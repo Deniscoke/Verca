@@ -36,6 +36,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
   --terracotta-glow: rgba(184, 100, 71, 0.18);
   --forest:         #2C3830;
   --forest-mid:     #3D4A42;
+  /* Teplá medová / „zlatý soumrak“ — fascia + experience, sladěné s krémem a terrakotou */
+  --fascia-sand:    #efe8d8;
+  --fascia-honey:   #d2b378;
+  --fascia-bronze:  #8f7654;
+  --fascia-root:    #4d4236;
   --wine:           #3a3128;
   --wine-mid:       #463c32;
   --wine-deep:      #241e19;
@@ -259,6 +264,39 @@ h1, h2, h3, h4 {
 }
 
 .btn--primary:active { transform: translateY(0) scale(0.98); }
+
+/* ═══ FASCIÁLNÍ PŘECHOD (služby → experience) — med, zlato, bronz ═══ */
+.fascia-bridge {
+  line-height: 0;
+  overflow: visible;
+  background: linear-gradient(180deg, var(--cream) 0%, #f5f0e6 45%, var(--fascia-sand) 100%);
+  position: relative;
+}
+/* Měkký náběh do experience — bez ostré linie mezi vlnou a sekcí */
+.fascia-bridge::after {
+  content: '';
+  display: block;
+  height: clamp(36px, 6vw, 56px);
+  margin-top: -3px;
+  background: linear-gradient(
+    180deg,
+    var(--fascia-root) 0%,
+    color-mix(in srgb, var(--fascia-root) 70%, var(--wine-mid)) 42%,
+    var(--wine-mid) 100%
+  );
+  pointer-events: none;
+}
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .fascia-bridge::after {
+    background: linear-gradient(180deg, var(--fascia-root) 0%, var(--wine-mid) 100%);
+  }
+}
+.fascia-bridge__svg {
+  display: block;
+  width: 100%;
+  height: clamp(128px, 19vw, 228px);
+  vertical-align: top;
+}
 
 /* ═══ NAV ═══ */
 .nav {
@@ -1169,9 +1207,9 @@ h1, h2, h3, h4 {
 
 /* ═══ EXPERIENCE ═══ (jen section — .label nesmí mít třídu .experience, jinak dědí padding/gradient) */
 section.experience {
-  margin-top: 0;
+  margin-top: -2px;
   background:
-    linear-gradient(180deg, rgba(245, 243, 239, 0.28) 0%, rgba(245, 236, 220, 0.14) 8%, rgba(70, 60, 50, 0) min(22%, 160px)),
+    linear-gradient(180deg, rgba(245, 236, 220, 0.2) 0%, rgba(70, 60, 50, 0) min(18%, 140px)),
     radial-gradient(ellipse 88% 58% at 50% 0%, rgba(210, 179, 120, 0.2) 0%, transparent 55%),
     radial-gradient(ellipse 85% 55% at 50% 0%, rgba(201, 123, 92, 0.1) 0%, transparent 58%),
     radial-gradient(ellipse 70% 45% at 85% 75%, rgba(168, 194, 174, 0.06) 0%, transparent 50%),
@@ -1939,6 +1977,32 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
   -webkit-backdrop-filter: blur(20px) saturate(105%);
 }
 
+html:not(.verca-lite):not(.reduce-motion) .fascia-bridge {
+  background: linear-gradient(
+    180deg,
+    rgba(245, 243, 239, 0.5) 0%,
+    rgba(245, 240, 230, 0.45) 45%,
+    rgba(239, 232, 216, 0.48) 100%
+  );
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+html:not(.verca-lite):not(.reduce-motion) .fascia-bridge::after {
+  background: linear-gradient(
+    180deg,
+    rgba(77, 66, 54, 0.82) 0%,
+    color-mix(in srgb, rgba(77, 66, 54, 0.82) 70%, rgba(70, 60, 50, 0.85)) 42%,
+    rgba(58, 49, 40, 0.86) 100%
+  );
+}
+
+@supports not (background: color-mix(in srgb, red, blue)) {
+  html:not(.verca-lite):not(.reduce-motion) .fascia-bridge::after {
+    background: linear-gradient(180deg, rgba(77, 66, 54, 0.82) 0%, rgba(70, 60, 50, 0.84) 42%, rgba(58, 49, 40, 0.86) 100%);
+  }
+}
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 1024px) {
   .hero__actions { justify-content: center; }
@@ -2256,6 +2320,61 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
     </div>
   </div>
 </section>
+
+<div class="fascia-bridge" aria-hidden="true">
+  <svg class="fascia-bridge__svg" viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="fasciaGoldFill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--fascia-sand)"/>
+        <stop offset="32%" stop-color="var(--fascia-honey)"/>
+        <stop offset="68%" stop-color="var(--fascia-bronze)"/>
+        <stop offset="100%" stop-color="var(--fascia-root)"/>
+      </linearGradient>
+      <linearGradient id="fasciaSheen" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#FFF9ED" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#F5E6C8" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <!-- Hlavní objem: měkká „masová“ silueta -->
+    <path fill="url(#fasciaGoldFill)" d="M0,108
+      C120,72 200,128 340,88
+      S520,48 680,102
+      S880,58 1040,96
+      S1260,78 1440,104
+      L1440,220 L0,220 Z"/>
+    <!-- Druhá vrstva pro hloubku -->
+    <path fill="var(--fascia-bronze)" fill-opacity="0.22" d="M0,118
+      C160,92 280,138 400,100
+      S640,72 800,112
+      S1000,88 1200,108
+      S1360,98 1440,112
+      L1440,220 L0,220 Z"/>
+    <!-- Jemné kruhy (nádech posvátné geometrie) -->
+    <g fill="none" stroke="#C9A86C" stroke-width="0.55" opacity="0.14">
+      <circle cx="280" cy="62" r="22"/>
+      <circle cx="308" cy="62" r="22"/>
+      <circle cx="294" cy="86" r="22"/>
+      <circle cx="980" cy="78" r="18"/>
+      <circle cx="1002" cy="78" r="18"/>
+      <circle cx="991" cy="96" r="18"/>
+    </g>
+    <!-- „Svalová“ vlákna — plynoucí křivky přes hranici -->
+    <g class="fascia-bridge__fibers" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path class="fascia-bridge__fiber" stroke="#D4A574" stroke-opacity="0.32" stroke-width="1.1" d="M-20,52 C200,38 420,78 640,52 S1080,28 1460,58"/>
+      <path class="fascia-bridge__fiber" stroke="#C97B5C" stroke-opacity="0.22" stroke-width="1" d="M-40,68 C180,88 400,48 620,72 S1040,96 1480,64"/>
+      <path class="fascia-bridge__fiber" stroke="#E8C89A" stroke-opacity="0.28" stroke-width="1.05" d="M0,84 C240,58 480,102 720,76 S1200,52 1440,88"/>
+      <path class="fascia-bridge__fiber" stroke="#B8955E" stroke-opacity="0.26" stroke-width="0.85" d="M-30,98 C220,118 460,78 700,104 S1120,128 1500,92"/>
+      <path class="fascia-bridge__fiber" stroke="#C97B5C" stroke-opacity="0.18" stroke-width="1" d="M20,112 C280,92 520,124 780,100 S1180,82 1420,108"/>
+      <path class="fascia-bridge__fiber" stroke="#F0D4A8" stroke-opacity="0.22" stroke-width="0.75" d="M-10,124 C260,138 500,108 760,128 S1140,148 1450,118"/>
+    </g>
+    <!-- Světelný lem podél vrcholu vlny -->
+    <path fill="none" stroke="url(#fasciaSheen)" stroke-width="2.2" stroke-linecap="round" d="M0,108
+      C120,72 200,128 340,88
+      S520,48 680,102
+      S880,58 1040,96
+      S1260,78 1440,104"/>
+  </svg>
+</div>
 
 <section class="experience" id="experience">
   <div class="experience__sacred-bg" aria-hidden="true"></div>
