@@ -150,9 +150,11 @@ html.verca-lite .hero.hero--ocean {
   background: linear-gradient(168deg, #f2ece4 0%, #e8e2d8 42%, #dde5df 100%);
 }
 html.verca-lite .hero.hero--ocean .hero__content {
+  background: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  background: rgba(245, 243, 239, 0.96);
+  border: none;
+  box-shadow: none;
 }
 html.verca-lite .verca-surface::before {
   opacity: 0.02;
@@ -529,22 +531,48 @@ h1, h2, h3, h4 {
   background: linear-gradient(90deg, rgba(92, 86, 78, 0.45), rgba(92, 86, 78, 0.65));
 }
 
+/* Úvod bez „rámu“ — text přímo na videu / WebGL; stíny drží čitelnost */
 .hero.hero--ocean .hero__content {
-  background: rgba(245, 243, 239, 0.52);
-  backdrop-filter: blur(22px) saturate(128%);
-  -webkit-backdrop-filter: blur(22px) saturate(128%);
-  padding: clamp(1.85rem, 4.2vw, 2.65rem) clamp(1.65rem, 3.2vw, 2.4rem);
-  border-radius: var(--radius-card);
-  border: 1px solid rgba(255, 255, 255, 0.38);
-  box-shadow:
-    0 24px 56px rgba(26, 24, 22, 0.07),
-    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: clamp(0.75rem, 2.5vw, 1.5rem) 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
   max-width: min(36rem, 100%);
   width: 100%;
 }
 
 .hero.hero--ocean .hero__title {
-  text-shadow: 0 1px 0 rgba(245, 243, 239, 0.9);
+  color: var(--charcoal);
+  text-shadow:
+    0 0 1px rgba(245, 243, 239, 0.95),
+    0 1px 2px rgba(245, 243, 239, 0.9),
+    0 2px 28px rgba(245, 243, 239, 0.55),
+    0 0 48px rgba(245, 243, 239, 0.35);
+}
+
+.hero.hero--ocean .hero__title em {
+  text-shadow:
+    0 0 1px rgba(245, 243, 239, 0.9),
+    0 1px 3px rgba(245, 243, 239, 0.75),
+    0 0 24px rgba(245, 243, 239, 0.45);
+}
+
+.hero.hero--ocean .hero__sub {
+  color: var(--text);
+  text-shadow:
+    0 0 1px rgba(245, 243, 239, 0.98),
+    0 1px 3px rgba(245, 243, 239, 0.88),
+    0 0 22px rgba(245, 243, 239, 0.45);
+}
+
+.hero.hero--ocean .hero__eyebrow .label {
+  color: var(--text-soft);
+  text-shadow:
+    0 0 1px rgba(245, 243, 239, 0.95),
+    0 1px 2px rgba(245, 243, 239, 0.75);
 }
 
 .hero__grid {
