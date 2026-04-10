@@ -1,139 +1,216 @@
-# VERCA — kontext projektu (pre GPT a konzultácie)
+# VERCA — Project Context for LLM
 
-**Ako to použiť:** Pri novej konverzácii v ChatGPT (alebo inom LLM) napíš napr. *„Mám statický web Verca, priložím súbor GPT-KONTEXT-VERCA.md z repa — drž sa ho pri úpravách.“* a skopíruj obsah tohto súboru alebo ho pripoj ako prílohu. Tento text je zdroj pravdy o štruktúre, súboroch a správaní stránok.
-
----
-
-## Čo je projekt
-
-**Verca — Gentle Natural Care** (na webe prezentované ako *jemná přírodní péče*): péče o pánevní dno, tělo, aromaterapie, bylinný ateliér. Tón: klid, důvěra, příroda, „přítomnost“ — vizuálne teplé farby (krémová, terakota, med/zlato pri fascia/experience).
-
-- **Jazyk obsahu stránok:** čeština (`lang="cs"`).
-- **Formát:** statické HTML + externé CSS/JS, **bez** npm/build/bundlera (žiadny `package.json` v koreni).
+> **How to use:** Paste this file at the start of a new ChatGPT / Claude / LLM conversation.
+> It is the single source of truth about the project's architecture, files, and conventions.
+> Last updated: 2026-04-11.
 
 ---
 
-## Mapa stránok (HTML vstupy)
+## 1  Identity
 
-| Súbor | Účel |
-|--------|------|
-| `index.html` | Hlavná dlhá landing stránka (väčšina CSS inline v `<style>`, GSAP animácie, hero video, WebGL „ocean“, bloom canvas). |
-| `kontakt.html` | Kontakt + WebGL pozadie (`verca-room-gl.js`). |
-| `bylinny-atelier.html` | Bylinný ateliér — orby, particles.js, sacred pattern (`verca-atelier.css`, `verca-atelier-particles.js`). |
-| `alchymie-vuni.html`, `esence-zeny.html`, `tajemstvi-panevniho-dna.html` | Podstránky „prostorů“ / služieb — rovnaký room layout + WebGL ako kontakt. |
-
-Všetky uvedené stránky majú **prechody medzi stránkami** (`verca-page-transition.js`) a zdieľaný **ambient audio** (`verca-ambient.js`), ak je na stránke prítomný `<audio id="verca-ambient-audio">`.
+```yaml
+name:        "Verca — Jemná přírodní péče"
+domain:      pelvic-floor therapy, bodywork, aromatherapy, herbal atelier
+lang:        cs (Czech)
+tone:        calm, warm, nature, trust, "presence"
+palette:     cream → terracotta → forest/sage → wine/charcoal
+deploy:      Vercel (auto-deploy on push to main)
+repo:        github.com/Deniscoke/Verca.git
+build:       NONE — static HTML + CSS + JS, no npm, no bundler
+```
 
 ---
 
-## Kľúčové súbory (kde čo meniť)
+## 2  File tree (production-relevant only)
 
 ```
 VERCA/
-├── index.html                 ← hlavná stránka, design tokeny :root, sekcie, väčšina CSS
-├── kontakt.html
-├── bylinny-atelier.html
-├── alchymie-vuni.html
-├── esence-zeny.html
-├── tajemstvi-panevniho-dna.html
-├── GPT-KONTEXT-VERCA.md       ← tento súbor
+│
+├── index.html                          ← main landing (3 100+ lines, ALL CSS inline in <style>, GSAP anims, hero video, WebGL ocean, bloom canvas)
+├── kontakt.html                        ← contact page + WebGL room bg
+├── bylinny-atelier.html                ← herbal atelier, particles, sacred pattern
+├── alchymie-vuni.html                  ← sub-page "Alchymie vůní"
+├── esence-zeny.html                    ← sub-page "Esence ženy"
+├── tajemstvi-panevniho-dna.html        ← sub-page "Tajemství pánevního dna"
+│
 ├── css/
-│   ├── verca-transitions.css  ← overlay prechodov, témy default/atelier/room
-│   ├── verca-room.css         ← layout kontakt + miestnosti + #glcanvas
-│   └── verca-atelier.css      ← bylinný ateliér, particles container, orby
+│   ├── verca-transitions.css           ← page-transition overlay themes (default / atelier / room)
+│   ├── verca-room.css                  ← room/contact layout + #glcanvas
+│   └── verca-atelier.css               ← atelier layout, particles, orbs
+│
 ├── js/
-│   ├── verca-perf-boot.js     ← hneď po <body>: reduce-motion + verca-lite
-│   ├── verca-page-transition.js
-│   ├── verca-ambient.js
-│   ├── verca-ocean.js         ← WebGL ocean (len index, ak sa načíta)
-│   ├── verca-room-gl.js       ← WebGL pozadie room/kontakt
-│   └── verca-atelier-particles.js
-├── images/                    ← hero poster/video, about, atď.
-├── audio/                     ← background-meditation.mp3 (ambient)
-├── script.js                  ← NEPATRÍ k produkčnému webu (Motion demo, nepripojené)
-├── scroll-animation-with-grid-motion/   ← starší demo priečinok
-└── third-party/               ← experimenty / staré demo (napr. ambient-background)
+│   ├── verca-perf-boot.js              ← FIRST script after <body>: sets .reduce-motion / .verca-lite on <html>
+│   ├── verca-page-transition.js        ← cross-page fade (default / atelier / room themes)
+│   ├── verca-ambient.js                ← shared background audio across pages (sessionStorage state)
+│   ├── verca-ocean.js                  ← WebGL raymarched ocean (index only, full-mode only)
+│   ├── verca-room-gl.js                ← WebGL room background (contact + sub-pages)
+│   ├── verca-atelier-particles.js      ← atelier particle system
+│   └── verca-ui-scroll-effects.js      ← GSAP ScrollTo wheel smoothing + reveal pack (adapted from Juxtopposed demo)
+│
+├── images/                             ← hero video/poster, about portrait, section photos
+│   ├── verca-hero-main.mov             ← primary hero video (QuickTime)
+│   ├── verca-hero-boomerang.mp4        ← MP4 fallback
+│   ├── IMG_0964.JPG                    ← hero poster / mobile preload
+│   └── (other JPG/PNG assets)
+│
+├── audio/background-meditation.mp3     ← ambient loop
+│
+├── third-party/                        ← reference demos, NOT linked in production
+│   ├── 10-simple-yet-cool-popular-effects-in-modern-ui-ft-gsap-color-blending-etc/
+│   ├── ambient-background/
+│   ├── ambient-particles.js
+│   └── various LICENSE files
+│
+├── scroll-animation-with-grid-motion/  ← older reference demo, NOT linked
+├── Context/                            ← design reference screenshots (PNG)
+├── GPT-KONTEXT-VERCA.md                ← THIS FILE
+├── script.js                           ← EMPTY, not linked anywhere
+└── style.css                           ← EMPTY, not linked anywhere
 ```
 
 ---
 
-## Poradie skriptov (dôležité pre chyby typu „nefunguje prechod / audio“)
+## 3  index.html — section order & IDs
 
-Na stránkach s prechodom je **prvé** v `<body>`:
-
-1. `js/verca-perf-boot.js` — musí byť pred ostatným, aby sa `verca-lite` / `reduce-motion` nastavili skoro.
-2. `js/verca-page-transition.js`
-3. Ďalej štruktúra stránky, potom často `verca-ambient.js` (na `index.html` môže byť `defer`).
-
-**Index navyše:** GSAP 3 + ScrollTrigger z CDN (`defer`), inline logika volá `initHero`, podmienene vkladá `verca-ocean.js`.
-
----
-
-## Výkon a mobil (`verca-lite` + `reduce-motion`)
-
-**`js/verca-perf-boot.js`** na `<html>` pridá:
-
-- **`reduce-motion`** — ak `prefers-reduced-motion: reduce`.
-- **`verca-lite`** — ak narrow viewport **(max-width: 768px)** ALEBO `navigator.connection.saveData` ALEBO `effectiveType` je `2g` / `slow-2g`.
-
-**Pri `verca-lite` na indexe (stručne):** bez načítania WebGL ocean skriptu, hero často statický obrázok namiesto videa, menej náročné efekty (žiadny backdrop-filter na hero obsahu podľa úprav, zjednodušené vrstvy). **Bloom** a **ocean** canvas sú skryté / neinicializované podľa inline podmienok v `index.html` a súvisiacich CSS pravidiel.
-
-**Pri `verca-lite` na podstránkach:**
-
-- `verca-room-gl.js` — skončí hneď, `body` dostane `no-webgl` (statický fallback z CSS).
-- `verca-atelier-particles.js` — vôbec nespustí particles; v CSS je `#particles-js` skrytý a orby bez animácie.
-
-**Fonty (index):** Fraunces, Nunito Sans, Kalam — Google Fonts s `subset=latin,latin-ext`. **Preload** hero obrázka pre úzke displeje: `images/IMG_0964.JPG`.
+```
+#home          section.hero.hero--ocean     ← hero video/poster + WebGL ocean behind
+#trust         div.trust                    ← trust strip (stats)
+#philosophy    section.philosophy           ← quote + approach text + figure
+#prostory      section.prostory             ← 4 cards linking to sub-pages
+#services      section.services             ← 3 service cards (pelvic floor / aroma / atelier)
+#experience    section.experience           ← "Co můžete čekat" — 3-step timeline in a card panel
+(no id)        section.testimonials         ← 3 testimonials
+#products      section.products             ← product showcase
+#about         section.about                ← portrait + bio
+#faq           section.faq                  ← accordion
+#contact       section.contact              ← CTA block
+               footer.footer                ← links + copyright
+```
 
 ---
 
-## Koordinácia ambientu a prechodu stránok
+## 4  Design tokens (`:root` in index.html `<style>`)
 
-- `verca-page-transition.js` pred navigáciou nastaví v `sessionStorage` kľúč **`vercaAmbientSkipResume`** (aby cieľová stránka **nehneď** znova nespúšťala autoplay po fade — používateľský zámer).
-- `verca-ambient.js` tento kľúč číta, po spracovaní ho maže; stav prehrávania a čas drží v `sessionStorage` (`vercaAmbientOn`, `vercaAmbientTime`).
-- Interné odkazy nesmú „kradnúť“ prvý gesture len kvôli audio — logika je upravená tak, aby neblokovala bežné kliky na navigáciu.
+```css
+/* Core palette */
+--cream:          #F5F3EF;      --cream-deep:     #EBE8E1;
+--parchment:      #E5E2DA;      --parchment-dark: #D8D4CA;
+--terracotta:     #B86447;      --terracotta-mid: #C97B5C;
+--forest:         #2C3830;      --forest-mid:     #3D4A42;
+--wine:           #3a3128;      --wine-mid:       #463c32;       --wine-deep: #241e19;
+--charcoal:       #1A1816;
+--text:           #2A2622;      --text-soft:      #5C564E;       --text-muted: #8A847C;
 
----
+/* Typography */
+--font-display:   'Fraunces';   /* serif headings */
+--font-body:      'Nunito Sans';/* body */
+--font-accent:    'Kalam';      /* handwritten accents */
 
-## Prechody — témy farieb
-
-`themeForPath` v `verca-page-transition.js`: cesty obsahujúce `bylinny-atelier` → téma **atelier**; `kontakt`, `esence`, `tajemstvi`, `alchymie` → **room**; inak **default**. Overlay používa triedy z `css/verca-transitions.css`.
-
----
-
-## Hlavné assety (index)
-
-- **Hero video:** `images/verca-hero-boomerang.mp4` (poster / fallback obrázok `images/IMG_0964.JPG`). Načítanie videa sa rieši až keď nie je lite a nie je reduce-motion (funkcia `initHeroVideoLoad` v inline skripte).
-- **About:** `images/verca-about.png`.
-- Sekcia **experience** môže mať posvätnú geometriu na pozadí (bez veľkej fotky — podľa poslednej úpravy v HTML).
-
----
-
-## Dizajn tokeny (`index.html` — `:root`)
-
-Kľúčové farby: `--cream`, `--terracotta*`, `--forest*`, fascia/experience **med / medová** (`--fascia-honey`, `--fascia-bronze`, …). Písmo: `--font-display` (Fraunces), `--font-body` (Nunito Sans), akcent Kalam. Zlatý rez ako `--phi` pre medzery a šírku prose.
+/* Layout — golden-ratio based */
+--phi: 1.618;  --max-w: 1200px;  --px: clamp(22px, 4.5vw, 56px);
+--section-y: clamp(5.5rem, 12vw, 10rem);  --section-y-lg: clamp(6.5rem, 14vw, 12rem);
+--gap-phi: clamp(1.125rem, 3.2vw, 2.618rem);
+```
 
 ---
 
-## Čo **nie** je súčasťou produkčného webu
+## 5  Performance tiers
 
-- **`script.js`** v koreni — Motion/ESM demo, selektory nezodpovedajú `index.html`, **nie je** linknutý.
-- **`scroll-animation-with-grid-motion/`** a **`third-party/`** — referenčné / experimentálne.
+| Class on `<html>` | When | Effect |
+|-|-|-|
+| `.reduce-motion` | `prefers-reduced-motion: reduce` | No GSAP anims, no bloom, no ocean parallax |
+| `.verca-lite` | viewport ≤ 768 px OR save-data OR slow net | No WebGL ocean, no hero video autoload, no backdrop-filter, simpler reveals |
 
----
-
-## Poznámky pre úpravy
-
-- Po zmene skriptov skontrolovať **mobil + desktop** a **prechod medzi dvoma stránkami** + ambient.
-- Footer rok na indexe: aktuálne **© 2026** (pri ročnej údržbe aktualizovať).
-- Lighthouse / reálne zariadenie: overiť hero autoplay na desktope a lite režim na telefóne.
+Set by `js/verca-perf-boot.js` synchronously before any rendering.
 
 ---
 
-## Jednovetné zhrnutie
+## 6  Script loading order (index.html)
 
-**Verca je viacstránkový statický web v češtine s prechodmi, zdieľaným ambientom, GSAP 3 na indexe, WebGL oceanom (len „plný“ režim na indexe) a WebGL/particles na podstránkach; na mobile a pomalých sieťach `verca-lite` vypína najťažšie efekty.**
+```
+1. js/verca-perf-boot.js          ← sync, first after <body>
+2. js/verca-page-transition.js    ← sync
+3. js/verca-ambient.js            ← defer
+4. js/verca-ocean.js              ← dynamically injected (only if NOT verca-lite)
+5. gsap.min.js                    ← CDN, defer
+6. ScrollTrigger.min.js           ← CDN, defer
+7. ScrollToPlugin.min.js          ← CDN, defer
+8. js/verca-ui-scroll-effects.js  ← defer (exports vercaJuxtInitReveals + vercaJuxtSmoothWheel)
+9. inline <script>                ← boot(): initNav, initJuxtSmoothWheel, initMagnetic, initHero,
+                                     initReveals (→ vercaJuxtInitReveals), initHeroDayTrack,
+                                     initProducts, initAbout, initFaq, initAnchors,
+                                     initKontaktTransition
+10. inline bloom canvas script    ← click-flower effect
+```
 
 ---
 
-*Tento súbor slúži na konzultácie a kontinuitu práce — pri väčších zmenách architektúry ho prosím aktualizuj.*
+## 7  Glass UI layer (WebGL ocean mode)
+
+When `html:not(.verca-lite):not(.reduce-motion)`:
+- `body` is `transparent`, WebGL ocean canvas visible behind.
+- Every section gets semi-transparent `rgba(…)` background + `backdrop-filter: blur()`.
+- Sections blend smoothly via gradient overlaps (negative margins, extended padding).
+
+When `.verca-lite`: sections have **opaque** solid backgrounds, no blur.
+
+---
+
+## 8  Scroll & animation system
+
+| Feature | Source |
+|-|-|
+| Wheel inertia (GSAP ScrollTo) | `verca-ui-scroll-effects.js → vercaJuxtSmoothWheel` (desktop, non-lite, non-touch) |
+| Scroll reveals (fade+translate, reverse on scroll up) | `verca-ui-scroll-effects.js → vercaJuxtInitReveals` (toggleActions: `play none none reverse`) |
+| Anchor click | GSAP `scrollTo` when wheel-smooth active, else native `scrollTo({behavior:'smooth'})` |
+| Hero parallax | Inline GSAP — blob drift, video y-shift on scroll |
+| Day/night track | `heroDayTrackFill` width = scroll progress, label cycles through Úsvit→Noc→Hlubina |
+| Ocean sun arc | `verca-ocean.js` — `uS` uniform driven by scroll position |
+
+---
+
+## 9  Cross-page transitions & ambient audio
+
+- **`verca-page-transition.js`** creates `#verca-transition` overlay, fades in before navigating, fades out on arrival.
+- Theme chosen by path: `bylinny-atelier` → atelier, `kontakt/esence/tajemstvi/alchymie` → room, else → default.
+- **`verca-ambient.js`** persists playback state + timestamp in `sessionStorage` (`vercaAmbientOn`, `vercaAmbientTime`). Key `vercaAmbientSkipResume` prevents auto-resume during page transition.
+- Toggle button in nav: `#verca-ambient-toggle`.
+
+---
+
+## 10  Sub-pages pattern
+
+All sub-pages (`kontakt.html`, `esence-zeny.html`, `tajemstvi-panevniho-dna.html`, `alchymie-vuni.html`) share:
+- `css/verca-room.css` (centered content, `#glcanvas` full-bleed behind)
+- `js/verca-room-gl.js` (WebGL — skips on verca-lite, adds `.no-webgl` for CSS fallback)
+- Page-transition + ambient scripts
+
+`bylinny-atelier.html` uses `css/verca-atelier.css` + `js/verca-atelier-particles.js` instead.
+
+---
+
+## 11  Key conventions
+
+1. **No build step.** Edit files directly; push to `main` → Vercel deploys.
+2. **CSS is inline** in index.html `<style>` (~2 000 lines). Sub-pages link external CSS.
+3. **Fonts:** Google Fonts (Fraunces, Nunito Sans, Kalam) with `subset=latin,latin-ext`.
+4. **Images:** JPG/PNG in `images/`, hero videos MOV + MP4, lazy-loaded where applicable.
+5. **Footer year:** `© 2026` — update annually.
+6. **Sections use gradient overlaps** + negative margins for seamless transitions (no wave/fascia dividers).
+7. **`third-party/`** and **`scroll-animation-with-grid-motion/`** are reference only — not linked in any HTML.
+
+---
+
+## 12  How to edit safely
+
+```
+1. Read this context file first.
+2. Most visual changes → edit inline <style> in index.html.
+3. Animation / scroll behaviour → js/verca-ui-scroll-effects.js or inline <script> in index.html.
+4. After changes: test desktop (full mode) + mobile (verca-lite) + page transitions + ambient audio.
+5. git add -A && git commit -m "..." && git push origin main   (auto-deploys to Vercel)
+```
+
+---
+
+*Update this file when architecture changes significantly.*
