@@ -734,8 +734,17 @@ h1, h2, h3, h4 {
 
 /* ═══ PHILOSOPHY ═══ */
 .philosophy {
-  background: var(--parchment);
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent calc(100% - min(120px, 22vw)),
+      var(--cream-deep) calc(100% - min(48px, 8vw)),
+      var(--cream) 100%
+    ),
+    var(--parchment);
   padding: var(--section-y) 0;
+  padding-bottom: calc(var(--section-y) + min(40px, 6vw));
   position: relative;
 }
 .philosophy::before {
@@ -828,12 +837,19 @@ h1, h2, h3, h4 {
 
 /* ═══ PROSTORY (samostatné „okna“ jako kontakt) ═══ */
 .prostory {
+  margin-top: calc(-1 * min(56px, 9vw));
   background:
+    linear-gradient(
+      180deg,
+      var(--cream) 0%,
+      var(--cream-deep) min(14%, 100px),
+      rgba(245, 243, 239, 0) min(32%, 220px)
+    ),
     radial-gradient(ellipse 62% 52% at 12% 28%, rgba(232, 196, 181, 0.22) 0%, transparent 58%),
     radial-gradient(ellipse 48% 42% at 88% 72%, rgba(255, 243, 220, 0.65) 0%, transparent 52%),
     radial-gradient(ellipse 50% 40% at 50% 0%, rgba(255, 252, 248, 0.9) 0%, transparent 45%),
     var(--cream);
-  padding: var(--section-y) 0;
+  padding: calc(var(--section-y) + min(56px, 9vw)) 0 var(--section-y);
   position: relative;
   overflow: hidden;
 }
@@ -846,6 +862,9 @@ h1, h2, h3, h4 {
     radial-gradient(ellipse 55% 80% at 38% 20%, rgba(184, 100, 71, 0.09) 0%, transparent 55%),
     radial-gradient(ellipse 42% 55% at 70% 12%, rgba(245, 211, 180, 0.14) 0%, transparent 48%);
   pointer-events: none;
+  /* Jemný náběh shora — bez ostré řezu k filosofii */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.45) min(8%, 72px), #000 min(22%, 180px));
+  mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.45) min(8%, 72px), #000 min(22%, 180px));
 }
 .prostory .container { position: relative; z-index: 1; }
 .prostory__header {
@@ -1843,19 +1862,33 @@ html:not(.verca-lite):not(.reduce-motion) .trust {
 }
 
 html:not(.verca-lite):not(.reduce-motion) .philosophy {
-  background: rgba(229, 226, 218, 0.4);
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent calc(100% - min(120px, 22vw)),
+      rgba(245, 243, 239, 0.52) calc(100% - min(52px, 9vw)),
+      rgba(245, 243, 239, 0.62) 100%
+    ),
+    rgba(229, 226, 218, 0.4);
   backdrop-filter: blur(18px) saturate(122%);
   -webkit-backdrop-filter: blur(18px) saturate(122%);
 }
 
 html:not(.verca-lite):not(.reduce-motion) .prostory {
   background:
+    linear-gradient(
+      180deg,
+      rgba(245, 243, 239, 0.72) 0%,
+      rgba(237, 232, 224, 0.38) min(16%, 110px),
+      transparent min(34%, 240px)
+    ),
     radial-gradient(ellipse 62% 52% at 12% 28%, rgba(232, 196, 181, 0.16) 0%, transparent 58%),
     radial-gradient(ellipse 48% 42% at 88% 72%, rgba(255, 243, 220, 0.32) 0%, transparent 52%),
     radial-gradient(ellipse 50% 40% at 50% 0%, rgba(255, 252, 248, 0.4) 0%, transparent 45%),
     rgba(245, 243, 239, 0.36);
-  backdrop-filter: blur(14px) saturate(120%);
-  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(18px) saturate(122%);
+  -webkit-backdrop-filter: blur(18px) saturate(122%);
 }
 
 html:not(.verca-lite):not(.reduce-motion) .prostory-card {
