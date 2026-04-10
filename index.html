@@ -163,7 +163,7 @@ html.verca-lite .hero__immersive {
 html.verca-lite .experience__sacred-bg {
   -webkit-mask-image: none;
   mask-image: none;
-  opacity: 0.045;
+  opacity: 0.07;
 }
 
 /* Obsah nad vodoznakem květu života */
@@ -1173,44 +1173,40 @@ h1, h2, h3, h4 {
 /* ═══ EXPERIENCE ═══ (jen section — .label nesmí mít třídu .experience, jinak dědí padding/gradient) */
 section.experience {
   margin-top: calc(-1 * min(48px, 6vw));
-  padding: calc(var(--section-y-lg) + min(32px, 5vw)) 0 var(--section-y-lg);
+  padding: calc(var(--section-y-lg) + min(28px, 4vw)) 0 var(--section-y-lg);
   background:
-    /* Plynulý náběh ze služeb (krém) do těla sekce — bez ostré řezu */
     linear-gradient(
       180deg,
       var(--cream) 0%,
-      #ebe6dc 14%,
-      #cfc4b4 30%,
-      #8f8276 44%,
-      var(--wine-mid) 54%,
-      transparent 66%
+      var(--cream-deep) 16%,
+      transparent 34%
     ),
-    radial-gradient(ellipse 88% 58% at 50% 0%, rgba(210, 179, 120, 0.2) 0%, transparent 58%),
-    radial-gradient(ellipse 85% 55% at 50% 0%, rgba(201, 123, 92, 0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 45% at 85% 75%, rgba(168, 194, 174, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 92% 52% at 50% -8%, rgba(232, 196, 181, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse 72% 48% at 88% 88%, rgba(168, 194, 174, 0.14) 0%, transparent 50%),
     linear-gradient(
-      165deg,
-      var(--wine-mid) 0%,
-      var(--wine) 44%,
-      var(--wine-deep) 100%
+      168deg,
+      var(--parchment) 0%,
+      var(--cream-deep) 42%,
+      var(--bloom-blush) 78%,
+      var(--parchment) 100%
     );
   position: relative;
   overflow: hidden;
 }
 
-/* Květ života — jemná mřížka v pozadí */
+/* Květ života — na světlém pozadí jemná šedohnědá linka */
 .experience__sacred-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23f4ead8' stroke-width='0.42'%3E%3Ccircle cx='100' cy='100' r='28'/%3E%3Ccircle cx='128' cy='100' r='28'/%3E%3Ccircle cx='114' cy='124' r='28'/%3E%3Ccircle cx='86' cy='124' r='28'/%3E%3Ccircle cx='72' cy='100' r='28'/%3E%3Ccircle cx='86' cy='76' r='28'/%3E%3Ccircle cx='114' cy='76' r='28'/%3E%3C/g%3E%3Cg stroke='%23d4b896' stroke-width='0.28' opacity='0.5'%3E%3Ccircle cx='100' cy='100' r='48'/%3E%3Ccircle cx='100' cy='100' r='68'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.42;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%239a8b7d' stroke-width='0.38' opacity='0.45'%3E%3Ccircle cx='100' cy='100' r='28'/%3E%3Ccircle cx='128' cy='100' r='28'/%3E%3Ccircle cx='114' cy='124' r='28'/%3E%3Ccircle cx='86' cy='124' r='28'/%3E%3Ccircle cx='72' cy='100' r='28'/%3E%3Ccircle cx='86' cy='76' r='28'/%3E%3Ccircle cx='114' cy='76' r='28'/%3E%3C/g%3E%3Cg stroke='%23b8956e' stroke-width='0.26' opacity='0.35'%3E%3Ccircle cx='100' cy='100' r='48'/%3E%3Ccircle cx='100' cy='100' r='68'/%3E%3C/g%3E%3C/svg%3E");
   background-size: min(280px, 36vw) min(280px, 36vw);
   background-repeat: repeat;
-  background-position: center 12%;
-  -webkit-mask-image: radial-gradient(ellipse 92% 70% at 50% 32%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.14) 48%, transparent 72%);
-  mask-image: radial-gradient(ellipse 92% 70% at 50% 32%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.14) 48%, transparent 72%);
+  background-position: center 18%;
+  -webkit-mask-image: radial-gradient(ellipse 100% 75% at 50% 38%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 52%, transparent 78%);
+  mask-image: radial-gradient(ellipse 100% 75% at 50% 38%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 52%, transparent 78%);
 }
 
 .experience__glow {
@@ -1241,7 +1237,7 @@ section.experience .experience__kicker {
   margin: 0 auto 0.65rem;
   padding: 0.4rem 0.2rem;
   text-align: center;
-  color: rgba(246, 241, 232, 0.58);
+  color: var(--text-muted);
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 500;
@@ -1256,19 +1252,19 @@ section.experience .experience__kicker::after {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(201, 123, 92, 0.55),
+    rgba(184, 100, 71, 0.35),
     transparent
   );
   flex-shrink: 0;
 }
 .experience__title {
   font-size: clamp(2.35rem, 5vw, 3.85rem);
-  color: var(--cream);
+  color: var(--charcoal);
   margin: 1rem auto clamp(1.75rem, 4vw, 2.75rem);
   max-width: 520px;
   line-height: 1.06;
 }
-.experience__title em { font-style: italic; color: var(--terracotta-mid); }
+.experience__title em { font-style: italic; color: var(--terracotta); }
 
 .experience__timeline {
   display: grid;
@@ -1276,8 +1272,14 @@ section.experience .experience__kicker::after {
   gap: 0;
   position: relative;
   z-index: 1;
-  max-width: 38rem;
+  max-width: 40rem;
   margin: 0 auto;
+  width: 100%;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1.25rem, 3vw, 2.25rem);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
 }
 
 .timeline__rail {
@@ -1320,7 +1322,7 @@ section.experience .experience__kicker::after {
   font-family: var(--font-display);
   font-size: clamp(3rem, 5vw, 4.5rem);
   font-weight: 300;
-  color: rgba(246, 241, 232, 0.08);
+  color: rgba(184, 100, 71, 0.12);
   line-height: 1;
   margin-bottom: 0.15rem;
   display: block;
@@ -1330,18 +1332,18 @@ section.experience .experience__kicker::after {
 .step__name {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2vw, 1.7rem);
-  color: var(--cream);
+  color: var(--charcoal);
   padding-top: 0.85rem;
-  border-top: 1px solid rgba(246, 241, 232, 0.12);
+  border-top: 1px solid var(--line);
   margin-bottom: 0.7rem;
   text-align: center;
 }
-.step__name em { font-style: italic; color: var(--terracotta-mid); }
+.step__name em { font-style: italic; color: var(--terracotta); }
 
 .step__body {
   font-size: 14.5px;
   line-height: 1.82;
-  color: rgba(246, 241, 232, 0.5);
+  color: var(--text-soft);
   max-width: 36rem;
   margin-left: auto;
   margin-right: auto;
@@ -1351,7 +1353,7 @@ section.experience .experience__kicker::after {
 .step__accent {
   font-family: var(--font-accent);
   font-size: 1.15rem;
-  color: var(--terracotta-mid);
+  color: var(--terracotta);
   display: block;
   text-align: center;
   margin-top: 0.75rem;
@@ -1893,25 +1895,28 @@ html:not(.verca-lite):not(.reduce-motion) section.experience {
   background:
     linear-gradient(
       180deg,
-      rgba(245, 243, 239, 0.52) 0%,
-      rgba(235, 228, 218, 0.4) 14%,
-      rgba(200, 190, 176, 0.38) 30%,
-      rgba(95, 88, 80, 0.42) 44%,
-      rgba(70, 60, 50, 0.48) 54%,
-      transparent 66%
+      rgba(245, 243, 239, 0.48) 0%,
+      rgba(237, 232, 224, 0.36) 18%,
+      transparent 36%
     ),
-    radial-gradient(ellipse 88% 58% at 50% 0%, rgba(210, 179, 120, 0.12) 0%, transparent 58%),
-    radial-gradient(ellipse 85% 55% at 50% 0%, rgba(201, 123, 92, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 45% at 85% 75%, rgba(168, 194, 174, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 92% 52% at 50% -8%, rgba(232, 196, 181, 0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 72% 48% at 88% 88%, rgba(168, 194, 174, 0.12) 0%, transparent 50%),
     linear-gradient(
-      165deg,
-      rgba(61, 74, 66, 0.42) 0%,
-      rgba(61, 74, 66, 0.82) 28%,
-      rgba(44, 56, 48, 0.88) 52%,
-      rgba(36, 30, 25, 0.9) 100%
+      168deg,
+      rgba(229, 226, 218, 0.52) 0%,
+      rgba(245, 243, 239, 0.4) 48%,
+      rgba(216, 212, 202, 0.46) 100%
     );
-  backdrop-filter: blur(12px) saturate(112%);
-  -webkit-backdrop-filter: blur(12px) saturate(112%);
+  backdrop-filter: blur(18px) saturate(122%);
+  -webkit-backdrop-filter: blur(18px) saturate(122%);
+}
+
+html:not(.verca-lite):not(.reduce-motion) .experience__timeline {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(26, 24, 22, 0.08);
+  backdrop-filter: blur(14px) saturate(118%);
+  -webkit-backdrop-filter: blur(14px) saturate(118%);
+  box-shadow: 0 18px 48px rgba(26, 24, 22, 0.06);
 }
 
 html:not(.verca-lite):not(.reduce-motion) .testimonials {
