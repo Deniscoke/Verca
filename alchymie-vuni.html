@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alchymie vůní — Verca</title>
+<meta name="description" content="Kurzy a dílny s éterickými oleji — osobní parfém, směsi na míru a vůně jako podpora nervové soustavy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/verca-transitions.css">
+<link rel="stylesheet" href="css/verca-room.css">
+</head>
+<body>
+<script src="js/verca-perf-boot.js"></script>
+<script src="js/verca-page-transition.js"></script>
+
+<div class="gl-fallback" aria-hidden="true"></div>
+<canvas id="glcanvas" aria-hidden="true"></canvas>
+
+<audio id="verca-ambient-audio" preload="metadata" loop playsinline hidden>
+  <source src="audio/background-meditation.mp3" type="audio/mpeg">
+</audio>
+<script src="js/verca-ambient.js"></script>
+
+<div class="contact-wrap">
+  <div class="top-bar">
+    <a href="index.html" class="logo">Verca</a>
+    <div class="top-bar__end">
+      <button type="button" class="ambient-toggle" id="verca-ambient-toggle" aria-pressed="false" aria-label="Přehrát jemnou hudbu v pozadí" title="Hudba v pozadí">
+        <svg class="ambient-toggle-icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></svg>
+        <svg class="ambient-toggle-icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </button>
+      <a href="index.html#prostory" class="back">← Zpět na úvod</a>
+    </div>
+  </div>
+
+  <div class="contact-stage contact-stage--wide">
+    <span class="label">Kurzy a dílny</span>
+    <h1><em>Alchymie</em> vůní</h1>
+    <p class="lead">Stejně jako na sociálních sítích sdílím bylinky a recepty, tady v kurzech pracujeme s éterickými oleji — osobní parfém, směs na míru a vůně, které podporují tělo i nervovou soustavu.</p>
+
+    <div class="room-prose">
+      <p>Učíme se principy aromaterapie pro zdraví a krásu, jak bezpečně pracovat s esencemi a jak namíchat oleje tak, aby podpořily to, co právě potřebujete — zklidnění, energii, jemné probuzení nebo návrat k sobě skrze čich. Přírodní kosmetiku dlouhodobě tvořím pod značkou <strong>Arnika</strong> — stejná péče o materiály a vůně jako u těchto kurzů.</p>
+      <p>Na workshopech typu <strong>domácí bylinné lékárničky</strong> nebo macerátů zůstává důraz na ruce, vůni a pochopení rostlin — stejný klidný rytmus, který máte u mě na sítích.</p>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn--primary" href="mailto:hello@verca.care?subject=Z%C3%A1jem%20%E2%80%94%20Alchymie%20v%C5%AFn%C3%AD">Napsat ohledně kurzu</a>
+      <a class="btn btn--ghost" href="kontakt.html">Otevřít kontakt</a>
+    </div>
+    <p class="note">Ozvu se s termíny nebo vám doporučím nejbližší setkání.</p>
+    <div id="err" role="alert"></div>
+
+    <nav class="room-cross" aria-label="Další prostory">
+      <a href="esence-zeny.html">Esence ženy</a><span class="sep">·</span>
+      <a href="tajemstvi-panevniho-dna.html">Tajemství pánevního dna</a><span class="sep">·</span>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+  </div>
+
+  <p class="attrib">Pozadí: převzato z <a href="https://codepen.io/equant_org/pen/RNayBgp" target="_blank" rel="noopener noreferrer">सूर्य GLSL</a> (MIT)</p>
+</div>
+
+<script src="js/verca-room-gl.js"></script>
+</body>
+</html>

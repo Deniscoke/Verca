@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bylinný ateliér — Verca</title>
+<meta name="description" content="Ručně vyráběné bylinné přípravky — přírodní péče z ateliéru Verca. Brzy plný e-shop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;1,6..12,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/verca-transitions.css">
+<link rel="stylesheet" href="css/verca-atelier.css">
+</head>
+<body class="atelier-page">
+<script src="js/verca-perf-boot.js"></script>
+<script src="js/verca-page-transition.js"></script>
+
+<div class="atelier-cosmos" aria-hidden="true">
+  <div class="atelier-orbs">
+    <div class="atelier-orb atelier-orb--1"></div>
+    <div class="atelier-orb atelier-orb--2"></div>
+    <div class="atelier-orb atelier-orb--3"></div>
+    <div class="atelier-orb atelier-orb--4"></div>
+  </div>
+  <div id="particles-js"></div>
+  <div class="atelier-sacred"></div>
+</div>
+
+<audio id="verca-ambient-audio" preload="metadata" loop playsinline hidden>
+  <source src="audio/background-meditation.mp3" type="audio/mpeg">
+</audio>
+<script src="js/verca-ambient.js"></script>
+
+<header class="atelier-top">
+  <a href="index.html" class="atelier-logo">Verca</a>
+  <nav class="atelier-top__nav" aria-label="Rychlé odkazy">
+    <a href="index.html#services">Služby</a>
+    <a href="index.html#philosophy">Přístup</a>
+    <a href="index.html#products">Úvodní produkty</a>
+    <a href="kontakt.html">Kontakt</a>
+  </nav>
+  <div class="atelier-top__end">
+    <button type="button" class="atelier-ambient" id="verca-ambient-toggle" aria-pressed="false" aria-label="Přehrát jemnou hudbu v pozadí" title="Hudba v pozadí">
+      <svg class="ambient-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></svg>
+      <svg class="ambient-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </button>
+    <a href="index.html" class="atelier-btn atelier-btn--ghost atelier-btn--compact">← Úvod</a>
+  </div>
+</header>
+
+<main class="atelier-main" id="nakup">
+  <header class="atelier-hero">
+    <span class="label">Ruční výroba · malé šarže</span>
+    <h1>Bylinný <em>ateliér</em></h1>
+    <p class="lead">
+      Přípravky z rostlin, které vybírám a připravuji s péčí — v tónu medového světla a jemného dřeva ateliéru.
+      Tato stránka bude brzy plnohodnotný e-shop; zatím si vyberte produkt a napište mi pro rezervaci nebo dotaz.
+    </p>
+  </header>
+
+  <div class="atelier-products" role="list">
+    <article class="atelier-card" role="listitem">
+      <div class="atelier-card__img">
+        <img src="images/IMG_0959.JPG" width="1244" height="2048" loading="lazy" decoding="async" alt="Bylinný přípravek ve skleněné dóze s přírodními materiály.">
+      </div>
+      <div class="atelier-card__body">
+        <p class="atelier-price">Malá série</p>
+        <h2>Bylinný balzám</h2>
+        <p>Hustší konzistence pro suchá místa a každodenní rituál — vyrobeno z macerátů a vosků, které mám ráda na dotek i vůni.</p>
+        <div class="atelier-cta-row">
+          <a class="atelier-btn" href="mailto:hello@verca.care?subject=Z%C3%A1jem%20%E2%80%94%20bylinn%C3%BD%20balz%C3%A1m">Domluvit</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="atelier-card" role="listitem">
+      <div class="atelier-card__img">
+        <img src="images/IMG_0965.JPG" width="1200" height="1600" loading="lazy" decoding="async" alt="Oleje ve skleněných lahvičkách s pipetou.">
+      </div>
+      <div class="atelier-card__body">
+        <p class="atelier-price">Oleje na míru</p>
+        <h2>Pleťové a tělové oleje</h2>
+        <p>Světlejší textura, snadné vstřebání — často kombinuji nosné oleje s jemnými maceráty z květů a bylin z vlastní dílny.</p>
+        <div class="atelier-cta-row">
+          <a class="atelier-btn" href="mailto:hello@verca.care?subject=Z%C3%A1jem%20%E2%80%94%20ple%C5%A5ov%C3%A9%20oleje">Domluvit</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="atelier-card" role="listitem">
+      <div class="atelier-card__img">
+        <img src="images/IMG_0960.JPG" width="1536" height="2048" loading="lazy" decoding="async" alt="Míchání bylinného balzámu ve skleněné misce.">
+      </div>
+      <div class="atelier-card__body">
+        <p class="atelier-price">Na přání</p>
+        <h2>Dárková sada / mix</h2>
+        <p>Sladím sadu podle toho, co používáte — napíšte, zda dáváte přednost vůni, textuře nebo bez vůně úplně.</p>
+        <div class="atelier-cta-row">
+          <a class="atelier-btn" href="mailto:hello@verca.care?subject=Dotaz%20%E2%80%94%20d%C3%A1rkov%C3%A1%20sada">Napsat</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <footer class="atelier-foot">
+    <p>Particles + záře: adaptace <a href="https://codepen.io/heaversm/pen/boexBe" target="_blank" rel="noopener noreferrer">interactive particle glow</a> (Mike Heavers, MIT) · <a href="third-party/interactive-particle-glow-LICENSE.txt">licence</a></p>
+    <p style="margin-top:0.5rem">© 2026 Verca</p>
+  </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.js"></script>
+<script src="js/verca-atelier-particles.js"></script>
+</body>
+</html>
