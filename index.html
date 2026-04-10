@@ -1926,7 +1926,7 @@ section.experience .experience__kicker::after {
 
 <section class="hero hero--ocean" id="home" aria-label="Úvod">
   <div class="hero__immersive" aria-hidden="true">
-    <!-- Video přes celou výšku úvodu; průhlednost nechává prosvítat WebGL moře a slunce -->
+    <!-- Hlavní úvodní video (+ MP4 záloha pro prohlížeče bez MOV) -->
     <video
       id="heroPortraitVideo"
       class="hero__video-fullbleed"
@@ -1940,6 +1940,7 @@ section.experience .experience__kicker::after {
       width="1080"
       height="1920"
       aria-hidden="true">
+      <source src="images/verca-hero-main.mov" type="video/quicktime">
       <source src="images/verca-hero-boomerang.mp4" type="video/mp4">
     </video>
     <div class="hero__immersive-scrim"></div>
