@@ -48,3 +48,47 @@
     transition-duration: 0.15s;
   }
 }
+
+/* Posuvník hlasitosti ambientu (vkládá verca-ambient.js vedle #verca-ambient-toggle) */
+.verca-ambient-volume {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.verca-ambient-volume input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: clamp(52px, 14vw, 104px);
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(26, 24, 22, 0.12);
+  cursor: pointer;
+  accent-color: #b86447;
+}
+
+.verca-ambient-volume input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #b86447;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 4px rgba(26, 24, 22, 0.2);
+}
+
+.verca-ambient-volume input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #b86447;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 4px rgba(26, 24, 22, 0.2);
+}
+
+@media (max-width: 480px) {
+  .verca-ambient-volume input[type='range'] {
+    width: clamp(44px, 22vw, 72px);
+  }
+}

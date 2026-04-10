@@ -1,16 +1,17 @@
 /**
- * Sdílená ambientní hudba mezi index.html a kontakt.html:
- * — stav a čas v sessionStorage (při přechodu stránka neskáče od začátku)
- * — na kontaktu (a zpět na úvod) automatické pokračování, pokud bylo zapnuto
- * — při zablokování autoplay obnovení při prvním pointerdown/keydown na stránce
+ * Sdílená ambientní hudba napříč stránkami:
+ * — výchozí stav: zapnuto (pokud uživatel nezvolil vypnuto — vercaAmbientOn === '0')
+ * — hlasitost v sessionStorage (vercaAmbientVol, 0–1)
+ * — čas a stav při přechodu stránky; před navigací volá page-transition window.vercaPersistAmbient
+ * — při zablokování autoplay obnovení při prvním pointerdown/keydown (kromě kliku na mezistránkový odkaz)
  */
 (function (global) {
   'use strict';
 
   var KEY_ON = 'vercaAmbientOn';
   var KEY_TIME = 'vercaAmbientTime';
-  /** Nastaví verca-page-transition.js před navigací — na cílové stránce neautoplay. */
-  var KEY_SKIP_RESUME = 'vercaAmbientSkipResume';
+  var KEY_VOLUME = 'vercaAmbientVol';
+  var DEFAULT_VOLUME = 0.38;
   var THROTTLE_MS = 700;
   var lastSave = 0;
   var interactFallbackAttached = false;
@@ -21,10 +22,28 @@
     } catch (e) {}
   }
 
+  function safeGet(key) {
+    try {
+      return sessionStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  }
+
   function persistFromAudio(audio) {
     if (!audio) return;
     safeSet(KEY_ON, audio.paused ? '0' : '1');
     safeSet(KEY_TIME, String(audio.paused ? audio.currentTime || 0 : audio.currentTime || 0));
+  }
+
+  function readVolume() {
+    var v = DEFAULT_VOLUME;
+    var s = safeGet(KEY_VOLUME);
+    if (s != null && s !== '') {
+      var n = parseFloat(s);
+      if (!isNaN(n)) v = Math.min(1, Math.max(0, n));
+    }
+    return v;
   }
 
   function removeInteractFallback() {
@@ -34,33 +53,57 @@
     document.removeEventListener('keydown', onFirstInteract, true);
   }
 
+  function injectVolumeControl(btn, audio) {
+    if (document.getElementById('verca-ambient-volume')) return;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'verca-ambient-volume';
+
+    var range = document.createElement('input');
+    range.type = 'range';
+    range.min = '0';
+    range.max = '100';
+    range.step = '1';
+    range.id = 'verca-ambient-volume';
+    range.setAttribute('aria-label', 'Hlasitost hudby v pozadí');
+    range.title = 'Hlasitost';
+    range.value = String(Math.round(readVolume() * 100));
+
+    wrap.appendChild(range);
+    if (btn.parentNode) {
+      btn.parentNode.insertBefore(wrap, btn.nextSibling);
+    }
+
+    function applyVolFromRange() {
+      var vol = parseInt(range.value, 10);
+      if (isNaN(vol)) vol = Math.round(DEFAULT_VOLUME * 100);
+      vol = Math.min(100, Math.max(0, vol)) / 100;
+      audio.volume = vol;
+      safeSet(KEY_VOLUME, String(vol));
+    }
+
+    range.addEventListener('input', applyVolFromRange);
+    range.addEventListener('change', applyVolFromRange);
+    range.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+  }
+
   function initAmbient() {
     var audio = document.getElementById('verca-ambient-audio');
     var btn = document.getElementById('verca-ambient-toggle');
     if (!audio || !btn) return;
 
-    audio.volume = 0.38;
+    var vol = readVolume();
+    audio.volume = vol;
 
-    var shouldPlay = false;
-    try {
-      shouldPlay = sessionStorage.getItem(KEY_ON) === '1';
-    } catch (e) {}
-
-    try {
-      if (sessionStorage.getItem(KEY_SKIP_RESUME) === '1') {
-        shouldPlay = false;
-        sessionStorage.removeItem(KEY_SKIP_RESUME);
-      }
-    } catch (e2) {}
-
-    var savedTime = 0;
-    try {
-      savedTime = parseFloat(sessionStorage.getItem(KEY_TIME) || '0') || 0;
-    } catch (e2) {}
+    var shouldPlay = safeGet(KEY_ON) !== '0';
 
     if (shouldPlay) {
       audio.preload = 'auto';
     }
+
+    injectVolumeControl(btn, audio);
 
     function syncUI() {
       var playing = !audio.paused;
@@ -68,7 +111,7 @@
       btn.classList.toggle('is-playing', playing);
       btn.setAttribute(
         'aria-label',
-        playing ? 'Vypnout hudbu v pozadí' : 'Přehrát jemnou hudbu v pozadí'
+        playing ? 'Vypnout hudbu v pozadí' : 'Zapnout hudbu v pozadí'
       );
     }
 
@@ -88,6 +131,7 @@
 
     function addInteractFallback() {
       if (interactFallbackAttached || !shouldPlay) return;
+      if (safeGet(KEY_ON) === '0') return;
       interactFallbackAttached = true;
       document.addEventListener('pointerdown', onFirstInteract, true);
       document.addEventListener('keydown', onFirstInteract, true);
@@ -97,7 +141,6 @@
       return path.replace(/\/index\.html$/i, '/').replace(/\/$/, '') || '/';
     }
 
-    /** Odkaz, který načte jiný dokument (ne čistá kotva na téže stránce) — nesmí spustit hudbu před klikem na přechod. */
     function isCrossPageNavLink(a) {
       if (!a || a.target === '_blank' || a.hasAttribute('download')) return false;
       var hrefAttr = (a.getAttribute('href') || '').trim();
@@ -130,6 +173,14 @@
     }
 
     function onFirstInteract(e) {
+      if (safeGet(KEY_ON) === '0') {
+        removeInteractFallback();
+        return;
+      }
+      var t = e.target;
+      if (t && t.id === 'verca-ambient-volume') return;
+      if (t && t.closest && t.closest('.verca-ambient-volume')) return;
+
       var link = linkFromTarget(e.target);
       if (link && isCrossPageNavLink(link)) return;
       if (e.type === 'keydown' && document.activeElement) {
@@ -139,6 +190,11 @@
       removeInteractFallback();
       tryPlay();
     }
+
+    var savedTime = 0;
+    try {
+      savedTime = parseFloat(safeGet(KEY_TIME) || '0') || 0;
+    } catch (e2) {}
 
     function applySeek() {
       if (savedTime <= 0) return;
@@ -160,7 +216,6 @@
         applySeek();
         tryPlay();
       }
-      /* Po přechodu ze stránky: počkat na buffer, aby start neškubal */
       if (audio.readyState >= 3) {
         kickoff();
       } else {
@@ -187,6 +242,7 @@
     });
     audio.addEventListener('pause', function () {
       persistFromAudio(audio);
+      removeInteractFallback();
       syncUI();
     });
 
@@ -208,6 +264,8 @@
         audio.pause();
         safeSet(KEY_ON, '0');
       } else {
+        safeSet(KEY_ON, '1');
+        shouldPlay = true;
         tryPlay();
       }
       syncUI();

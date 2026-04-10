@@ -1,7 +1,7 @@
 /**
- * WebGL scroll-sync ocean — adapted from "WebGL Scroll Sync V2" by Luis Alberto Martinez Riancho
- * https://codepen.io/luis-lessrain/pen/bNwBYMM
- * Verca: native scroll, warm sunny palette, animated sun arc, cream vignette, hero fade.
+ * WebGL scroll-sync ocean — raymarched waves + sky (CodePen / Less Rain lineage).
+ * Sun arc: scroll-driven day→night via uS (see sunProgress = uS / 0.58 in fragment shader).
+ * Verca: warm palette, native scroll (no wheel capture), cream uBg vignette, late page fade-out.
  */
 (function () {
   'use strict';
@@ -122,12 +122,12 @@
     '    vec3(0.98, 0.88, 0.68), vec3(0.75, 0.86, 0.98),',
     '    vec3(0.92, 0.62, 0.38), vec3(0.18, 0.24, 0.38), vec3(0.42, 0.52, 0.62));',
     '',
-    '  // Sun arc: high enough at scroll=0, with time-based breathing',
-    '  float sunBreath = sin(uT * 0.24) * 0.05 + cos(uT * 0.11) * 0.03;',
-    '  float sunProgress = clamp(uS * 1.15 + 0.12 + sunBreath, 0.0, 1.0);',
-    '  float sunAngle = sunProgress * PI * 0.88 + 0.18;',
-    '  float sunArcX = cos(sunAngle) * -0.58;',
-    '  float sunArcY = sin(sunAngle) * 0.52 + 0.05;',
+    '  // Sun arc — scroll-driven day→night (Less Rain–style uS / 0.58) + jemný dech času',
+    '  float sunBreath = sin(uT * 0.18) * 0.02;',
+    '  float sunProgress = clamp(uS / 0.58 + sunBreath, 0.0, 1.0);',
+    '  float sunAngle = sunProgress * PI;',
+    '  float sunArcX = cos(sunAngle) * -0.75;',
+    '  float sunArcY = sin(sunAngle) * 0.38 - 0.08;',
     '  vec3 sunDir = normalize(vec3(sunArcX, sunArcY, -1.0));',
     '  vec3 moonDir = normalize(vec3(-0.14, 0.42, -1.0));',
     '',
@@ -309,7 +309,6 @@
   var maxScroll = 1;
   var tgt = 0;
   var smooth = 0;
-
   var qualityScale = 1;
   var MAX_DPR = 1.5;
   var MIN_QUALITY = 0.82;
@@ -351,14 +350,17 @@
     window.visualViewport.addEventListener('resize', requestResize, { passive: true });
   }
 
+  /** Oceán viditelný skoro po celou délku stránky; stmavání až v závěru scrollu (plynulý den→noc podle uS). */
   function updateOceanOpacity() {
-    var vh = window.innerHeight || 1;
-    var y = window.scrollY;
-    var fade0 = vh * 0.15;
-    var fade1 = vh * 1.35;
-    var t = (y - fade0) / (fade1 - fade0);
-    var op = 1 - Math.max(0, Math.min(1, t));
-    canvas.style.opacity = String(op);
+    var ms = maxScroll;
+    var p = ms > 0 ? window.scrollY / ms : 0;
+    if (p <= 0.7) {
+      canvas.style.opacity = '1';
+    } else if (p >= 0.92) {
+      canvas.style.opacity = '0';
+    } else {
+      canvas.style.opacity = String(1 - (p - 0.7) / 0.22);
+    }
   }
 
   window.addEventListener('scroll', function () {
@@ -410,7 +412,7 @@
     lastNow = now;
     maybeAdjustQuality(dt);
 
-    smooth += (tgt - smooth) * (1 - Math.exp(-dt * 11));
+    smooth += (tgt - smooth) * (1 - Math.exp(-dt * 8));
     var raw = smooth * (N - 1);
     var flr = Math.floor(raw);
     var si = Math.min(flr, N - 2);

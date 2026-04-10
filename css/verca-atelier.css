@@ -462,3 +462,18 @@ html.verca-lite .atelier-orb {
 
 .atelier-ambient.is-playing .ambient-off { display: none; }
 .atelier-ambient.is-playing .ambient-on { display: block; }
+
+.atelier-top__end .verca-ambient-volume input[type='range'] {
+  background: rgba(201, 123, 72, 0.15);
+  accent-color: #c97b48;
+}
+
+.atelier-top__end .verca-ambient-volume input[type='range']::-webkit-slider-thumb {
+  background: #e8a050;
+  border-color: rgba(255, 252, 248, 0.95);
+}
+
+.atelier-top__end .verca-ambient-volume input[type='range']::-moz-range-thumb {
+  background: #e8a050;
+  border-color: rgba(255, 252, 248, 0.95);
+}

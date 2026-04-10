@@ -297,8 +297,25 @@ h1 em {
 
 .top-bar__end {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: clamp(8px, 2vw, 14px);
+}
+
+.top-bar__end .verca-ambient-volume input[type='range'] {
+  background: rgba(246, 241, 232, 0.14);
+  accent-color: #d4886a;
+}
+
+.top-bar__end .verca-ambient-volume input[type='range']::-webkit-slider-thumb {
+  background: #e8c4b5;
+  border-color: rgba(36, 30, 24, 0.35);
+}
+
+.top-bar__end .verca-ambient-volume input[type='range']::-moz-range-thumb {
+  background: #e8c4b5;
+  border-color: rgba(36, 30, 24, 0.35);
 }
 .ambient-toggle {
   display: inline-flex;

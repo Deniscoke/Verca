@@ -6,8 +6,6 @@
 
   var STORAGE = 'verca-t';
   var THEME_KEY = 'verca-t-theme';
-  /** Po přechodu neobnovovat autoplay ambientu (viz verca-ambient.js). */
-  var AMBIENT_SKIP_RESUME = 'vercaAmbientSkipResume';
   var DURATION_MS = 580;
   var reduceMotion = false;
 
@@ -112,9 +110,11 @@
 
         window.setTimeout(function () {
           try {
+            if (typeof window.vercaPersistAmbient === 'function') {
+              window.vercaPersistAmbient();
+            }
             window.sessionStorage.setItem(STORAGE, '1');
             window.sessionStorage.setItem(THEME_KEY, theme);
-            window.sessionStorage.setItem(AMBIENT_SKIP_RESUME, '1');
           } catch (err) {}
           window.location.href = dest;
         }, ms);
