@@ -76,6 +76,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 }
 
 html { scroll-behavior: smooth; }
+/* GSAP ScrollTo wheel smoothing — native smooth-scroll would stack awkwardly */
+html.verca-juxt-wheel { scroll-behavior: auto; }
 
 body {
   color: var(--text);
@@ -2561,6 +2563,8 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" defer></script>
+<script src="js/verca-ui-scroll-effects.js" defer></script>
 <script>
 (function () {
   'use strict';
@@ -2672,80 +2676,27 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
     }, { passive: true });
   }
 
-  /* ── SCROLL REVEALS ── */
+  /* ── SCROLL REVEALS + hero scrub (Juxtopposed-style pack — js/verca-ui-scroll-effects.js) ── */
   function initReveals() {
-    if (typeof ScrollTrigger === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    if (reduceMotion) return;
-
-    gsap.utils.toArray('.js-reveal').forEach(function (el) {
-      gsap.fromTo(el, { autoAlpha: 0, y: 32 }, {
-        autoAlpha: 1, y: 0, duration: DUR, ease: EASE,
-        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
-      });
+    if (typeof vercaJuxtInitReveals !== 'function') return;
+    vercaJuxtInitReveals({
+      gsap: typeof gsap !== 'undefined' ? gsap : null,
+      ScrollTrigger: typeof ScrollTrigger !== 'undefined' ? ScrollTrigger : null,
+      reduceMotion: reduceMotion,
+      EASE: EASE,
+      DUR: DUR,
+      STAG: STAG
     });
+  }
 
-    ['.prostory__grid', '.services__cards', '.testimonials__grid'].forEach(function (sel) {
-      document.querySelectorAll(sel).forEach(function (parent) {
-        var items = parent.querySelectorAll('.js-reveal-stagger');
-        if (!items.length) return;
-        gsap.fromTo(items, { autoAlpha: 0, y: 36 }, {
-          autoAlpha: 1, y: 0, duration: DUR, stagger: STAG, ease: EASE,
-          scrollTrigger: { trigger: parent, start: 'top 84%', toggleActions: 'play none none none' }
-        });
-      });
+  /* ── Juxtopposed-style wheel → GSAP ScrollTo (third-party asset adapted) ── */
+  function initJuxtSmoothWheel() {
+    if (typeof vercaJuxtSmoothWheel !== 'function') return;
+    vercaJuxtSmoothWheel({
+      gsap: typeof gsap !== 'undefined' ? gsap : null,
+      reduceMotion: reduceMotion,
+      isTouch: isTouch
     });
-
-    gsap.utils.toArray('.js-reveal-exp').forEach(function (el) {
-      gsap.fromTo(el, { autoAlpha: 0, y: 24 }, {
-        autoAlpha: 1, y: 0, duration: 0.95, ease: EASE,
-        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
-      });
-    });
-
-    document.querySelectorAll('.js-timeline-step').forEach(function (step) {
-      var parts = step.querySelectorAll('.step__num, .step__name, .step__body, .step__accent');
-      gsap.fromTo(parts, { autoAlpha: 0, y: 28 }, {
-        autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.1, ease: EASE,
-        scrollTrigger: { trigger: step, start: 'top 80%', toggleActions: 'play none none none' }
-      });
-    });
-
-    var exp = document.getElementById('experience');
-    var railFill = document.getElementById('timelineRailFill');
-    if (exp && railFill) {
-      gsap.fromTo(railFill, { height: '0%' }, {
-        height: '100%', ease: 'none',
-        scrollTrigger: { trigger: exp, start: 'top 60%', end: 'bottom 40%', scrub: 1 }
-      });
-    }
-
-    var trustItems = document.querySelectorAll('.trust__item');
-    if (trustItems.length) {
-      gsap.fromTo(trustItems, { autoAlpha: 0, y: 18 }, {
-        autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.08, ease: EASE,
-        scrollTrigger: { trigger: '.trust', start: 'top 90%', toggleActions: 'play none none none' }
-      });
-    }
-
-    /* Hero video: lehký posun při opouštění úvodu — více prostoru pro horizont (WebGL) */
-    if (!reduceMotion) {
-      var hv = document.querySelector('.hero__video-fullbleed');
-      var home = document.getElementById('home');
-      if (hv && home && !document.documentElement.classList.contains('verca-lite')) {
-        gsap.to(hv, {
-          y: '-5%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: home,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 0.7
-          }
-        });
-      }
-    }
   }
 
   /* Průběh dne v souladu s scrollem stránky (stejná logika jako plynulý cyklus v oceánu) */
@@ -2870,6 +2821,16 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
   /* ── ANCHOR SCROLL ── */
   function initAnchors() {
     var nav = document.getElementById('nav');
+    var useGsapAnchor =
+      document.documentElement.classList.contains('verca-juxt-wheel') &&
+      typeof gsap !== 'undefined' &&
+      typeof ScrollToPlugin !== 'undefined' &&
+      !reduceMotion;
+    if (useGsapAnchor) {
+      try {
+        gsap.registerPlugin(ScrollToPlugin);
+      } catch (err) {}
+    }
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         var id = a.getAttribute('href');
@@ -2878,10 +2839,18 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
         if (!target) return;
         e.preventDefault();
         var offset = (nav ? nav.offsetHeight : 0) + 16;
-        window.scrollTo({
-          top: target.getBoundingClientRect().top + window.scrollY - offset,
-          behavior: reduceMotion ? 'auto' : 'smooth'
-        });
+        if (useGsapAnchor) {
+          gsap.to(window, {
+            duration: 1.05,
+            scrollTo: { y: target, offsetY: offset, autoKill: true },
+            ease: 'power2.inOut'
+          });
+        } else {
+          window.scrollTo({
+            top: target.getBoundingClientRect().top + window.scrollY - offset,
+            behavior: reduceMotion ? 'auto' : 'smooth'
+          });
+        }
       });
     });
   }
@@ -2900,6 +2869,7 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
   function boot() {
     initHeroVideoLoad();
     initNav();
+    initJuxtSmoothWheel();
     initMagnetic();
     initHero();
     initReveals();
