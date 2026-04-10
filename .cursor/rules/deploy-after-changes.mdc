@@ -1,0 +1,12 @@
+---
+description: Po úpravách kódu v tomto repozitári vždy commitni a pushni na origin/main, aby sa nasadenie na Verceli spustilo.
+alwaysApply: true
+---
+
+Po dokončení zmien v projekte VERCA (ak používateľ výslovne nepožiada o opak):
+
+1. `git add -A`
+2. `git commit -m "..."` — krátky zmysluplný popis po anglicky alebo česky
+3. `git push origin main`
+
+Ak nie sú zmeny, push preskoč. Ak commit zlyhá (konflikt, hook), informuj používateľa.
