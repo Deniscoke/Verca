@@ -14,8 +14,8 @@
   --atelier-glass: rgba(255, 255, 255, 0.62);
   --atelier-glass-border: rgba(232, 165, 75, 0.2);
   --atelier-accent: #c97b48;
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Nunito Sans', system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
