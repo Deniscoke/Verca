@@ -3318,13 +3318,76 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     }
   }
 
+  /* ── Touch trail particles ── */
+  var trails = [];
+  var MAX_TRAILS = 48;
+  var TRAIL_COLS = ['#D4A088', '#C97B5C', '#E8C4B5', '#A8C2AE', '#C4B896', '#d2b378'];
+  var lastTrailTime = 0;
+  var TRAIL_INTERVAL = 28;
+
+  function TrailDot(x, y) {
+    this.x = x + (Math.random() - 0.5) * 10;
+    this.y = y + (Math.random() - 0.5) * 10;
+    this.age = 0;
+    this.life = 32 + Math.random() * 28;
+    this.r = 2.2 + Math.random() * 3.8;
+    this.vx = (Math.random() - 0.5) * 0.6;
+    this.vy = -0.3 - Math.random() * 0.5;
+    this.col = TRAIL_COLS[Math.floor(Math.random() * TRAIL_COLS.length)];
+    this.glow = Math.random() < 0.3;
+  }
+
+  TrailDot.prototype.draw = function () {
+    this.age++;
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy *= 0.97;
+    this.vx *= 0.96;
+    var p = this.age / this.life;
+    var alpha = p < 0.15 ? p / 0.15 : 1 - (p - 0.15) / 0.85;
+    alpha = Math.max(0, alpha) * 0.65;
+    if (alpha < 0.01) return;
+    var r = this.r * (1 - p * 0.4);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    if (this.glow) {
+      ctx.shadowColor = this.col;
+      ctx.shadowBlur = r * 3;
+    }
+    ctx.fillStyle = this.col;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
+
+  TrailDot.prototype.isDead = function () {
+    return this.age >= this.life;
+  };
+
+  function spawnTrail(x, y) {
+    var now = performance.now();
+    if (now - lastTrailTime < TRAIL_INTERVAL) return;
+    lastTrailTime = now;
+    while (trails.length >= MAX_TRAILS) trails.shift();
+    var count = 2 + Math.floor(Math.random() * 2);
+    for (var i = 0; i < count; i++) {
+      trails.push(new TrailDot(x, y));
+    }
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+
   function tick() {
     ctx.clearRect(0, 0, W, H);
-    for (var i = flowers.length - 1; i >= 0; i--) {
-      flowers[i].draw();
-      if (flowers[i].isDead()) flowers.splice(i, 1);
+    for (var i = trails.length - 1; i >= 0; i--) {
+      trails[i].draw();
+      if (trails[i].isDead()) trails.splice(i, 1);
     }
-    rafId = flowers.length ? requestAnimationFrame(tick) : null;
+    for (var j = flowers.length - 1; j >= 0; j--) {
+      flowers[j].draw();
+      if (flowers[j].isDead()) flowers.splice(j, 1);
+    }
+    rafId = (flowers.length || trails.length) ? requestAnimationFrame(tick) : null;
   }
 
   resize();
@@ -3340,6 +3403,12 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     var t = e.changedTouches[0];
     ignoreClickUntil = Date.now() + 450;
     spawnAt(t.clientX, t.clientY, e.target);
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function (e) {
+    if (!e.touches.length) return;
+    var t = e.touches[0];
+    spawnTrail(t.clientX, t.clientY);
   }, { passive: true });
 })();
 </script>
