@@ -443,6 +443,32 @@ html.verca-lite .atelier-orb {
   color: var(--atelier-muted);
 }
 
+.atelier-foot__legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.atelier-foot__legal a {
+  color: rgba(201, 123, 72, 0.78);
+  text-decoration: none;
+}
+
+.atelier-foot__legal a:hover {
+  text-decoration: underline;
+}
+
+.atelier-foot__sep {
+  color: rgba(138, 132, 124, 0.45);
+  user-select: none;
+}
+
 .atelier-ambient {
   display: inline-flex;
   align-items: center;

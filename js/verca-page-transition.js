@@ -17,6 +17,12 @@
     var p = (pathname || '').toLowerCase();
     if (p.indexOf('bylinny-atelier') !== -1) return 'atelier';
     if (/kontakt|esence|tajemstvi|alchymie/.test(p)) return 'room';
+    if (
+      /obchodni-podminky|ochrana-osobnich-udaju|cookies\.html|reklamace-a-vraceni|odstoupeni-od-smlouvy|podminky-vernostniho-programu/.test(
+        p
+      )
+    )
+      return 'legal';
     return 'default';
   }
 

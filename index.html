@@ -1942,6 +1942,28 @@ section.experience .experience__kicker::after {
   letter-spacing: 0.1em;
   color: rgba(246, 241, 232, 0.22);
 }
+.footer__legal {
+  width: 100%;
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(246, 241, 232, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.1rem;
+  justify-content: center;
+  align-items: center;
+}
+.footer__legal a {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(246, 241, 232, 0.28);
+  transition: color 0.3s;
+}
+@media (hover: hover) {
+  .footer__legal a:hover { color: rgba(245, 243, 239, 0.85); }
+}
 
 /* ═══ Průhledné UI — moře a zapadající slunce prosvítají (kromě úsporného / reduce-motion režimu) ═══ */
 html:not(.verca-savedata):not(.reduce-motion) body {
@@ -2759,6 +2781,14 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
       </nav>
       <span class="footer__copy">© 2026 Verca</span>
     </div>
+    <nav class="footer__legal" aria-label="Právní informace">
+      <a href="obchodni-podminky.html">Obchodní podmínky</a>
+      <a href="ochrana-osobnich-udaju.html">Ochrana údajů</a>
+      <a href="cookies.html">Cookies</a>
+      <a href="reklamace-a-vraceni.html">Reklamace</a>
+      <a href="odstoupeni-od-smlouvy.html">Odstoupení</a>
+      <a href="podminky-vernostniho-programu.html">Věrnostní program</a>
+    </nav>
   </div>
 </footer>
 </div>

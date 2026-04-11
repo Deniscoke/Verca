@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ochrana osobních údajů — Verca</title>
+<meta name="description" content="Informace o zpracování osobních údajů při nákupu a účtu u Verca — návrh k právnímu přezkumu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap&subset=latin,latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="css/verca-transitions.css">
+<link rel="stylesheet" href="css/verca-legal.css">
+</head>
+<body class="verca-legal-page">
+<script src="js/verca-perf-boot.js"></script>
+<script src="js/verca-page-transition.js"></script>
+
+<a class="verca-legal-skip" href="#main">Přejít k obsahu</a>
+
+<header class="verca-legal-header">
+  <a class="verca-legal-brand" href="index.html">Verca</a>
+  <a class="verca-legal-back" href="index.html">← Zpět na úvod</a>
+</header>
+
+<main class="verca-legal-wrap" id="main">
+  <article class="verca-legal-doc">
+    <div class="verca-legal-banner" role="note">
+      <strong>Návrh k právnímu přezkumu</strong>
+      Tento dokument má strukturu vhodnou pro GDPR a české právo; musí být doplněn o skutečné údaje správce, účely, kategorie příjemců a doby uchování. Nejedná se o prohlášení o „plné shodě“ bez individuálního posouzení.
+    </div>
+
+    <h1>Zásady ochrany osobních údajů</h1>
+    <p class="verca-legal-meta">Verze dokumentu: <strong>ZOOU-DRAFT-0.1</strong> · Platnost od: <span class="verca-legal-placeholder">[datum]</span></p>
+
+    <h2>1. Správce</h2>
+    <p>Správce osobních údajů: <span class="verca-legal-placeholder">[název / jméno, sídlo, IČO]</span>. Kontakt pro žádosti subjektů údajů: <a href="mailto:hello@verca.care">hello@verca.care</a> <span class="verca-legal-placeholder">[případně pověřenec pro ochranu osobních údajů]</span>.</p>
+
+    <h2>2. Rozsah těchto zásad</h2>
+    <p>Tyto zásady popisují zpracování osobních údajů v souvislosti s:</p>
+    <ul>
+      <li>návštěvou webu a volbami ohledně cookies (viz <a href="cookies.html">Zásady cookies</a>);</li>
+      <li>objednávkou zboží <strong>včetně nákupu bez účtu (host checkout)</strong>;</li>
+      <li>volitelným uživatelským účtem a <strong>volitelným přihlášením</strong> (např. přes Google OAuth), pokud bude zprovozněno;</li>
+      <li>platebními transakcemi prostřednictvím platebního poskytovatele (např. Stripe);</li>
+      <li>věrnostním programem, pokud bude nabízen — viz samostatné <a href="podminky-vernostniho-programu.html">podmínky programu</a>;</li>
+      <li><strong>samostatným souhlasem</strong> s obchodními sděleními (newsletter / marketing), pokud jej nabízíte.</li>
+    </ul>
+
+    <h2>3. Oddělení „e-shop“ a citlivějšího kontextu péče</h2>
+    <p>Provozovatel může nabízet i služby s osobním nebo zdravotním kontextem (např. terapeutické nebo vzdělávací aktivity). <strong>Údaje nutné k provedení běžné objednávky zboží</strong> (doručovací údaje, e-mail, historie plateb u konkrétní objednávky) <strong>neslouží</strong> jako místo pro ukládání zdravotních poznámek, diagnóz ani intimních terapeutických detailů.</p>
+    <p>Pokud bude zpracování zvláštních kategorií osobních údajů podle čl. 9 GDPR relevantní, vyžaduje se <strong>zvlášť definovaný účel, právní základ a dokumentace</strong> — toto musí doplnit advokát. Tyto zásady se primárně vztahují na běžný provoz e-commerce a účtu.</p>
+
+    <h2>4. Kategorie osobních údajů</h2>
+    <p>Typicky: identifikační a kontaktní údaje, doručovací a fakturační údaje, údaje o objednávkách a platbách, technické údaje (logy, IP v omezeném rozsahu), údaje o účtu a přihlášení, záznamy o souhlasu a jeho verzi (<span class="verca-legal-placeholder">sladění s databázovým polem <code>consent_type</code> / <code>version</code></span>).</p>
+
+    <h2>5. Právní základy zpracování (GDPR)</h2>
+    <ul>
+      <li><strong>Plnění smlouvy</strong> — vyřízení objednávky, doručení, reklamace.</li>
+      <li><strong>Oprávněný zájem</strong> — např. bezpečnost, zjednodušení sporů, omezené logování; vždy s testem proporcionality (doplní advokát).</li>
+      <li><strong>Právní povinnost</strong> — např. účetní a daňové doklady.</li>
+      <li><strong>Souhlas</strong> — marketingové komunikace a nepovinné analytické cookies; souhlas lze kdykoli odvolat. <strong>Souhlas s marketingem není podmínkou nákupu ani založení účtu.</strong></li>
+    </ul>
+
+    <h2>6. Příjemci a zpracovatelé</h2>
+    <p>Osobní údaje mohou být předány zpracovatelům podle pokynů správce, například:</p>
+    <ul>
+      <li>poskytovateli platebních služeb <span class="verca-legal-placeholder">[např. Stripe Payments Europe Ltd. — doplnit aktuální subjekty a odkazy na jejich zásady]</span>;</li>
+      <li>poskytovateli hostingu / infrastruktury <span class="verca-legal-placeholder">[např. Vercel Inc.]</span>;</li>
+      <li>poskytovateli e-mailové komunikace <span class="verca-legal-placeholder">[doplnit]</span>;</li>
+      <li>dopravcům <span class="verca-legal-placeholder">[doplnit]</span>.</li>
+    </ul>
+    <p>Seznam zpracovatelů a účelů udržujte aktuální; tato sekce je místem pro verzi dokumentu po každé změně dodavatele.</p>
+
+    <h2>7. Předání do třetích zemí</h2>
+    <p>Pokud zpracovatel zpracovává údaje mimo EHP, uveďte právní základ předání (např. rozhodnutí o odpovídající úrovni ochrany, standardní smluvní doložky) — doplní advokát podle skutečných smluv.</p>
+
+    <h2>8. Doba uchovávání</h2>
+    <p>Objednávky a účetní doklady po dobu stanovenou zákonem. Údaje účtu do zrušení účtu nebo nečinnosti podle pravidel <span class="verca-legal-placeholder">[doplnit lhůty]</span>. Marketingové údaje do odvolání souhlasu a případně krátce pro prokázání souhlasu. Logy bezpečnostní — <span class="verca-legal-placeholder">[doplnit]</span>.</p>
+
+    <h2>9. Práva subjektů údajů</h2>
+    <p>Máte právo na přístup, opravu, výmaz (v mezích zákona), omezení zpracování, přenositelnost (kde aplikovatelné), námitku vůči zpracování z oprávněného zájmu a právo podat stížnost u Úřadu pro ochranu osobních údajů (<a href="https://www.uoou.cz/" rel="noopener noreferrer">uoou.cz</a>).</p>
+
+    <h2>10. Profilování a automatizované rozhodování</h2>
+    <p><span class="verca-legal-placeholder">[Uveďte, zda provádíte profilování s právními účinky — jinak: neprovádíme, pokud je to pravda.]</span></p>
+
+    <h2>11. Zabezpečení</h2>
+    <p>Provozovatel uplatňuje vhodná technická a organizační opatření (šifrování v přenosu, omezení přístupů, tajné klíče mimo klientský kód). Podrobnosti neuvádíme veřejně tak, aby neoslabily bezpečnost.</p>
+
+    <div class="verca-legal-nav-block">
+      <p>Související dokumenty:</p>
+      <nav aria-label="Právní dokumenty">
+        <a href="obchodni-podminky.html">Obchodní podmínky</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="reklamace-a-vraceni.html">Reklamace a vrácení</a>
+        <a href="odstoupeni-od-smlouvy.html">Odstoupení od smlouvy</a>
+        <a href="podminky-vernostniho-programu.html">Věrnostní program</a>
+      </nav>
+    </div>
+  </article>
+</main>
+</body>
+</html>

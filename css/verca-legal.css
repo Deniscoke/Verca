@@ -1,0 +1,207 @@
+/**
+ * Verca — sdílené styly pro právní / compliance stránky (statický web).
+ */
+:root {
+  --legal-cream: #f5f3ef;
+  --legal-text: #2a2622;
+  --legal-muted: #6b6560;
+  --legal-terracotta: #b86447;
+  --legal-line: rgba(26, 24, 22, 0.1);
+  --legal-font-display: "Cormorant Garamond", Georgia, serif;
+  --legal-font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body.verca-legal-page {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--legal-font-body);
+  font-size: clamp(15px, 1.05vw, 16.5px);
+  line-height: 1.75;
+  color: var(--legal-text);
+  background: var(--legal-cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+.verca-legal-skip {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.verca-legal-skip:focus {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 10px 16px;
+  clip: auto;
+  z-index: 9999;
+  background: var(--legal-terracotta);
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.verca-legal-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: clamp(14px, 3vw, 20px) clamp(20px, 4vw, 48px);
+  background: rgba(245, 243, 239, 0.92);
+  border-bottom: 1px solid var(--legal-line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.verca-legal-brand {
+  font-family: var(--legal-font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--legal-text);
+  text-decoration: none;
+}
+
+.verca-legal-brand:hover {
+  color: var(--legal-terracotta);
+}
+
+.verca-legal-back {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--legal-muted);
+  text-decoration: none;
+}
+
+.verca-legal-back:hover {
+  color: var(--legal-terracotta);
+}
+
+.verca-legal-wrap {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 4vw, 2.75rem) clamp(20px, 4vw, 48px) clamp(3rem, 6vw, 4rem);
+}
+
+.verca-legal-banner {
+  padding: 14px 18px;
+  margin-bottom: 2rem;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--legal-text);
+  background: rgba(184, 100, 71, 0.1);
+  border: 1px solid rgba(184, 100, 71, 0.22);
+  border-radius: 10px;
+}
+
+.verca-legal-banner strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--legal-terracotta);
+}
+
+.verca-legal-doc h1 {
+  margin: 0 0 0.35em;
+  font-family: var(--legal-font-display);
+  font-size: clamp(1.85rem, 4.5vw, 2.35rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--legal-text);
+}
+
+.verca-legal-meta {
+  margin: 0 0 2rem;
+  font-size: 12px;
+  color: var(--legal-muted);
+}
+
+.verca-legal-doc h2 {
+  margin: 2.25rem 0 0.65rem;
+  font-family: var(--legal-font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--legal-text);
+}
+
+.verca-legal-doc h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--legal-text);
+}
+
+.verca-legal-doc p,
+.verca-legal-doc li {
+  margin: 0 0 0.85em;
+  color: var(--legal-text);
+}
+
+.verca-legal-doc ul,
+.verca-legal-doc ol {
+  margin: 0 0 1em;
+  padding-left: 1.35em;
+}
+
+.verca-legal-doc a {
+  color: var(--legal-terracotta);
+  text-underline-offset: 3px;
+}
+
+.verca-legal-doc a:hover {
+  text-decoration: underline;
+}
+
+.verca-legal-placeholder {
+  padding: 2px 6px;
+  font-size: 0.92em;
+  font-style: italic;
+  background: rgba(42, 38, 34, 0.06);
+  border-radius: 4px;
+}
+
+.verca-legal-nav-block {
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--legal-line);
+  font-size: 13px;
+  color: var(--legal-muted);
+}
+
+.verca-legal-nav-block nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.verca-legal-nav-block a {
+  color: var(--legal-terracotta);
+  text-decoration: none;
+}
+
+.verca-legal-nav-block a:hover {
+  text-decoration: underline;
+}

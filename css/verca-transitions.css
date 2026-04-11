@@ -43,6 +43,14 @@
     linear-gradient(165deg, #1a1510 0%, #241e18 45%, #2a241c 100%);
 }
 
+/* Právní / compliance stránky — stejná rodina jako úvod */
+#verca-transition.verca-transition--legal {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 0%, rgba(201, 123, 92, 0.16) 0%, transparent 52%),
+    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(245, 243, 239, 0.95) 0%, transparent 50%),
+    linear-gradient(168deg, #f8f6f2 0%, #ebe8e1 48%, #e5e0d8 100%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   #verca-transition {
     transition-duration: 0.15s;
