@@ -10,10 +10,12 @@
     return;
   }
 
-  if (document.documentElement.classList.contains('verca-lite')) {
+  if (document.documentElement.classList.contains('verca-savedata')) {
     document.body.classList.add('no-webgl');
     return;
   }
+
+  var isLite = document.documentElement.classList.contains('verca-lite');
 
   var canvas = document.getElementById('glcanvas');
   var errEl = document.getElementById('err');
@@ -28,12 +30,20 @@
     return;
   }
 
+  var maxDPR = isLite ? 1.0 : (window.devicePixelRatio || 1);
+  var lastW = 0;
+
   function resize() {
-    var d = window.devicePixelRatio || 1;
-    canvas.width = Math.floor(window.innerWidth * d);
-    canvas.height = Math.floor(window.innerHeight * d);
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    if (isLite && lastW === w && canvas.width > 0) return;
+    lastW = w;
+    var d = Math.min(window.devicePixelRatio || 1, maxDPR);
+    var scale = isLite ? 0.65 : 1;
+    canvas.width = Math.floor(w * d * scale);
+    canvas.height = Math.floor(h * d * scale);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
   resize();
@@ -44,8 +54,9 @@
     'void main() { gl_Position = vec4(pos, 0.0, 1.0); }'
   ].join('\n');
 
+  var loopCount = isLite ? 22 : 42;
   var frag = [
-    'precision highp float;',
+    (isLite ? 'precision mediump float;' : 'precision highp float;'),
     'uniform vec2 u_res;',
     'uniform float u_time;',
     'uniform float u_speed;',
@@ -55,7 +66,7 @@
     '  vec2 r = u_res;',
     '  vec2 p = (FC * 2.0 - r) / r.y;',
     '  vec3 c = vec3(0.0);',
-    '  for (float i = 0.0; i < 42.0; i++) {',
+    '  for (float i = 0.0; i < ' + loopCount.toFixed(1) + '; i++) {',
     '    float a = i / 1.5 + t * 0.5;',
     '    vec2 q = p;',
     '    q.x = q.x + sin(q.y * 19.0 + t * 2.0 + i) *',
