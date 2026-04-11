@@ -429,6 +429,20 @@ html.verca-lite .atelier-orb {
   color: rgba(201, 123, 72, 0.75);
 }
 
+.atelier-foot .attrib {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--atelier-muted);
+}
+
+.atelier-foot__copy {
+  margin: 0.5rem 0 0;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--atelier-muted);
+}
+
 .atelier-ambient {
   display: inline-flex;
   align-items: center;
