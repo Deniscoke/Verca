@@ -2,3 +2,14 @@
 Thumbs.db
 desktop.ini
 *.log
+
+# Secrets and local env (never commit)
+.env
+.env.*
+!.env.example
+
+# Vercel CLI local link state
+.vercel
+
+# Node (added when serverless deps like stripe are installed)
+node_modules/
