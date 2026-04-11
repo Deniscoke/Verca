@@ -157,7 +157,10 @@ html.verca-lite .verca-surface::before {
   opacity: 0.02;
 }
 html.verca-lite .hero__video-fullbleed {
-  display: none !important;
+  opacity: 0.22;
+  filter: saturate(0.85) contrast(1.02);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, rgba(0,0,0,0.5) 60%, transparent 90%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 30%, rgba(0,0,0,0.5) 60%, transparent 90%);
 }
 html.verca-lite .hero__immersive {
   background: linear-gradient(168deg, #ebe4dc 0%, #e0d8ce 50%, #d5ddd5 100%);
@@ -343,6 +346,77 @@ h1, h2, h3, h4 {
     border-color: #A4563C;
     transform: translateY(-1px);
   }
+}
+
+/* ═══ HAMBURGER (mobile) ═══ */
+.nav__hamburger {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--cream-deep);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.nav__hamburger-icon {
+  width: 18px;
+  height: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.nav__hamburger-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.35s var(--ease-organic), opacity 0.25s;
+}
+.nav.is-open .nav__hamburger-icon span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav.is-open .nav__hamburger-icon span:nth-child(2) { opacity: 0; }
+.nav.is-open .nav__hamburger-icon span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.nav__mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 199;
+  background: var(--cream);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vw, 2.5rem);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.35s var(--ease-organic), transform 0.35s var(--ease-organic);
+  pointer-events: none;
+}
+.nav.is-open ~ .nav__mobile-drawer,
+.nav.is-open + .nav__mobile-drawer {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.nav__mobile-drawer a {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--charcoal);
+  letter-spacing: 0.02em;
+  transition: color 0.25s;
+}
+.nav__mobile-drawer a:hover,
+.nav__mobile-drawer a:active { color: var(--terracotta); }
+.nav__mobile-drawer .nav__cta {
+  font-size: 12px !important;
+  padding: 14px 36px !important;
 }
 
 /* ═══ Ambient audio toggle ═══ */
@@ -2035,26 +2109,51 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
 }
 
 @media (max-width: 768px) {
-  .nav__links a:not(.nav__cta) { display: none; }
-  .hero.hero--ocean { --hero-video-opacity: 0.34; }
-  .hero__video-fullbleed {
-    object-position: center 14%;
-  }
+  /* NAV → hamburger */
+  .nav__links a:not(.nav__cta):not(.nav__hamburger) { display: none; }
+  .nav__links .nav__ambient { display: none; }
+  .nav__hamburger { display: flex; }
+
+  /* HERO */
+  .hero.hero--ocean { --hero-video-opacity: 0.28; }
+  .hero__video-fullbleed { object-position: center 14%; }
   .hero__title { font-size: clamp(2.5rem, 11vw, 3.5rem); }
-  .hero { padding-top: clamp(90px, 13vh, 130px); }
-  .footer__inner { flex-direction: column; text-align: center; }
-  .footer__links { justify-content: center; }
+  .hero { padding-top: clamp(90px, 13vh, 130px); padding-bottom: clamp(48px, 8vh, 80px); }
+  .hero__scroll-indicator { display: none; }
+  .hero__daytrack { bottom: clamp(20px, 4vh, 40px); width: min(200px, 70vw); }
   .hero__actions,
   .contact__actions { flex-direction: column; align-items: stretch; }
   .magnetic-wrap { width: 100%; }
   .magnetic-wrap .btn { width: 100%; }
+
+  /* TRUST */
   .trust__item { min-width: 80px; }
   .trust__value { font-size: clamp(1.4rem, 5vw, 1.8rem); }
-  .hero__scroll-indicator { display: none; }
-  .hero__daytrack {
-    bottom: clamp(28px, 5vh, 48px);
-    width: min(200px, 70vw);
+
+  /* PHILOSOPHY */
+  .philosophy__grid { gap: clamp(1.5rem, 4vw, 2.5rem); }
+  .philosophy__quote { font-size: clamp(1.25rem, 4.5vw, 1.75rem); }
+
+  /* PROSTORY */
+  .prostory__grid { grid-template-columns: 1fr; gap: clamp(12px, 3vw, 20px); }
+
+  /* SERVICES */
+  .services__cards { grid-template-columns: 1fr; }
+
+  /* EXPERIENCE */
+  .experience__timeline {
+    padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1rem, 2.5vw, 1.5rem);
+    border-radius: 10px;
   }
+
+  /* PRODUCTS */
+  .products__images { height: clamp(220px, 56vw, 360px); }
+  .product-visual--main { width: 68%; height: 72%; }
+  .product-visual--secondary { width: 50%; height: 48%; }
+
+  /* FOOTER */
+  .footer__inner { flex-direction: column; text-align: center; }
+  .footer__links { justify-content: center; flex-wrap: wrap; }
 }
 
 @media (max-width: 480px) {
@@ -2062,6 +2161,21 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
   .service-card__thumb { margin: -1.35rem -1.35rem 1rem; }
   .btn { padding: 14px 28px; font-size: 10.5px; }
   .nav__cta { padding: 9px 18px !important; font-size: 9.5px !important; }
+
+  .hero__title { font-size: clamp(2.2rem, 12vw, 3rem); }
+  .hero__sub { font-size: 14px; }
+  .prostory-card { padding: clamp(1rem, 2vw, 1.35rem); }
+  .prostory-card__title { font-size: clamp(1.15rem, 4vw, 1.45rem); }
+  .experience__timeline { padding: 1rem 0.85rem; }
+  .step__num { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .step__name { font-size: clamp(1.1rem, 4vw, 1.4rem); }
+  .step__body { font-size: 13.5px; }
+  .testimonial { padding: 1.25rem; }
+  .testimonial__body { font-size: 0.92rem; }
+  .products__title { font-size: clamp(1.75rem, 6vw, 2.25rem); }
+  .about__name { font-size: clamp(1.75rem, 6vw, 2.25rem); }
+  .faq__title { font-size: clamp(1.75rem, 6vw, 2.25rem); }
+  .contact__title { font-size: clamp(1.75rem, 6vw, 2.25rem); }
 }
 
 </style>
@@ -2091,8 +2205,19 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
       <svg class="nav__ambient-icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
     </button>
     <a href="kontakt.html" class="nav__cta js-to-kontakt">Rezervovat</a>
+    <button type="button" class="nav__hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false">
+      <span class="nav__hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
   </div>
 </nav>
+<div class="nav__mobile-drawer" id="navDrawer">
+  <a href="#services" data-mobile-nav>Služby</a>
+  <a href="#about" data-mobile-nav>O mně</a>
+  <a href="#prostory" data-mobile-nav>Prostory</a>
+  <a href="#products" data-mobile-nav>Produkty</a>
+  <a href="#faq" data-mobile-nav>FAQ</a>
+  <a href="kontakt.html" class="nav__cta js-to-kontakt">Rezervovat</a>
+</div>
 
 <section class="hero hero--ocean" id="home" aria-label="Úvod">
   <div class="hero__immersive" aria-hidden="true">
@@ -2577,7 +2702,7 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
   var DUR = 1.1;
   var STAG = 0.1;
 
-  /* ── NAV: scroll state + active section ── */
+  /* ── NAV: scroll state + active section + hamburger ── */
   function initNav() {
     var nav = document.getElementById('nav');
     if (!nav) return;
@@ -2603,6 +2728,23 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
 
     update();
     window.addEventListener('scroll', update, { passive: true });
+
+    var hamburger = document.getElementById('navHamburger');
+    var drawer = document.getElementById('navDrawer');
+    if (hamburger && drawer) {
+      hamburger.addEventListener('click', function () {
+        var open = nav.classList.toggle('is-open');
+        hamburger.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      drawer.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          nav.classList.remove('is-open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    }
   }
 
   /* ── MAGNETIC (pointer devices only) ── */
@@ -2857,12 +2999,17 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
 
   function initHeroVideoLoad() {
     var v = document.getElementById('heroPortraitVideo');
-    if (!v || document.documentElement.classList.contains('verca-lite')) return;
+    if (!v) return;
     if (reduceMotion) return;
-    v.preload = 'auto';
-    try {
-      v.load();
-    } catch (e) {}
+    var isLite = document.documentElement.classList.contains('verca-lite');
+    if (isLite) {
+      var movSource = v.querySelector('source[type="video/quicktime"]');
+      if (movSource) movSource.remove();
+      v.preload = 'metadata';
+    } else {
+      v.preload = 'auto';
+    }
+    try { v.load(); } catch (e) {}
   }
 
   /* ── BOOT ── */
