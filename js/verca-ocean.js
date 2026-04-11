@@ -318,12 +318,20 @@
   var MAX_QUALITY = isLite ? 0.7 : 1;
   var resizeRAF = 0;
 
+  var lastCssW = 0;
+
   function resize() {
     resizeRAF = 0;
-    var vp = window.visualViewport || { width: window.innerWidth, height: window.innerHeight };
-    var cssW = Math.round(vp.width);
-    var cssH = Math.round(vp.height);
+    var cssW = Math.round(window.innerWidth);
+    var cssH = Math.round(window.innerHeight);
     if (!cssW || !cssH) return;
+
+    if (isLite && lastCssW === cssW && canvas.width > 0) {
+      maxScroll = Math.max(1, document.documentElement.scrollHeight - cssH);
+      tgt = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      return;
+    }
+    lastCssW = cssW;
 
     var dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
     var renderScale = dpr * qualityScale;
@@ -349,9 +357,6 @@
 
   resize();
   window.addEventListener('resize', requestResize, { passive: true });
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', requestResize, { passive: true });
-  }
 
   /** Oceán viditelný skoro po celou délku stránky; stmavání až v závěru scrollu (plynulý den→noc podle uS). */
   function updateOceanOpacity() {
@@ -379,31 +384,37 @@
   var lowFpsTime = 0;
   var highFpsTime = 0;
 
+  var FPS_SAMPLE = isLite ? 1.2 : 0.75;
+  var LOW_THRESH = isLite ? 35 : 50;
+  var HIGH_THRESH = isLite ? 50 : 57;
+  var STEP_DOWN = isLite ? 0.1 : 0.06;
+  var STEP_UP = isLite ? 0.05 : 0.04;
+
   function maybeAdjustQuality(dt) {
     fpsAccum += dt;
     fpsFrames++;
-    if (fpsAccum < 0.75) return;
+    if (fpsAccum < FPS_SAMPLE) return;
     var avgDt = fpsAccum / fpsFrames;
     var fps = 1 / avgDt;
     fpsAccum = 0;
     fpsFrames = 0;
-    if (fps < 50) {
-      lowFpsTime += 0.75;
+    if (fps < LOW_THRESH) {
+      lowFpsTime += FPS_SAMPLE;
       highFpsTime = 0;
-    } else if (fps > 57) {
-      highFpsTime += 0.75;
+    } else if (fps > HIGH_THRESH) {
+      highFpsTime += FPS_SAMPLE;
       lowFpsTime = 0;
     } else {
       lowFpsTime = 0;
       highFpsTime = 0;
     }
     if (lowFpsTime >= 1.5 && qualityScale > MIN_QUALITY) {
-      qualityScale = Math.max(MIN_QUALITY, +(qualityScale - 0.06).toFixed(2));
+      qualityScale = Math.max(MIN_QUALITY, +(qualityScale - STEP_DOWN).toFixed(2));
       lowFpsTime = 0;
       requestResize();
     }
-    if (highFpsTime >= 3 && qualityScale < MAX_QUALITY) {
-      qualityScale = Math.min(MAX_QUALITY, +(qualityScale + 0.04).toFixed(2));
+    if (highFpsTime >= 4 && qualityScale < MAX_QUALITY) {
+      qualityScale = Math.min(MAX_QUALITY, +(qualityScale + STEP_UP).toFixed(2));
       highFpsTime = 0;
       requestResize();
     }

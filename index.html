@@ -117,6 +117,13 @@ body::after { display: none; }
   pointer-events: none;
   z-index: 0;
   transition: opacity 0.45s var(--ease-organic);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: contents;
+}
+html.verca-lite #verca-ocean-canvas {
+  will-change: auto;
+  transition: opacity 0.2s linear;
 }
 
 /* Nad mořem: veškerý obsah kromě pláten + posvátná geometrie (vodoznak) */
@@ -2088,6 +2095,47 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
   background: rgba(26, 24, 22, 0.78);
   backdrop-filter: blur(20px) saturate(105%);
   -webkit-backdrop-filter: blur(20px) saturate(105%);
+}
+
+/* ═══ MOBILE GLASS PERF — lower blur to prevent scroll jank on touch devices ═══ */
+@media (max-width: 768px) {
+  html:not(.verca-savedata):not(.reduce-motion) .nav {
+    backdrop-filter: blur(12px) saturate(115%);
+    -webkit-backdrop-filter: blur(12px) saturate(115%);
+  }
+  html:not(.verca-savedata):not(.reduce-motion) .trust,
+  html:not(.verca-savedata):not(.reduce-motion) .philosophy,
+  html:not(.verca-savedata):not(.reduce-motion) .services,
+  html:not(.verca-savedata):not(.reduce-motion) .testimonials,
+  html:not(.verca-savedata):not(.reduce-motion) .products,
+  html:not(.verca-savedata):not(.reduce-motion) .about,
+  html:not(.verca-savedata):not(.reduce-motion) .faq,
+  html:not(.verca-savedata):not(.reduce-motion) .contact {
+    backdrop-filter: blur(8px) saturate(110%);
+    -webkit-backdrop-filter: blur(8px) saturate(110%);
+  }
+  html:not(.verca-savedata):not(.reduce-motion) .prostory {
+    backdrop-filter: blur(8px) saturate(110%);
+    -webkit-backdrop-filter: blur(8px) saturate(110%);
+  }
+  html:not(.verca-savedata):not(.reduce-motion) section.experience {
+    backdrop-filter: blur(6px) saturate(105%);
+    -webkit-backdrop-filter: blur(6px) saturate(105%);
+  }
+  html:not(.verca-savedata):not(.reduce-motion) .service-card,
+  html:not(.verca-savedata):not(.reduce-motion) .testimonial,
+  html:not(.verca-savedata):not(.reduce-motion) .prostory-card {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  html:not(.verca-savedata):not(.reduce-motion) .experience__timeline {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  html:not(.verca-savedata):not(.reduce-motion) .footer {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }
 
 /* ═══ RESPONSIVE ═══ */
