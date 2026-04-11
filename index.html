@@ -2443,10 +2443,10 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 <section class="prostory" id="prostory" aria-label="Témata a setkání">
   <div class="container">
     <header class="prostory__header">
-      <span class="label js-reveal">Stejný hlas jako na sítích</span>
+      <span class="label js-reveal">Kde se témata prohloubí</span>
       <h2 class="prostory__title js-reveal">Prostory pro <em>hlubší témata</em></h2>
       <p class="prostory__intro js-reveal">
-        Na Facebooku a ve zprávách mluvím o vůních, bylinkách, pánevním dně a návratu do těla. Tady má každé téma vlastní klidnou stránku — jako kontakt, jen pro obsah, který spolu nejčastěji řešíme.
+        Vůně, bylinky, pánevní dno, návrat do těla — každé téma si zaslouží vlastní klidnou stránku. Tady najdete prostor pro to, co spolu nejčastěji řešíme — v klidu a bez spěchu.
       </p>
     </header>
     <div class="prostory__grid" role="list">
@@ -3394,6 +3394,22 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     return this.age >= this.life;
   };
 
+  /* After-bloom trail: 2s of gentle particles following pointer after click */
+  var afterBloomUntil = 0;
+  var AFTER_BLOOM_MS = 2000;
+  var AFTER_BLOOM_INTERVAL = 55;
+  var lastAfterTime = 0;
+
+  function spawnAfterTrail(x, y) {
+    if (performance.now() > afterBloomUntil) return;
+    var now = performance.now();
+    if (now - lastAfterTime < AFTER_BLOOM_INTERVAL) return;
+    lastAfterTime = now;
+    while (trails.length >= MAX_TRAILS) trails.shift();
+    trails.push(new TrailDot(x, y));
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+
   function spawnTrail(x, y) {
     var now = performance.now();
     if (now - lastTrailTime < TRAIL_INTERVAL) return;
@@ -3425,19 +3441,26 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
   document.addEventListener('click', function (e) {
     if (Date.now() < ignoreClickUntil) return;
     spawnAt(e.clientX, e.clientY, e.target);
+    afterBloomUntil = performance.now() + AFTER_BLOOM_MS;
   }, true);
+
+  document.addEventListener('mousemove', function (e) {
+    spawnAfterTrail(e.clientX, e.clientY);
+  }, { passive: true });
 
   document.addEventListener('touchend', function (e) {
     if (e.changedTouches.length !== 1) return;
     var t = e.changedTouches[0];
     ignoreClickUntil = Date.now() + 450;
     spawnAt(t.clientX, t.clientY, e.target);
+    afterBloomUntil = performance.now() + AFTER_BLOOM_MS;
   }, { passive: true });
 
   document.addEventListener('touchmove', function (e) {
     if (!e.touches.length) return;
     var t = e.touches[0];
     spawnTrail(t.clientX, t.clientY);
+    spawnAfterTrail(t.clientX, t.clientY);
   }, { passive: true });
 })();
 </script>
