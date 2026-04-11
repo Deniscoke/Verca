@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Přihlášení — dokončení — Verca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap&subset=latin,latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="css/verca-transitions.css">
+<link rel="stylesheet" href="css/verca-legal.css">
+<style>
+  .auth-callback-box { max-width: 28rem; margin: 0 auto; padding: 2rem 1.25rem; text-align: center; }
+  .auth-callback-box p { color: var(--legal-muted); margin-bottom: 1rem; }
+  .auth-callback-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 1.5rem; }
+  .auth-callback-actions a {
+    font-family: var(--legal-font-body);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--legal-terracotta);
+    padding: 10px 20px;
+    border: 1px solid rgba(184, 100, 71, 0.35);
+    border-radius: 999px;
+  }
+  .auth-callback-actions a:hover { background: rgba(184, 100, 71, 0.08); }
+</style>
+</head>
+<body class="verca-legal-page">
+<script src="js/verca-perf-boot.js"></script>
+<script src="js/verca-page-transition.js"></script>
+
+<header class="verca-legal-header">
+  <a class="verca-legal-brand" href="index.html">Verca</a>
+  <a class="verca-legal-back" href="bylinny-atelier.html">← Ateliér</a>
+</header>
+
+<main class="verca-legal-wrap">
+  <div class="auth-callback-box">
+    <h1 class="verca-legal-doc" style="margin-top:0;font-size:1.75rem;">Přihlášení</h1>
+    <p id="auth-callback-msg">Zpracováváme přihlášení…</p>
+    <div class="auth-callback-actions">
+      <a href="bylinny-atelier.html">Zpět do ateliéru</a>
+      <a href="index.html">Úvodní stránka</a>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
+
+  const msg = document.getElementById('auth-callback-msg');
+
+  try {
+    const res = await fetch('/api/public-config', { credentials: 'same-origin' });
+    const cfg = await res.json();
+    if (!cfg.configured || !cfg.supabaseUrl || !cfg.supabaseAnonKey) {
+      msg.textContent = 'Chybí konfigurace Supabase. Doplňte PUBLIC_SITE_URL, SUPABASE_URL a SUPABASE_ANON_KEY.';
+      throw new Error('no config');
+    }
+
+    const supabase = createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+      auth: {
+        detectSessionInUrl: true,
+        persistSession: true,
+      },
+    });
+
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) {
+      msg.textContent = 'Přihlášení se nepodařilo: ' + (error.message || 'neznámá chyba');
+    } else if (session) {
+      msg.textContent = 'Jste přihlášeni. Můžete pokračovat do ateliéru — brzy zde přibude účet a objednávky.';
+    } else {
+      msg.textContent = 'Žádná aktivní relace. Zkuste znovu přihlášení z ateliéru.';
+    }
+  } catch (e) {
+    if (msg && !msg.textContent.includes('Chybí')) {
+      msg.textContent = 'Chyba při načtení (spusťte web přes Vercel / vercel dev, ne file://).';
+    }
+  }
+</script>
+</body>
+</html>

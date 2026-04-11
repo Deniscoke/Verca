@@ -40,6 +40,8 @@ Implementation stub: `api/webhooks/stripe.js` (not active until configured).
 
 Stubs: `api/auth/google/callback.js`, `api/account/me.js`.
 
+**`GET /api/public-config`:** Returns only **non-service** values for the static shop UI (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, public redirect URLs). The anon key is for browser use with **RLS**; never return `SUPABASE_SERVICE_ROLE_KEY` or other secrets from this endpoint.
+
 ---
 
 ## 4. Sensitive data separation (shop vs health context)
@@ -97,3 +99,4 @@ When `package.json` is introduced for Stripe SDK or DB clients:
 
 - `.env.example` — variable names only (no real values).
 - `api/` — serverless stubs; no secrets in repo.
+- `api/public-config.js` — public JSON for e-shop UI; keep the allowlist of keys minimal.

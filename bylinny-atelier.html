@@ -58,6 +58,27 @@
     </p>
   </header>
 
+  <section class="atelier-shop-config" data-verca-shop aria-label="Nastavení e-shopu z prostředí serveru">
+    <h2 class="atelier-shop-config__title">E-shop a účet</h2>
+    <p class="atelier-shop-config__lead">
+      Údaje níže se načítají z proměnných prostředí (např. <code>.env</code> lokálně nebo Vercel → Environment Variables) přes <code>/api/public-config</code>.
+      Tajné klíče (service role, Stripe secret) se do prohlížeče neposílají.
+    </p>
+    <p class="atelier-shop-config__status" data-shop-status>Načítám konfiguraci…</p>
+    <div class="atelier-shop-config__actions">
+      <button type="button" class="atelier-btn" data-shop-google-login disabled aria-disabled="true">
+        Přihlásit přes Google
+      </button>
+    </div>
+    <p class="atelier-shop-config__guest" data-shop-guest-note>
+      Nákup bez účtu (host) zůstane možný — přihlášení je volitelné.
+    </p>
+    <p class="atelier-shop-config__env-hint">
+      V <code>.env</code> nastavte mimo jiné: <code>PUBLIC_SITE_URL</code>, <code>SUPABASE_URL</code>, <code>SUPABASE_ANON_KEY</code>;
+      pro Google pak <code>PUBLIC_GOOGLE_LOGIN_ENABLED=true</code> a v Supabase povolenou adresu přesměrování (<code>SUPABASE_AUTH_REDIRECT_URL</code> nebo výchozí <code>…/auth-callback.html</code>).
+    </p>
+  </section>
+
   <div class="atelier-products" role="list">
     <article class="atelier-card" role="listitem">
       <div class="atelier-card__img">
@@ -121,5 +142,6 @@
 -->
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.js"></script>
 <script src="js/verca-atelier-particles.js"></script>
+<script src="js/verca-shop-config.js" defer></script>
 </body>
 </html>
