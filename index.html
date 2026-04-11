@@ -154,9 +154,7 @@ html.verca-savedata .hero__immersive {
 }
 
 /* Lite (mobil) — oceán beží s nižším DPR, bloom vypnutý */
-html.verca-lite #verca-bloom-canvas {
-  display: none !important;
-}
+/* bloom canvas je aktívny aj na lite (touch = tap bloom) */
 html.verca-lite .hero.hero--ocean .hero__content {
   background: none;
   backdrop-filter: none;
@@ -3057,20 +3055,21 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 (function () {
   'use strict';
 
-  if (document.documentElement.classList.contains('verca-lite')) return;
+  if (document.documentElement.classList.contains('verca-savedata')) return;
   if (document.documentElement.classList.contains('reduce-motion')) return;
 
   var canvas = document.getElementById('verca-bloom-canvas');
   if (!canvas || !canvas.getContext) return;
 
   var ctx = canvas.getContext('2d', { alpha: true });
+  var isLite = document.documentElement.classList.contains('verca-lite');
   var W = 0, H = 0;
   var flowers = [];
   var rafId = null;
   var lastSpawn = 0;
   var ignoreClickUntil = 0;
-  var COOLDOWN_MS = 260;
-  var MAX_FLOWERS = 28;
+  var COOLDOWN_MS = isLite ? 400 : 260;
+  var MAX_FLOWERS = isLite ? 14 : 28;
 
   /* Muted Verca-adjacent palettes (original structure: petals / centre / stem) */
   var PALETTES = [
@@ -3091,7 +3090,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
   }
 
   function resize() {
-    var d = Math.min(window.devicePixelRatio || 1, 2);
+    var d = Math.min(window.devicePixelRatio || 1, isLite ? 1.5 : 2);
     W = window.innerWidth;
     H = window.innerHeight;
     canvas.width = Math.floor(W * d);
