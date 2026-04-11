@@ -1,6 +1,8 @@
 /**
- * Spustit hned po <body>: prefers-reduced-motion + verca-lite (mobil / save-data / pomalé sítě).
- * Slouží k úspoře CPU, GPU a dat na telefonech.
+ * Spustit hned po <body>: reduce-motion, verca-lite (mobil), verca-savedata (save-data / 2g).
+ *
+ * verca-lite  = narrow viewport (≤768px) — lighter effects, no bloom, lower ocean DPR
+ * verca-savedata = save-data or slow-2g/2g — no WebGL, no video, minimal visuals
  */
 (function () {
   var html = document.documentElement;
@@ -18,7 +20,11 @@
     try {
       narrow = window.matchMedia('(max-width: 768px)').matches;
     } catch (e2) {}
-    if (narrow || saveData || slowNet) {
+
+    if (saveData || slowNet) {
+      html.classList.add('verca-savedata');
+      html.classList.add('verca-lite');
+    } else if (narrow) {
       html.classList.add('verca-lite');
     }
   } catch (e3) {}

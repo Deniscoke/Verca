@@ -30,15 +30,17 @@
     '}'
   ].join('\n');
 
+  var mobileSteps = isLite ? 14 : 24;
+  var mobileRefine = isLite ? 3 : 6;
   var fsSrc = [
-    'precision highp float;',
+    (isLite ? 'precision mediump float;' : 'precision highp float;'),
     'uniform vec2 uR;',
     'uniform float uT, uS, uSc, uBl;',
     'uniform vec3 uBg;',
     '',
     '#define PI 3.14159265359',
-    '#define MARCH_STEPS 24',
-    '#define REFINE_STEPS 6',
+    '#define MARCH_STEPS ' + mobileSteps,
+    '#define REFINE_STEPS ' + mobileRefine,
     '',
     'vec3 sCol(vec3 c0, vec3 c1, vec3 c2, vec3 c3, vec3 c4) {',
     '  int si = int(uSc);',
@@ -309,10 +311,11 @@
   var maxScroll = 1;
   var tgt = 0;
   var smooth = 0;
-  var qualityScale = 1;
-  var MAX_DPR = 1.5;
-  var MIN_QUALITY = 0.82;
-  var MAX_QUALITY = 1;
+  var isLite = document.documentElement.classList.contains('verca-lite');
+  var qualityScale = isLite ? 0.6 : 1;
+  var MAX_DPR = isLite ? 1.0 : 1.5;
+  var MIN_QUALITY = isLite ? 0.45 : 0.82;
+  var MAX_QUALITY = isLite ? 0.7 : 1;
   var resizeRAF = 0;
 
   function resize() {

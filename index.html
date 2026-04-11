@@ -138,13 +138,24 @@ body::after { display: none; }
 .reduce-motion .verca-surface::before { opacity: 0.02; }
 .reduce-motion #verca-ocean-canvas { display: none; }
 
-/* Úsporný režim: telefon, save-data, pomalá síť (viz js/verca-perf-boot.js) */
-html.verca-lite #verca-ocean-canvas,
-html.verca-lite #verca-bloom-canvas {
+/* Úsporný režim: save-data alebo veľmi pomalá sieť — bez oceánu, bez bloom */
+html.verca-savedata #verca-ocean-canvas,
+html.verca-savedata #verca-bloom-canvas {
   display: none !important;
 }
-html.verca-lite .hero.hero--ocean {
+html.verca-savedata .hero.hero--ocean {
   background: linear-gradient(168deg, #f2ece4 0%, #e8e2d8 42%, #dde5df 100%);
+}
+html.verca-savedata .hero__video-fullbleed {
+  display: none !important;
+}
+html.verca-savedata .hero__immersive {
+  background: linear-gradient(168deg, #ebe4dc 0%, #e0d8ce 50%, #d5ddd5 100%);
+}
+
+/* Lite (mobil) — oceán beží s nižším DPR, bloom vypnutý */
+html.verca-lite #verca-bloom-canvas {
+  display: none !important;
 }
 html.verca-lite .hero.hero--ocean .hero__content {
   background: none;
@@ -1904,40 +1915,40 @@ section.experience .experience__kicker::after {
 }
 
 /* ═══ Průhledné UI — moře a zapadající slunce prosvítají (kromě úsporného / reduce-motion režimu) ═══ */
-html:not(.verca-lite):not(.reduce-motion) body {
+html:not(.verca-savedata):not(.reduce-motion) body {
   background: transparent;
 }
 
-html:not(.verca-lite):not(.reduce-motion) .verca-surface::before {
+html:not(.verca-savedata):not(.reduce-motion) .verca-surface::before {
   opacity: 0.02;
 }
 
-html:not(.verca-lite):not(.reduce-motion) .nav {
+html:not(.verca-savedata):not(.reduce-motion) .nav {
   background: rgba(245, 243, 239, 0.5);
   backdrop-filter: blur(20px) saturate(130%);
   -webkit-backdrop-filter: blur(20px) saturate(130%);
   border-bottom-color: rgba(42, 38, 34, 0.06);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .nav.is-scrolled {
+html:not(.verca-savedata):not(.reduce-motion) .nav.is-scrolled {
   background: rgba(245, 243, 239, 0.68);
   box-shadow: 0 1px 0 rgba(26, 24, 22, 0.04), 0 14px 44px rgba(26, 24, 22, 0.05);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .nav__ambient {
+html:not(.verca-savedata):not(.reduce-motion) .nav__ambient {
   background: rgba(235, 232, 225, 0.42);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .trust {
+html:not(.verca-savedata):not(.reduce-motion) .trust {
   background: rgba(235, 232, 225, 0.42);
   backdrop-filter: blur(16px) saturate(125%);
   -webkit-backdrop-filter: blur(16px) saturate(125%);
   border-bottom-color: rgba(26, 24, 22, 0.05);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .philosophy {
+html:not(.verca-savedata):not(.reduce-motion) .philosophy {
   background:
     linear-gradient(
       180deg,
@@ -1951,7 +1962,7 @@ html:not(.verca-lite):not(.reduce-motion) .philosophy {
   -webkit-backdrop-filter: blur(18px) saturate(122%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .prostory {
+html:not(.verca-savedata):not(.reduce-motion) .prostory {
   background:
     linear-gradient(
       180deg,
@@ -1967,20 +1978,20 @@ html:not(.verca-lite):not(.reduce-motion) .prostory {
   -webkit-backdrop-filter: blur(18px) saturate(122%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .prostory-card {
+html:not(.verca-savedata):not(.reduce-motion) .prostory-card {
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(12px) saturate(115%);
   -webkit-backdrop-filter: blur(12px) saturate(115%);
 }
 
 @media (hover: hover) {
-  html:not(.verca-lite):not(.reduce-motion) .prostory-card:hover,
-  html:not(.verca-lite):not(.reduce-motion) .prostory-card:focus-visible {
+  html:not(.verca-savedata):not(.reduce-motion) .prostory-card:hover,
+  html:not(.verca-savedata):not(.reduce-motion) .prostory-card:focus-visible {
     background: rgba(255, 255, 255, 0.58);
   }
 }
 
-html:not(.verca-lite):not(.reduce-motion) .services {
+html:not(.verca-savedata):not(.reduce-motion) .services {
   background:
     linear-gradient(180deg, transparent 0%, transparent calc(100% - min(140px, 22vw)), rgba(240, 235, 226, 0.35) 100%),
     rgba(245, 243, 239, 0.38);
@@ -1988,19 +1999,19 @@ html:not(.verca-lite):not(.reduce-motion) .services {
   -webkit-backdrop-filter: blur(16px) saturate(125%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .service-card {
+html:not(.verca-savedata):not(.reduce-motion) .service-card {
   background: rgba(255, 255, 255, 0.48);
   backdrop-filter: blur(14px) saturate(120%);
   -webkit-backdrop-filter: blur(14px) saturate(120%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .service-tag {
+html:not(.verca-savedata):not(.reduce-motion) .service-tag {
   background: rgba(235, 232, 225, 0.48);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-html:not(.verca-lite):not(.reduce-motion) section.experience {
+html:not(.verca-savedata):not(.reduce-motion) section.experience {
   background:
     linear-gradient(
       180deg,
@@ -2020,7 +2031,7 @@ html:not(.verca-lite):not(.reduce-motion) section.experience {
   -webkit-backdrop-filter: blur(18px) saturate(122%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .experience__timeline {
+html:not(.verca-savedata):not(.reduce-motion) .experience__timeline {
   background: rgba(255, 255, 255, 0.5);
   border-color: rgba(26, 24, 22, 0.08);
   backdrop-filter: blur(14px) saturate(118%);
@@ -2028,54 +2039,54 @@ html:not(.verca-lite):not(.reduce-motion) .experience__timeline {
   box-shadow: 0 18px 48px rgba(26, 24, 22, 0.06);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .testimonials {
+html:not(.verca-savedata):not(.reduce-motion) .testimonials {
   background: rgba(229, 226, 218, 0.38);
   backdrop-filter: blur(16px) saturate(122%);
   -webkit-backdrop-filter: blur(16px) saturate(122%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .testimonial {
+html:not(.verca-savedata):not(.reduce-motion) .testimonial {
   background: rgba(255, 255, 255, 0.46);
   backdrop-filter: blur(12px) saturate(118%);
   -webkit-backdrop-filter: blur(12px) saturate(118%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .products {
+html:not(.verca-savedata):not(.reduce-motion) .products {
   background: rgba(245, 243, 239, 0.38);
   backdrop-filter: blur(16px) saturate(125%);
   -webkit-backdrop-filter: blur(16px) saturate(125%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .product-visual--secondary {
+html:not(.verca-savedata):not(.reduce-motion) .product-visual--secondary {
   border-color: rgba(245, 243, 239, 0.75);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .badge {
+html:not(.verca-savedata):not(.reduce-motion) .badge {
   background: rgba(235, 232, 225, 0.46);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .about {
+html:not(.verca-savedata):not(.reduce-motion) .about {
   background: rgba(216, 212, 202, 0.42);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .faq {
+html:not(.verca-savedata):not(.reduce-motion) .faq {
   background: rgba(245, 243, 239, 0.36);
   backdrop-filter: blur(16px) saturate(125%);
   -webkit-backdrop-filter: blur(16px) saturate(125%);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .contact {
+html:not(.verca-savedata):not(.reduce-motion) .contact {
   background: rgba(235, 232, 225, 0.44);
   backdrop-filter: blur(18px) saturate(128%);
   -webkit-backdrop-filter: blur(18px) saturate(128%);
   border-top-color: rgba(26, 24, 22, 0.06);
 }
 
-html:not(.verca-lite):not(.reduce-motion) .footer {
+html:not(.verca-savedata):not(.reduce-motion) .footer {
   background: rgba(26, 24, 22, 0.78);
   backdrop-filter: blur(20px) saturate(105%);
   -webkit-backdrop-filter: blur(20px) saturate(105%);
@@ -2679,7 +2690,9 @@ html:not(.verca-lite):not(.reduce-motion) .footer {
 
 <script>
 (function () {
-  if (document.documentElement.classList.contains('verca-lite')) return;
+  var html = document.documentElement;
+  if (html.classList.contains('verca-savedata')) return;
+  if (html.classList.contains('reduce-motion')) return;
   var s = document.createElement('script');
   s.src = 'js/verca-ocean.js';
   s.async = true;
