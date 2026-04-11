@@ -69,6 +69,9 @@
       <button type="button" class="atelier-btn" data-shop-google-login disabled aria-disabled="true">
         Přihlásit přes Google
       </button>
+      <button type="button" class="atelier-btn atelier-btn--ghost" data-shop-stripe-test disabled aria-disabled="true" title="Vyžaduje STRIPE_TEST_PRICE_ID ve veřejné konfiguraci a Stripe klíče na serveru">
+        Test platba (Stripe)
+      </button>
     </div>
     <p class="atelier-shop-config__guest" data-shop-guest-note>
       Nákup bez účtu (host) zůstane možný — přihlášení je volitelné.
@@ -76,6 +79,7 @@
     <p class="atelier-shop-config__env-hint">
       V <code>.env</code> nastavte mimo jiné: <code>PUBLIC_SITE_URL</code>, <code>SUPABASE_URL</code>, <code>SUPABASE_ANON_KEY</code>;
       pro Google pak <code>PUBLIC_GOOGLE_LOGIN_ENABLED=true</code> a v Supabase povolenou adresu přesměrování (<code>SUPABASE_AUTH_REDIRECT_URL</code> nebo výchozí <code>…/auth-callback.html</code>).
+      Pro Stripe: <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET</code>, <code>STRIPE_TEST_PRICE_ID</code> (nebo <code>STRIPE_ALLOWED_PRICE_IDS</code>), webhook URL ve Stripe: <code>/api/webhooks/stripe</code>.
     </p>
   </section>
 

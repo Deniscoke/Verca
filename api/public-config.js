@@ -1,7 +1,7 @@
 /**
  * GET /api/public-config
- * Vrací pouze veřejné hodnoty pro statický e-shop (anon key, URL přesměrování).
- * SERVICE_ROLE_KEY ani jiné tajné klíče sem nepřidávejte.
+ * Veřejné hodnoty pro statický e-shop (anon key, redirect URL, Stripe test price).
+ * SERVICE_ROLE_KEY sem nepřidávejte.
  */
 'use strict';
 
@@ -32,54 +32,66 @@ module.exports = function publicConfig(req, res) {
   var checkoutSuccess = process.env.CHECKOUT_SUCCESS_URL || '';
   var checkoutCancel = process.env.CHECKOUT_CANCEL_URL || '';
 
-  var missing = [];
-  if (!siteUrl) missing.push('PUBLIC_SITE_URL');
-  if (!supabaseUrl) missing.push('SUPABASE_URL');
-  if (!anon) missing.push('SUPABASE_ANON_KEY');
+  var stripeTestPriceId = (process.env.STRIPE_TEST_PRICE_ID || '').trim() || null;
+  var stripePublishableKey = (process.env.STRIPE_PUBLISHABLE_KEY || '').trim() || null;
 
-  if (missing.length) {
-    return http.json(res, 200, {
-      ok: false,
-      configured: false,
-      message:
-        'Chybí proměnné prostředí. Doplňte je v .env (lokálně) nebo ve Vercel → Environment Variables.',
-      missing: missing,
-      urls: {
-        authCallback: authRedirectUrl || null,
-        checkoutSuccess: checkoutSuccess || null,
-        checkoutCancel: checkoutCancel || null,
-      },
-    });
-  }
+  var supabaseMissing = [];
+  if (!siteUrl) supabaseMissing.push('PUBLIC_SITE_URL');
+  if (!supabaseUrl) supabaseMissing.push('SUPABASE_URL');
+  if (!anon) supabaseMissing.push('SUPABASE_ANON_KEY');
+
+  var supabaseConfigured = supabaseMissing.length === 0;
 
   var googleAuthorizeUrl = null;
-  if (googleEnabled && authRedirectUrl) {
+  if (supabaseConfigured && googleEnabled && authRedirectUrl) {
     googleAuthorizeUrl =
       supabaseUrl +
       '/auth/v1/authorize?provider=google&redirect_to=' +
       encodeURIComponent(authRedirectUrl);
   }
 
-  return http.json(res, 200, {
-    ok: true,
-    configured: true,
-    siteUrl: siteUrl,
-    supabaseUrl: supabaseUrl,
-    supabaseAnonKey: anon,
+  var payload = {
+    ok: supabaseConfigured,
+    configured: supabaseConfigured,
+    siteUrl: siteUrl || null,
+    supabaseUrl: supabaseConfigured ? supabaseUrl : null,
+    supabaseAnonKey: supabaseConfigured ? anon : null,
     features: {
       googleLogin: Boolean(googleAuthorizeUrl),
+      stripeTestCheckout: Boolean(stripeTestPriceId),
+    },
+    stripe: {
+      testPriceId: stripeTestPriceId,
+      publishableKey: stripePublishableKey,
     },
     urls: {
       googleAuthorize: googleAuthorizeUrl,
-      authCallback: authRedirectUrl,
+      authCallback: authRedirectUrl || null,
       checkoutSuccess: checkoutSuccess || null,
       checkoutCancel: checkoutCancel || null,
     },
-    hints: {
-      supabaseRedirectAllowList:
-        'V Supabase → Authentication → URL Configuration přidejte přesnou adresu z urls.authCallback do „Redirect URLs“.',
-      googleProvider:
-        'Google provider zapněte v Supabase → Authentication → Providers a vložte Client ID + Secret z Google Cloud Console.',
-    },
-  });
+    hints: {},
+  };
+
+  if (!supabaseConfigured) {
+    payload.message =
+      'Supabase není kompletní — doplňte PUBLIC_SITE_URL, SUPABASE_URL a SUPABASE_ANON_KEY pro přihlášení.';
+    payload.missing = supabaseMissing;
+    payload.hints.supabaseRedirectAllowList =
+      'V Supabase → Authentication → URL Configuration přidejte urls.authCallback do „Redirect URLs“.';
+    payload.hints.googleProvider =
+      'Google provider v Supabase → Authentication → Providers.';
+  } else {
+    payload.hints.supabaseRedirectAllowList =
+      'V Supabase → Authentication → URL Configuration přidejte přesnou adresu z urls.authCallback do „Redirect URLs“.';
+    payload.hints.googleProvider =
+      'Google provider zapněte v Supabase → Authentication → Providers a vložte Client ID + Secret z Google Cloud Console.';
+  }
+
+  if (stripeTestPriceId) {
+    payload.hints.stripe =
+      'Testovací platba: tlačítko na ateliéru odešle price ID jen pokud sedí se STRIPE_TEST_PRICE_ID na serveru. Webhook: /api/webhooks/stripe';
+  }
+
+  return http.json(res, 200, payload);
 };

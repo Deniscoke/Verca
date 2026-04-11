@@ -1,14 +1,14 @@
 /**
- * Future: Stripe webhook — MUST verify signature with raw body + STRIPE_WEBHOOK_SECRET.
- * MUST be idempotent (store stripe event id before mutating orders / loyalty).
- *
- * Vercel + Node: ensure this handler receives the raw body for signature verification
- * (see Stripe and Vercel docs for your runtime; avoid parsing JSON before verify).
+ * POST /api/webhooks/stripe
+ * Ověření podpisu (raw body), checkout.session.completed.
+ * Idempotence: ukládejte event.id do DB (webhook_events) před změnou objednávky — zatím jen log.
  */
 'use strict';
 
 var http = require('../_lib/http');
 var env = require('../_lib/env');
+var readBody = require('../_lib/read-body');
+var getStripe = require('../_lib/stripe-client').getStripe;
 
 module.exports = function stripeWebhook(req, res) {
   http.noStore(res);
@@ -21,20 +21,53 @@ module.exports = function stripeWebhook(req, res) {
   if (!required.ok) {
     return http.json(res, 501, {
       error: 'not_configured',
-      message:
-        'Webhook secret not set. Configure STRIPE_WEBHOOK_SECRET and implement constructEvent + idempotent handlers.',
+      message: 'Nastavte STRIPE_WEBHOOK_SECRET (Signing secret z Stripe → Webhooks).',
       missing_env: required.missing,
     });
   }
 
-  // TODO (Phase 6):
-  // const sig = req.headers['stripe-signature'];
-  // const rawBody = ... // raw bytes/string as required by Stripe SDK
-  // event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
-  // if (alreadyProcessed(event.id)) return res.status(200).end();
-  // handle event.type; persist order/payment state; append loyalty_ledger; commit webhook_events
-  return http.json(res, 501, {
-    error: 'not_implemented',
-    message: 'Webhook handler scaffold only. Implement signature verification and idempotent order updates.',
-  });
+  var stripe = getStripe();
+  if (!stripe) {
+    return http.json(res, 501, { error: 'not_configured', message: 'Chybí STRIPE_SECRET_KEY.' });
+  }
+
+  var sig = req.headers['stripe-signature'];
+  if (!sig || typeof sig !== 'string') {
+    return http.json(res, 400, { error: 'missing_signature' });
+  }
+
+  readBody
+    .readRawBody(req, 1024 * 1024)
+    .then(function (buf) {
+      var event;
+      try {
+        event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET);
+      } catch (err) {
+        console.error('[stripe webhook] signature', err && err.message);
+        return http.json(res, 400, { error: 'invalid_signature' });
+      }
+
+      if (event.type === 'checkout.session.completed') {
+        var sess = event.data && event.data.object;
+        var sid = sess && sess.id;
+        var paid = sess && sess.payment_status === 'paid';
+        console.info('[stripe webhook] checkout.session.completed', {
+          sessionId: sid,
+          payment_status: sess && sess.payment_status,
+          amount_total: sess && sess.amount_total,
+          currency: sess && sess.currency,
+        });
+        if (paid && sid) {
+          // TODO: upsert orders + payments v Supabase (service role), loyalty_ledger, idempotence v DB
+        }
+      }
+
+      return http.json(res, 200, { received: true });
+    })
+    .catch(function (err) {
+      console.error('[stripe webhook]', err && err.message ? err.message : err);
+      if (!res.writableEnded) {
+        return http.json(res, 500, { error: 'webhook_error' });
+      }
+    });
 };

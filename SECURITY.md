@@ -25,7 +25,7 @@ This document supports engineering and **lawyer review** of processes. It is **n
 | **Source of truth** | Final payment and order status come from **webhooks + server-side reconciliation**, not from client query parameters alone after redirect. |
 | **SCA / 3-D Secure** | Use Checkout or Payment Element flows that handle authentication; still confirm outcome via webhook. |
 
-Implementation stub: `api/webhooks/stripe.js` (not active until configured).
+Implementace: `api/checkout/create-session.js` (Checkout Session + allowlist cen z env), `api/webhooks/stripe.js` (ověření podpisu, raw body). Objednávky v DB zatím neukládáme — doplnit po Supabase.
 
 ---
 

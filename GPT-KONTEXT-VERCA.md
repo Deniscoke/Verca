@@ -2,7 +2,7 @@
 
 > **How to use:** Paste this file at the start of a new ChatGPT / Claude / LLM conversation.
 > It is the single source of truth about the project's architecture, files, and conventions.
-> Last updated: 2026-04-11.
+> Last updated: 2026-04-11 (Stripe Checkout + webhook přidány).
 
 ---
 
@@ -17,7 +17,7 @@ palette:     cream → terracotta → forest/sage → wine/charcoal
 deploy:      Vercel (auto-deploy on push to main)
 vercel_url:  https://verca-omega.vercel.app   # site origin; PUBLIC_SITE_URL v .env bez /index.html
 repo:        github.com/Deniscoke/Verca.git
-build:       NONE — static HTML + CSS + JS, no npm, no bundler
+build:       Vercel spustí `npm install` kvůli `stripe` v api/*; žádný bundler frontendu
 ```
 
 ---
@@ -46,7 +46,8 @@ VERCA/
 │   ├── verca-ocean.js                  ← WebGL raymarched ocean (index only, full-mode only)
 │   ├── verca-room-gl.js                ← WebGL room background (contact + sub-pages)
 │   ├── verca-atelier-particles.js      ← atelier particle system
-│   └── verca-ui-scroll-effects.js      ← GSAP ScrollTo wheel smoothing + reveal pack (adapted from Juxtopposed demo)
+│   ├── verca-ui-scroll-effects.js      ← GSAP ScrollTo wheel smoothing + reveal pack (adapted from Juxtopposed demo)
+│   └── verca-shop-config.js            ← /api/public-config + Stripe test tlačítko na ateliéru
 │
 ├── images/                             ← hero video/poster, about portrait, section photos
 │   ├── verca-hero-main.mov             ← primary hero video (QuickTime)
@@ -64,6 +65,14 @@ VERCA/
 │
 ├── scroll-animation-with-grid-motion/  ← older reference demo, NOT linked
 ├── Context/                            ← design reference screenshots (PNG)
+├── package.json                        ← závislost `stripe` pro serverless
+├── package-lock.json
+├── auth-callback.html                  ← návrat OAuth (Supabase)
+├── api/                                ← Vercel Node functions
+│   ├── public-config.js
+│   ├── checkout/create-session.js      ← Stripe Checkout Session
+│   ├── webhooks/stripe.js
+│   └── …
 ├── GPT-KONTEXT-VERCA.md                ← THIS FILE
 ├── script.js                           ← EMPTY, not linked anywhere
 └── style.css                           ← EMPTY, not linked anywhere

@@ -1,0 +1,11 @@
+{
+  "name": "verca",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "stripe": "^17.7.0"
+  }
+}
