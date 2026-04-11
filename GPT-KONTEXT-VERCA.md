@@ -15,6 +15,7 @@ lang:        cs (Czech)
 tone:        calm, warm, nature, trust, "presence"
 palette:     cream → terracotta → forest/sage → wine/charcoal
 deploy:      Vercel (auto-deploy on push to main)
+vercel_url:  https://verca-omega.vercel.app   # site origin; PUBLIC_SITE_URL v .env bez /index.html
 repo:        github.com/Deniscoke/Verca.git
 build:       NONE — static HTML + CSS + JS, no npm, no bundler
 ```
