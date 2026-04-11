@@ -49,7 +49,10 @@
   function removeInteractFallback() {
     if (!interactFallbackAttached) return;
     interactFallbackAttached = false;
+    var b = document.getElementById('verca-ambient-toggle');
+    if (b) b.classList.remove('is-waiting');
     document.removeEventListener('pointerdown', onFirstInteract, true);
+    document.removeEventListener('touchstart', onFirstInteract, true);
     document.removeEventListener('keydown', onFirstInteract, true);
   }
 
@@ -133,7 +136,9 @@
       if (interactFallbackAttached || !shouldPlay) return;
       if (safeGet(KEY_ON) === '0') return;
       interactFallbackAttached = true;
+      if (btn) btn.classList.add('is-waiting');
       document.addEventListener('pointerdown', onFirstInteract, true);
+      document.addEventListener('touchstart', onFirstInteract, true);
       document.addEventListener('keydown', onFirstInteract, true);
     }
 

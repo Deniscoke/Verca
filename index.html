@@ -481,6 +481,13 @@ h1, h2, h3, h4 {
     border-color: var(--terracotta-mid);
   }
 }
+.nav__ambient.is-waiting {
+  animation: ambientPulse 2s ease-in-out infinite;
+}
+@keyframes ambientPulse {
+  0%, 100% { border-color: var(--line); box-shadow: none; }
+  50% { border-color: var(--terracotta-mid); box-shadow: 0 0 12px rgba(184, 100, 71, 0.2); }
+}
 
 .nav__links .verca-ambient-volume input[type='range'] {
   background: rgba(42, 38, 34, 0.1);
@@ -2168,7 +2175,12 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 @media (max-width: 768px) {
   /* NAV → hamburger */
   .nav__links a:not(.nav__cta):not(.nav__hamburger) { display: none; }
-  .nav__links .nav__ambient { display: none; }
+  .nav__links .nav__ambient {
+    width: 34px;
+    height: 34px;
+    order: -1;
+  }
+  .nav__links .nav__ambient svg { width: 17px; height: 17px; }
   .nav__hamburger { display: flex; }
 
   /* HERO */
