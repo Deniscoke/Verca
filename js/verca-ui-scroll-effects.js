@@ -134,8 +134,9 @@
   }
 
   /**
-   * Demo-style inertia: wheel drives GSAP ScrollTo (needs ScrollToPlugin on page).
-   * Skipped for touch, reduce-motion, verca-lite.
+   * High-speed smooth wheel: accumulates rapid flicks into one long glide.
+   * Multiplier + duration scale with velocity so fast scrolling feels fast,
+   * slow scrolling stays precise, and deceleration is always buttery.
    */
   function vercaJuxtSmoothWheel(o) {
     var gsap = o.gsap;
@@ -147,18 +148,39 @@
     gsap.registerPlugin(ScrollToPlugin);
     document.documentElement.classList.add('verca-juxt-wheel');
 
+    var SPEED = 2.8;
+    var BASE_DUR = 0.92;
+    var MAX_DUR = 1.6;
+    var accumulated = 0;
+    var rafPending = false;
+
+    function flush() {
+      rafPending = false;
+      if (accumulated === 0) return;
+      var delta = accumulated;
+      accumulated = 0;
+
+      var absDelta = Math.abs(delta);
+      var dur = Math.min(MAX_DUR, BASE_DUR + absDelta * 0.0004);
+
+      gsap.to(window, {
+        scrollTo: { y: '+=' + delta, autoKill: true },
+        duration: dur,
+        ease: 'power3.out',
+        overwrite: 'auto',
+      });
+    }
+
     window.addEventListener(
       'wheel',
       function (e) {
         if (e.ctrlKey || e.metaKey) return;
         e.preventDefault();
-        var amt = e.deltaY * 1.15;
-        gsap.to(window, {
-          scrollTo: { y: '+=' + amt, autoKill: true },
-          duration: 0.62,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
+        accumulated += e.deltaY * SPEED;
+        if (!rafPending) {
+          rafPending = true;
+          requestAnimationFrame(flush);
+        }
       },
       { passive: false }
     );
