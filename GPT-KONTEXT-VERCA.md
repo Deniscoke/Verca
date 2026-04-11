@@ -203,7 +203,7 @@ All sub-pages (`kontakt.html`, `esence-zeny.html`, `tajemstvi-panevniho-dna.html
 
 1. **No build step.** Edit files directly; push to `main` → Vercel deploys.
 2. **CSS is inline** in index.html `<style>` (~2 000 lines). Sub-pages link external CSS.
-3. **Fonts:** Google Fonts (Fraunces, Nunito Sans, Kalam) with `subset=latin,latin-ext`.
+3. **Fonts:** Google Fonts — Cormorant Garamond, Plus Jakarta Sans, Caveat (`subset=latin,latin-ext`).
 4. **Images:** JPG/PNG in `images/`, hero videos MOV + MP4, lazy-loaded where applicable.
 5. **Footer year:** `© 2026` — update annually.
 6. **Sections use gradient overlaps** + negative margins for seamless transitions (no wave/fascia dividers).
@@ -220,6 +220,36 @@ All sub-pages (`kontakt.html`, `esence-zeny.html`, `tajemstvi-panevniho-dna.html
 4. After changes: test desktop (full mode) + mobile (verca-lite) + page transitions + ambient audio.
 5. git add -A && git commit -m "..." && git push origin main   (auto-deploys to Vercel)
 ```
+
+---
+
+## 13  Pokračování práce (uloženo 2026-04-11)
+
+### Co už je hotové (shrnutí)
+
+- **Fáze 2–4:** `SECURITY.md`, `.env.example`, `api/` kostra; `docs/data-model.md`, `db/schema-proposal.sql`, právní HTML (`obchodni-podminky.html` atd.), `docs/compliance-mapping.md`, odkazy v patičce.
+- **Supabase plán:** `docs/supabase-phase-a.md` (architektura; `public.users` vs `auth.users` — rozhodnout při migraci).
+- **Env / nasazení:** `PUBLIC_SITE_URL` a související URL směřují na **`https://verca-omega.vercel.app`** (v `.env.example` + `GPT-KONTEXT`); lokální `.env` je v `.gitignore`.
+- **E-shop UI (ateliér):** `/api/public-config`, sekce „E-shop a účet“ na `bylinny-atelier.html`, `auth-callback.html` pro návrat OAuth, `js/verca-shop-config.js`.
+- **Stripe:** `package.json` + `stripe`; `POST /api/checkout/create-session` (allowlist `STRIPE_ALLOWED_PRICE_IDS` / `STRIPE_TEST_PRICE_ID`); `POST /api/webhooks/stripe` (podpis, raw body); tlačítko **Test platba (Stripe)**. **Objednávky do DB zatím neukládáme** — až Supabase + idempotence `webhook_events`.
+
+### Kam příště — Supabase **anon key** (uživatel zatím nenašel)
+
+1. Přihlásit se na [supabase.com](https://supabase.com) → otevřít **projekt**.
+2. Dole vlevo **Project Settings** (ozubené kolo), nebo v novějším UI sekce **Settings** / **Configuration**.
+3. Menu **API** (někdy „Data API“).
+4. Blok **Project URL** = `SUPABASE_URL`.
+5. Blok **Project API keys** — klíč označený jako **`anon`** a **`public`** (dlouhý JWT řetězec) = **`SUPABASE_ANON_KEY`**.  
+   - **`service_role`** je tajný → jen Vercel serverless / `.env` server, nikdy do prohlížeče.
+6. **Authentication → URL Configuration:** přidat redirect např. `https://verca-omega.vercel.app/auth-callback.html`.
+
+Stejné hodnoty zkopírovat do **Vercel → Project → Settings → Environment Variables**.
+
+### Otevřené kroky po získání klíčů
+
+- Aplikovat SQL migraci z `db/schema-proposal.sql` (nebo upravit podle `auth.users`), zapnout **RLS**.
+- Webhook Stripe doplnit o zápis `orders` / `payments` / `webhook_events`.
+- Volitelně: `PUBLIC_GOOGLE_LOGIN_ENABLED=true` + Google provider v Supabase.
 
 ---
 
