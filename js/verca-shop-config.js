@@ -11,6 +11,9 @@
   var btnGoogle = root.querySelector('[data-shop-google-login]');
   var btnStripe = root.querySelector('[data-shop-stripe-test]');
   var btnGuest = root.querySelector('[data-shop-guest-note]');
+  var accountWrap = root.querySelector('[data-shop-account]');
+  var accountDetail = root.querySelector('[data-shop-account-detail]');
+  var btnLogout = root.querySelector('[data-shop-logout]');
 
   function setStatus(text, isError) {
     if (!statusEl) return;
@@ -122,6 +125,70 @@
     if (btnGuest) {
       btnGuest.style.display = '';
     }
+
+    initSessionPanel(cfg);
+  }
+
+  function initSessionPanel(cfg) {
+    if (!cfg || !cfg.configured || !cfg.supabaseUrl || !cfg.supabaseAnonKey) return;
+    if (!accountWrap || !accountDetail || !btnLogout) return;
+
+    import('https://esm.sh/@supabase/supabase-js@2.49.1')
+      .then(function (mod) {
+        var createClient = mod.createClient;
+        var supabase = createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+          auth: {
+            persistSession: true,
+            detectSessionInUrl: false,
+            flowType: 'pkce',
+          },
+        });
+        return supabase.auth.getSession().then(function (out) {
+          return { supabase: supabase, session: out.data && out.data.session, err: out.error };
+        });
+      })
+      .then(function (pack) {
+        if (pack.err || !pack.session) {
+          accountWrap.hidden = true;
+          btnLogout.hidden = true;
+          return;
+        }
+        var session = pack.session;
+        var supabase = pack.supabase;
+        var email = (session.user && session.user.email) || '';
+        accountWrap.hidden = false;
+        accountDetail.textContent = email ? 'Přihlášeni: ' + email : 'Přihlášeni';
+        btnLogout.hidden = false;
+        btnLogout.onclick = function () {
+          supabase.auth.signOut().then(function () {
+            window.location.reload();
+          });
+        };
+        if (btnGoogle) {
+          btnGoogle.disabled = true;
+          btnGoogle.setAttribute('aria-disabled', 'true');
+        }
+        var at = session.access_token;
+        if (!at) return;
+        fetch('/api/account/me', {
+          headers: { Authorization: 'Bearer ' + at },
+          credentials: 'same-origin',
+        })
+          .then(function (r) {
+            if (!r.ok) return null;
+            return r.json();
+          })
+          .then(function (body) {
+            if (!body || !body.user) return;
+            var parts = ['Ověřeno serverem', body.user.email || ''];
+            if (body.profile && body.profile.full_name) {
+              parts.push(body.profile.full_name);
+            }
+            accountDetail.textContent = parts.join(' — ');
+          })
+          .catch(function () {});
+      })
+      .catch(function () {});
   }
 
   fetch('/api/public-config', { credentials: 'same-origin' })

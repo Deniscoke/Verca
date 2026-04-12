@@ -151,7 +151,7 @@ Neutral operational bridge between **booking/scheduling** and **loyalty** (or an
 | `external_id` | Id in that system |
 | `customer_account_id` | Nullable if only email known — then link via separate process |
 | `session_completed_at` | When completion was recorded |
-| `meta` | `jsonb` — **only** non-sensitive keys (e.g. `service_code: "massage_60"`), no free-text notes |
+| `meta` | `jsonb` — **only** non-sensitive keys (e.g. `service_code: "atelier_session_60"`), no free-text notes |
 
 ### `consents`
 

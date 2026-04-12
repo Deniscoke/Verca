@@ -33,12 +33,12 @@ Implementace: `api/checkout/create-session.js` (Checkout Session + allowlist cen
 
 | Concern | Guidance |
 |---------|----------|
-| **Sessions** | Prefer **httpOnly, Secure, SameSite** cookies for session tokens; avoid storing long-lived secrets in `localStorage`. |
+| **Sessions** | Prefer **httpOnly, Secure, SameSite** cookies for session tokens; avoid storing long-lived secrets in `localStorage`. **Supabase JS** dnes ukládá relaci v `localStorage` — pro ostrý provoz zvažte SSR/cookie režim; pro testovací fázi je to běžný kompromis. |
 | **Google login** | Must remain **optional**; support guest checkout without OAuth. |
 | **Callbacks** | OAuth callback handlers must run **only** on the server, validate `state`, and exchange codes with client secret server-side. |
 | **CSRF** | For cookie-based sessions on mutating routes, use CSRF tokens or SameSite cookies + strict origin checks as appropriate to your flow. |
 
-Stubs: `api/auth/google/callback.js`, `api/account/me.js`.
+**Účty:** `auth-callback.html` dokončí OAuth (PKCE `exchangeCodeForSession`). `GET /api/account/me` ověří `Authorization: Bearer` proti Supabase a vrátí bezpečný výřez uživatele + řádek `public.profiles` (pokud existuje, viz `db/supabase-auth-profiles.sql`). Stub: `api/auth/google/callback.js` (vlastní Google OAuth mimo Supabase).
 
 **`GET /api/public-config`:** Returns only **non-service** values for the static shop UI (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, public redirect URLs). The anon key is for browser use with **RLS**; never return `SUPABASE_SERVICE_ROLE_KEY` or other secrets from this endpoint.
 
@@ -98,5 +98,12 @@ When `package.json` is introduced for Stripe SDK or DB clients:
 ## 9. Related files
 
 - `.env.example` — variable names only (no real values).
-- `api/` — serverless stubs; no secrets in repo.
+- `api/` — serverless; no secrets in repo.
 - `api/public-config.js` — public JSON for e-shop UI; keep the allowlist of keys minimal.
+
+---
+
+## 10. Repo hygiene
+
+- Složka **`Context/`** (interní náhledy) **není** v Gitu — lokálně ji můžete mít mimo repozitář nebo v `.gitignore`, aby se nešířily pracovní materiály.
+- Pokud se kdy do commitu dostaly **skutečné klíče** (`.env`, tokeny), po opravě souboru je nutné je **rotovat** v Supabase / Stripe / Google a zvážit přepsání historie (`git filter-repo`), protože `git rm` z aktuální revize historii nemaze.

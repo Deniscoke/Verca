@@ -57,7 +57,7 @@
     const res = await fetch('/api/public-config', { credentials: 'same-origin' });
     const cfg = await res.json();
     if (!cfg.configured || !cfg.supabaseUrl || !cfg.supabaseAnonKey) {
-      msg.textContent = 'Chybí konfigurace Supabase. Doplňte PUBLIC_SITE_URL, SUPABASE_URL a SUPABASE_ANON_KEY.';
+      msg.textContent = 'Chybí konfigurace Supabase. Doplňte SUPABASE_URL a SUPABASE_ANON_KEY (nebo NEXT_PUBLIC_* aliasy).';
       throw new Error('no config');
     }
 
@@ -65,19 +65,35 @@
       auth: {
         detectSessionInUrl: true,
         persistSession: true,
+        flowType: 'pkce',
       },
     });
+
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
+
+    if (code) {
+      const { error: exErr } = await supabase.auth.exchangeCodeForSession(code);
+      if (exErr) {
+        msg.textContent = 'Dokončení přihlášení se nepodařilo: ' + (exErr.message || 'chyba OAuth');
+        throw exErr;
+      }
+      url.searchParams.delete('code');
+      const clean = url.pathname + (url.searchParams.toString() ? '?' + url.searchParams.toString() : '') + url.hash;
+      window.history.replaceState({}, '', clean);
+    }
 
     const { data: { session }, error } = await supabase.auth.getSession();
     if (error) {
       msg.textContent = 'Přihlášení se nepodařilo: ' + (error.message || 'neznámá chyba');
-    } else if (session) {
-      msg.textContent = 'Jste přihlášeni. Můžete pokračovat do ateliéru — brzy zde přibude účet a objednávky.';
+    } else if (session && session.user) {
+      const em = session.user.email || 'účet bez e-mailu';
+      msg.textContent = 'Jste přihlášeni jako ' + em + '. Pokračujte do ateliéru — údaje účtu načteme i na serveru (/api/account/me).';
     } else {
       msg.textContent = 'Žádná aktivní relace. Zkuste znovu přihlášení z ateliéru.';
     }
   } catch (e) {
-    if (msg && !msg.textContent.includes('Chybí')) {
+    if (msg && !msg.textContent.includes('Chybí') && !msg.textContent.includes('nepodařilo')) {
       msg.textContent = 'Chyba při načtení (spusťte web přes Vercel / vercel dev, ne file://).';
     }
   }

@@ -64,7 +64,7 @@ VERCA/
 │   └── various LICENSE files
 │
 ├── scroll-animation-with-grid-motion/  ← older reference demo, NOT linked
-├── Context/                            ← design reference screenshots (PNG)
+├── db/supabase-auth-profiles.sql       ← Supabase SQL: profiles + RLS + trigger na auth.users
 ├── package.json                        ← závislost `stripe` pro serverless
 ├── package-lock.json
 ├── auth-callback.html                  ← návrat OAuth (Supabase)
@@ -230,7 +230,7 @@ All sub-pages (`kontakt.html`, `esence-zeny.html`, `tajemstvi-panevniho-dna.html
 - **Fáze 2–4:** `SECURITY.md`, `.env.example`, `api/` kostra; `docs/data-model.md`, `db/schema-proposal.sql`, právní HTML (`obchodni-podminky.html` atd.), `docs/compliance-mapping.md`, odkazy v patičce.
 - **Supabase plán:** `docs/supabase-phase-a.md` (architektura; `public.users` vs `auth.users` — rozhodnout při migraci).
 - **Env / nasazení:** `PUBLIC_SITE_URL` a související URL směřují na **`https://verca-omega.vercel.app`** (v `.env.example` + `GPT-KONTEXT`); lokální `.env` je v `.gitignore`.
-- **E-shop UI (ateliér):** `/api/public-config`, sekce „E-shop a účet“ na `bylinny-atelier.html`, `auth-callback.html` pro návrat OAuth, `js/verca-shop-config.js`.
+- **E-shop UI (ateliér):** `/api/public-config`, sekce „E-shop a účet“ na `bylinny-atelier.html`, `auth-callback.html` (OAuth PKCE + `exchangeCodeForSession`), `js/verca-shop-config.js` (stav účtu + `/api/account/me`), migrace `db/supabase-auth-profiles.sql`.
 - **Stripe:** `package.json` + `stripe`; `POST /api/checkout/create-session` (allowlist `STRIPE_ALLOWED_PRICE_IDS` / `STRIPE_TEST_PRICE_ID`); `POST /api/webhooks/stripe` (podpis, raw body); tlačítko **Test platba (Stripe)**. **Objednávky do DB zatím neukládáme** — až Supabase + idempotence `webhook_events`.
 
 ### Kam příště — Supabase **anon key** (uživatel zatím nenašel)
