@@ -5,6 +5,9 @@
   "engines": {
     "node": ">=18"
   },
+  "scripts": {
+    "check:deploy": "node scripts/check-deployment.mjs"
+  },
   "dependencies": {
     "stripe": "^17.7.0"
   }

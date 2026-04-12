@@ -6,17 +6,15 @@
 'use strict';
 
 var http = require('./_lib/http');
+var siteUrlLib = require('./_lib/site-url');
 
 function trimSlash(s) {
-  return (s || '').replace(/\/+$/, '');
+  return siteUrlLib.trimSlash(s);
 }
 
-/** Vercel sets VERCEL_URL (host only); use as fallback for redirects when PUBLIC_SITE_URL is unset. */
-function vercelSiteOrigin() {
-  var h = String(process.env.VERCEL_URL || '').trim();
-  if (!h) return '';
-  h = h.replace(/^https?:\/\//i, '');
-  return 'https://' + h;
+function envNonEmpty(name) {
+  var v = process.env[name];
+  return v != null && String(v).trim() !== '';
 }
 
 module.exports = function publicConfig(req, res) {
@@ -26,9 +24,7 @@ module.exports = function publicConfig(req, res) {
     return http.json(res, 405, { error: 'method_not_allowed' });
   }
 
-  var siteUrl = trimSlash(
-    process.env.PUBLIC_SITE_URL || vercelSiteOrigin() || ''
-  );
+  var siteUrl = siteUrlLib.resolveSiteUrl();
   var supabaseUrl = trimSlash(
     process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || ''
   );
@@ -45,8 +41,14 @@ module.exports = function publicConfig(req, res) {
   var defaultCallback = siteUrl ? siteUrl + '/auth-callback.html' : '';
   var authRedirectUrl = trimSlash(process.env.SUPABASE_AUTH_REDIRECT_URL || '') || defaultCallback;
 
-  var checkoutSuccess = process.env.CHECKOUT_SUCCESS_URL || '';
-  var checkoutCancel = process.env.CHECKOUT_CANCEL_URL || '';
+  var checkoutSuccess =
+    process.env.CHECKOUT_SUCCESS_URL ||
+    siteUrlLib.defaultCheckoutSuccess(siteUrl) ||
+    '';
+  var checkoutCancel =
+    process.env.CHECKOUT_CANCEL_URL ||
+    siteUrlLib.defaultCheckoutCancel(siteUrl) ||
+    '';
 
   var stripeTestPriceId = (process.env.STRIPE_TEST_PRICE_ID || '').trim() || null;
   var stripePublishableKey =
@@ -57,7 +59,7 @@ module.exports = function publicConfig(req, res) {
     ).trim() || null;
 
   var supabaseMissing = [];
-  if (!siteUrl) supabaseMissing.push('PUBLIC_SITE_URL');
+  if (!siteUrl) supabaseMissing.push('PUBLIC_SITE_URL_OR_VERCEL_URL');
   if (!supabaseUrl) supabaseMissing.push('SUPABASE_URL');
   if (!anon) supabaseMissing.push('SUPABASE_ANON_KEY');
 
@@ -70,6 +72,10 @@ module.exports = function publicConfig(req, res) {
       '/auth/v1/authorize?provider=google&redirect_to=' +
       encodeURIComponent(authRedirectUrl);
   }
+
+  var priceAllowlist =
+    String(process.env.STRIPE_ALLOWED_PRICE_IDS || '').trim() !== '' ||
+    String(process.env.STRIPE_TEST_PRICE_ID || '').trim() !== '';
 
   var payload = {
     ok: supabaseConfigured,
@@ -91,12 +97,24 @@ module.exports = function publicConfig(req, res) {
       checkoutSuccess: checkoutSuccess || null,
       checkoutCancel: checkoutCancel || null,
     },
+    /** Safe booleans for debugging nasazení — žádné tajné hodnoty. */
+    readiness: {
+      publicSiteUrlExplicit: envNonEmpty('PUBLIC_SITE_URL'),
+      stripeSecretKey: envNonEmpty('STRIPE_SECRET_KEY'),
+      stripeWebhookSecret: envNonEmpty('STRIPE_WEBHOOK_SECRET'),
+      stripePriceAllowlist: priceAllowlist,
+      checkoutUrlsResolved: Boolean(checkoutSuccess && checkoutCancel),
+      stripeTestFlowLikely:
+        envNonEmpty('STRIPE_SECRET_KEY') &&
+        priceAllowlist &&
+        Boolean(checkoutSuccess && checkoutCancel),
+    },
     hints: {},
   };
 
   if (!supabaseConfigured) {
     payload.message =
-      'Supabase není kompletní — doplňte PUBLIC_SITE_URL, SUPABASE_URL a SUPABASE_ANON_KEY pro přihlášení.';
+      'Supabase není kompletní — doplňte SUPABASE_URL a SUPABASE_ANON_KEY (a volitelně PUBLIC_SITE_URL místo výchozí adresy z Vercelu).';
     payload.missing = supabaseMissing;
     payload.hints.supabaseRedirectAllowList =
       'V Supabase → Authentication → URL Configuration přidejte urls.authCallback do „Redirect URLs“.';

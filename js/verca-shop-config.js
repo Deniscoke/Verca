@@ -84,6 +84,16 @@
           'Google: nastavte PUBLIC_GOOGLE_LOGIN_ENABLED=true a Redirect URLs v Supabase.'
         );
       }
+      if (
+        cfg.features &&
+        cfg.features.stripeTestCheckout &&
+        cfg.readiness &&
+        !cfg.readiness.stripeTestFlowLikely
+      ) {
+        parts.push(
+          'Stripe test: na serveru ještě chybí STRIPE_SECRET_KEY nebo ceny v allowlistu (viz Vercel / .env).'
+        );
+      }
       setStatus(parts.join(' '), false);
     } else {
       parts.push(cfg.message || 'Supabase není plně nastaveno (přihlášení Google nebude fungovat).');

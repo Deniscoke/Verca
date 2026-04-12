@@ -8,6 +8,7 @@ var http = require('../_lib/http');
 var env = require('../_lib/env');
 var readBody = require('../_lib/read-body');
 var getStripe = require('../_lib/stripe-client').getStripe;
+var siteUrlLib = require('../_lib/site-url');
 
 function allowedPriceSet() {
   var raw =
@@ -47,12 +48,20 @@ module.exports = function createCheckoutSession(req, res) {
     });
   }
 
-  var successUrl = process.env.CHECKOUT_SUCCESS_URL || '';
-  var cancelUrl = process.env.CHECKOUT_CANCEL_URL || '';
+  var siteUrl = siteUrlLib.resolveSiteUrl();
+  var successUrl =
+    process.env.CHECKOUT_SUCCESS_URL ||
+    siteUrlLib.defaultCheckoutSuccess(siteUrl) ||
+    '';
+  var cancelUrl =
+    process.env.CHECKOUT_CANCEL_URL ||
+    siteUrlLib.defaultCheckoutCancel(siteUrl) ||
+    '';
   if (!successUrl || !cancelUrl) {
     return http.json(res, 503, {
       error: 'checkout_urls_missing',
-      message: 'Nastavte CHECKOUT_SUCCESS_URL a CHECKOUT_CANCEL_URL.',
+      message:
+        'Nastavte CHECKOUT_SUCCESS_URL a CHECKOUT_CANCEL_URL, nebo PUBLIC_SITE_URL / nasaďte na Vercel (výchozí cesty na bylinny-atelier.html).',
     });
   }
 
