@@ -11,6 +11,14 @@ function trimSlash(s) {
   return (s || '').replace(/\/+$/, '');
 }
 
+/** Vercel sets VERCEL_URL (host only); use as fallback for redirects when PUBLIC_SITE_URL is unset. */
+function vercelSiteOrigin() {
+  var h = String(process.env.VERCEL_URL || '').trim();
+  if (!h) return '';
+  h = h.replace(/^https?:\/\//i, '');
+  return 'https://' + h;
+}
+
 module.exports = function publicConfig(req, res) {
   http.noStore(res);
   if (req.method !== 'GET') {
@@ -18,9 +26,17 @@ module.exports = function publicConfig(req, res) {
     return http.json(res, 405, { error: 'method_not_allowed' });
   }
 
-  var siteUrl = trimSlash(process.env.PUBLIC_SITE_URL || '');
-  var supabaseUrl = trimSlash(process.env.SUPABASE_URL || '');
-  var anon = process.env.SUPABASE_ANON_KEY || '';
+  var siteUrl = trimSlash(
+    process.env.PUBLIC_SITE_URL || vercelSiteOrigin() || ''
+  );
+  var supabaseUrl = trimSlash(
+    process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  );
+  var anon =
+    process.env.SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    '';
   var googleEnabled =
     String(process.env.PUBLIC_GOOGLE_LOGIN_ENABLED || '')
       .toLowerCase()
@@ -33,7 +49,12 @@ module.exports = function publicConfig(req, res) {
   var checkoutCancel = process.env.CHECKOUT_CANCEL_URL || '';
 
   var stripeTestPriceId = (process.env.STRIPE_TEST_PRICE_ID || '').trim() || null;
-  var stripePublishableKey = (process.env.STRIPE_PUBLISHABLE_KEY || '').trim() || null;
+  var stripePublishableKey =
+    (
+      process.env.STRIPE_PUBLISHABLE_KEY ||
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
+      ''
+    ).trim() || null;
 
   var supabaseMissing = [];
   if (!siteUrl) supabaseMissing.push('PUBLIC_SITE_URL');
