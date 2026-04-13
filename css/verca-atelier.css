@@ -163,15 +163,15 @@ html.verca-lite .atelier-orb {
   animation: none !important;
 }
 
-/* Posvátná geometrie — tenčí linie, větší dlaždice, teplý tón */
+/* Posvátná geometrie — dvojitý květ + kruhy + hex (teplé tóny, ladí s index „experience“) */
 .atelier-sacred {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.048;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23e8c4a0' stroke-width='0.32'%3E%3Ccircle cx='100' cy='100' r='28'/%3E%3Ccircle cx='124' cy='100' r='28'/%3E%3Ccircle cx='112' cy='124' r='28'/%3E%3Ccircle cx='88' cy='124' r='28'/%3E%3Ccircle cx='76' cy='100' r='28'/%3E%3Ccircle cx='88' cy='76' r='28'/%3E%3Ccircle cx='112' cy='76' r='28'/%3E%3C/g%3E%3Cg stroke='%23f0cfa8' stroke-width='0.22' opacity='0.65'%3E%3Ccircle cx='100' cy='100' r='48'/%3E%3Ccircle cx='100' cy='100' r='68'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 300px 300px;
+  opacity: 0.082;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cg%20fill%3D%22none%22%3E%3Cg%20stroke%3D%22%23c9a07a%22%20stroke-width%3D%220.4%22%3E%3Cg%20opacity%3D%220.9%22%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22128%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2272%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%220.34%22%20opacity%3D%220.65%22%20transform%3D%22rotate(30%20100%20100)%22%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22128%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2272%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg%20stroke%3D%22%23e8c4a0%22%20stroke-width%3D%220.26%22%20opacity%3D%220.55%22%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2246%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2266%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2284%22%2F%3E%3C%2Fg%3E%3Cpath%20stroke%3D%22%23e8c4a0%22%20stroke-width%3D%220.3%22%20opacity%3D%220.5%22%20d%3D%22M100%2058%20L138.7%2080.4V125L100%20147.3L61.3%20125V80.4Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-size: 272px 272px;
   background-repeat: repeat;
 }
 

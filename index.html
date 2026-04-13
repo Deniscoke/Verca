@@ -137,10 +137,11 @@ html.verca-lite #verca-ocean-canvas {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%232C3830' stroke-width='0.35'%3E%3Ccircle cx='60' cy='60' r='14'/%3E%3Ccircle cx='88' cy='60' r='14'/%3E%3Ccircle cx='74' cy='84' r='14'/%3E%3Ccircle cx='46' cy='84' r='14'/%3E%3Ccircle cx='32' cy='60' r='14'/%3E%3Ccircle cx='46' cy='36' r='14'/%3E%3Ccircle cx='74' cy='36' r='14'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 100px 100px;
-  background-position: 12% 18%;
+  /* Květ života + rotovaná kopie + hex — prosvítá skrz „glass“ sekce */
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%232C3830%22%3E%3Cg%20stroke-width%3D%220.42%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%220.36%22%20opacity%3D%220.72%22%20transform%3D%22rotate(30%2060%2060)%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2226%22%20stroke-width%3D%220.3%22%20opacity%3D%220.52%22%2F%3E%3Cpath%20stroke-width%3D%220.32%22%20opacity%3D%220.58%22%20d%3D%22M60%2034%20L85.2%2048.5V79.5L60%2094L34.8%2079.5V48.5Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-size: 92px 92px;
+  background-position: 10% 16%;
 }
 .reduce-motion .verca-surface::before { opacity: 0.02; }
 .reduce-motion #verca-ocean-canvas { display: none; }
@@ -170,7 +171,7 @@ html.verca-lite .hero.hero--ocean .hero__content {
   box-shadow: none;
 }
 html.verca-lite .verca-surface::before {
-  opacity: 0.02;
+  opacity: 0.032;
 }
 html.verca-lite .hero__video-fullbleed {
   opacity: 0.22;
@@ -184,7 +185,7 @@ html.verca-lite .hero__immersive {
 html.verca-lite .experience__sacred-bg {
   -webkit-mask-image: none;
   mask-image: none;
-  opacity: 0.07;
+  opacity: 0.11;
 }
 
 /* Obsah nad vodoznakem květu života */
@@ -1059,8 +1060,8 @@ h1, h2, h3, h4 {
   bottom: -12px;
   width: 120px;
   height: 120px;
-  opacity: 0.07;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23C97B5C' stroke-width='0.75'%3E%3Ccircle cx='60' cy='60' r='14'/%3E%3Ccircle cx='88' cy='60' r='14'/%3E%3Ccircle cx='74' cy='84' r='14'/%3E%3Ccircle cx='46' cy='84' r='14'/%3E%3Ccircle cx='32' cy='60' r='14'/%3E%3Ccircle cx='46' cy='36' r='14'/%3E%3Ccircle cx='74' cy='36' r='14'/%3E%3C/g%3E%3C/svg%3E") no-repeat right bottom;
+  opacity: 0.11;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23C97B5C%22%3E%3Cg%20stroke-width%3D%220.52%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%220.4%22%20opacity%3D%220.78%22%20transform%3D%22rotate(30%2060%2060)%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2224%22%20stroke-width%3D%220.36%22%20opacity%3D%220.55%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") no-repeat right bottom;
   pointer-events: none;
   z-index: 0;
   transition:
@@ -1335,13 +1336,13 @@ section.experience {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.42;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%239a8b7d' stroke-width='0.38' opacity='0.45'%3E%3Ccircle cx='100' cy='100' r='28'/%3E%3Ccircle cx='128' cy='100' r='28'/%3E%3Ccircle cx='114' cy='124' r='28'/%3E%3Ccircle cx='86' cy='124' r='28'/%3E%3Ccircle cx='72' cy='100' r='28'/%3E%3Ccircle cx='86' cy='76' r='28'/%3E%3Ccircle cx='114' cy='76' r='28'/%3E%3C/g%3E%3Cg stroke='%23b8956e' stroke-width='0.26' opacity='0.35'%3E%3Ccircle cx='100' cy='100' r='48'/%3E%3Ccircle cx='100' cy='100' r='68'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: min(280px, 36vw) min(280px, 36vw);
+  opacity: 0.58;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cg%20fill%3D%22none%22%3E%3Cg%20stroke%3D%22%239a8b7d%22%20stroke-width%3D%220.44%22%3E%3Cg%20opacity%3D%220.92%22%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22128%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2272%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%220.38%22%20opacity%3D%220.62%22%20transform%3D%22rotate(30%20100%20100)%22%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22128%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22124%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2272%22%20cy%3D%22100%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%2276%22%20r%3D%2228%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3Cg%20stroke%3D%22%23b8956e%22%20stroke-width%3D%220.28%22%20opacity%3D%220.5%22%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2246%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2266%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2286%22%2F%3E%3C%2Fg%3E%3Cpath%20stroke%3D%22%23b8956e%22%20stroke-width%3D%220.34%22%20opacity%3D%220.55%22%20d%3D%22M100%2058%20L138.7%2080.4V125L100%20147.3L61.3%20125V80.4Z%22%2F%3E%3Cg%20stroke%3D%22%239a8b7d%22%20stroke-width%3D%220.22%22%20opacity%3D%220.45%22%3E%3Cline%20x1%3D%22100%22%20y1%3D%22100%22%20x2%3D%22100%22%20y2%3D%2244%22%2F%3E%3Cline%20x1%3D%22100%22%20y1%3D%22100%22%20x2%3D%22151.5%22%20y2%3D%22129.8%22%2F%3E%3Cline%20x1%3D%22100%22%20y1%3D%22100%22%20x2%3D%22127.5%22%20y2%3D%22158.2%22%2F%3E%3Cline%20x1%3D%22100%22%20y1%3D%22100%22%20x2%3D%2272.5%22%20y2%3D%22158.2%22%2F%3E%3Cline%20x1%3D%22100%22%20y1%3D%22100%22%20x2%3D%2248.5%22%20y2%3D%22129.8%22%2F%3E%3Cline%20x1%3D%22100%22%20y1%3D%22100%22%20x2%3D%2272.5%22%20y2%3D%2241.8%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-size: min(248px, 32vw) min(248px, 32vw);
   background-repeat: repeat;
-  background-position: center 18%;
-  -webkit-mask-image: radial-gradient(ellipse 100% 75% at 50% 38%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 52%, transparent 78%);
-  mask-image: radial-gradient(ellipse 100% 75% at 50% 38%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 52%, transparent 78%);
+  background-position: center 16%;
+  -webkit-mask-image: radial-gradient(ellipse 118% 90% at 50% 40%, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.24) 52%, rgba(0, 0, 0, 0.08) 76%, transparent 94%);
+  mask-image: radial-gradient(ellipse 118% 90% at 50% 40%, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.24) 52%, rgba(0, 0, 0, 0.08) 76%, transparent 94%);
 }
 
 .experience__glow {
@@ -1971,7 +1972,8 @@ html:not(.verca-savedata):not(.reduce-motion) body {
 }
 
 html:not(.verca-savedata):not(.reduce-motion) .verca-surface::before {
-  opacity: 0.02;
+  /* Dříve 0.02 — skoro neviditelné přes glass; zvýšeno aby geometrie prosvítala */
+  opacity: 0.074;
 }
 
 html:not(.verca-savedata):not(.reduce-motion) .nav {
@@ -2145,6 +2147,9 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 
 /* ═══ MOBILE GLASS PERF — lower blur to prevent scroll jank on touch devices ═══ */
 @media (max-width: 768px) {
+  html:not(.verca-savedata):not(.reduce-motion) .verca-surface::before {
+    opacity: 0.058;
+  }
   html:not(.verca-savedata):not(.reduce-motion) .nav {
     backdrop-filter: blur(12px) saturate(115%);
     -webkit-backdrop-filter: blur(12px) saturate(115%);
