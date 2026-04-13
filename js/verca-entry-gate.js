@@ -7,10 +7,7 @@
 
   var root = document.documentElement;
   if (root.classList.contains('verca-entry-done')) return;
-  if (root.classList.contains('verca-savedata')) {
-    root.classList.add('verca-entry-done');
-    return;
-  }
+  /* Brána zůstává i při verca-savedata (úspora dat) — particles běží v lite režimu; těžké věci řeší perf-boot jinde. */
 
   var gate = document.getElementById('verca-entry-gate');
   if (!gate) return;

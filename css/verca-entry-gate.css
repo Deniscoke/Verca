@@ -9,7 +9,8 @@ html:not(.verca-entry-done) body {
 .verca-entry-gate {
   position: fixed;
   inset: 0;
-  z-index: 250;
+  /* Nad #verca-transition (2147483000), aby úvod nezmizel pod přechodem ani při návratu na index */
+  z-index: 2147483646;
   isolation: isolate;
   display: block;
   padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
