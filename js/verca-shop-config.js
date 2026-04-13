@@ -68,6 +68,14 @@
     };
   }
 
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   function apply(cfg) {
     if (!cfg || typeof cfg !== 'object') {
       setStatus('Neplatná odpověď serveru.', true);
@@ -75,6 +83,12 @@
     }
 
     window.vercaShopConfig = cfg;
+
+    var hintEl = root.querySelector('[data-shop-google-redirect-hint]');
+    if (hintEl) {
+      hintEl.textContent = '';
+      hintEl.hidden = true;
+    }
 
     var parts = [];
 
@@ -98,6 +112,24 @@
         );
       }
       setStatus(parts.join(' '), false);
+      if (
+        hintEl &&
+        cfg.hints &&
+        cfg.hints.googleAuthorizedRedirectUri &&
+        cfg.urls &&
+        cfg.urls.authCallback
+      ) {
+        hintEl.innerHTML =
+          'Pokud Google zobrazí <strong>redirect_uri_mismatch</strong> (400): v ' +
+          '<a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer">Google Cloud Console</a> → Credentials → váš <em>OAuth 2.0 Client ID</em> → <em>Authorized redirect URIs</em> přidejte přesně ' +
+          '<code>' +
+          escapeHtml(cfg.hints.googleAuthorizedRedirectUri) +
+          '</code>. V Supabase → Authentication → URL Configuration přidejte do <em>Redirect URLs</em> i ' +
+          '<code>' +
+          escapeHtml(cfg.urls.authCallback) +
+          '</code>.';
+        hintEl.hidden = false;
+      }
     } else {
       parts.push(cfg.message || 'Supabase není plně nastaveno (přihlášení Google nebude fungovat).');
       if (cfg.features && cfg.features.stripeTestCheckout) {

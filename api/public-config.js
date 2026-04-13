@@ -126,6 +126,8 @@ module.exports = function publicConfig(req, res) {
       'V Supabase → Authentication → URL Configuration přidejte přesnou adresu z urls.authCallback do „Redirect URLs“.';
     payload.hints.googleProvider =
       'Google provider zapněte v Supabase → Authentication → Providers a vložte Client ID + Secret z Google Cloud Console.';
+    /* Google volá redirect na Supabase — musí být v OAuth klientovi (Authorized redirect URIs), jinak chyba 400 redirect_uri_mismatch. */
+    payload.hints.googleAuthorizedRedirectUri = supabaseUrl + '/auth/v1/callback';
   }
 
   if (stripeTestPriceId) {

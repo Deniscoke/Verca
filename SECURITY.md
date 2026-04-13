@@ -35,6 +35,7 @@ Implementace: `api/checkout/create-session.js` (Checkout Session + allowlist cen
 |---------|----------|
 | **Sessions** | Prefer **httpOnly, Secure, SameSite** cookies for session tokens; avoid storing long-lived secrets in `localStorage`. **Supabase JS** dnes ukládá relaci v `localStorage` — pro ostrý provoz zvažte SSR/cookie režim; pro testovací fázi je to běžný kompromis. |
 | **Google login** | Must remain **optional**; support guest checkout without OAuth. |
+| **Google `redirect_uri_mismatch` (400)** | Supabase forwards users to Google with redirect URI **`https://<project-ref>.supabase.co/auth/v1/callback`**. In **Google Cloud Console → APIs & Services → Credentials → your OAuth 2.0 Client → Authorized redirect URIs**, add that URL exactly (same scheme/host/path, no trailing slash unless Google shows one). Separately, in **Supabase → Authentication → URL Configuration → Redirect URLs**, allow your app callback (e.g. `https://your-domain/auth-callback.html`). |
 | **Callbacks** | OAuth callback handlers must run **only** on the server, validate `state`, and exchange codes with client secret server-side. |
 | **CSRF** | For cookie-based sessions on mutating routes, use CSRF tokens or SameSite cookies + strict origin checks as appropriate to your flow. |
 
