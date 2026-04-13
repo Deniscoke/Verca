@@ -55,6 +55,26 @@ html:not(.verca-entry-done) body {
   animation: verca-entry-copy-in 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
 }
 
+/* Západ slunce pod textem — čitelnost + návaznost na hero / terrakotové akcenty */
+.verca-entry-gate__copy::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 118%;
+  height: 168%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 72% 55% at 50% 88%, rgba(255, 196, 160, 0.42) 0%, transparent 58%),
+    radial-gradient(ellipse 90% 70% at 22% 30%, rgba(255, 214, 188, 0.28) 0%, transparent 52%),
+    radial-gradient(ellipse 80% 60% at 88% 22%, rgba(232, 160, 130, 0.22) 0%, transparent 50%),
+    linear-gradient(168deg, rgba(255, 248, 240, 0.14) 0%, rgba(58, 38, 32, 0.08) 100%);
+  filter: blur(0.5px);
+}
+
 @keyframes verca-entry-copy-in {
   from {
     opacity: 0;
@@ -76,11 +96,38 @@ html:not(.verca-entry-done) body {
   font-size: clamp(1.35rem, 4.5vw, 2.05rem);
   font-weight: 400;
   font-style: normal;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   line-height: 1.22;
-  color: rgba(42, 38, 34, 0.94);
   text-wrap: balance;
-  text-shadow: 0 1px 0 rgba(255, 252, 248, 0.55);
+  /* Západ: hluboká víno-hněď → terrakota → broskvová záře (tokeny z :root) */
+  color: var(--wine-deep, #241e19);
+  background-image: linear-gradient(
+    102deg,
+    var(--wine-mid, #463c32) 0%,
+    var(--terracotta, #b86447) 22%,
+    var(--bloom-coral, #d4a088) 44%,
+    #f0c4a8 56%,
+    var(--terracotta-mid, #c97b5c) 70%,
+    var(--wine, #3a3128) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  /* Jemný „halo“ prohloubí čitelnost na světlém pozadí brány */
+  filter: drop-shadow(0 0 22px rgba(255, 200, 168, 0.55)) drop-shadow(0 2px 10px rgba(58, 36, 28, 0.12));
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .verca-entry-gate__headline {
+    background: none;
+    -webkit-text-fill-color: unset;
+    color: var(--terracotta, #b86447);
+    filter: none;
+    text-shadow:
+      0 0 28px rgba(255, 196, 170, 0.65),
+      0 1px 0 rgba(255, 252, 248, 0.85);
+  }
 }
 
 .verca-entry-gate__lede {
@@ -89,11 +136,14 @@ html:not(.verca-entry-done) body {
   font-size: clamp(0.82rem, 2.35vw, 0.98rem);
   font-weight: 500;
   line-height: 1.55;
-  color: rgba(74, 68, 60, 0.92);
   text-wrap: balance;
   max-width: 34em;
   margin-left: auto;
   margin-right: auto;
+  color: rgba(74, 48, 42, 0.94);
+  text-shadow:
+    0 0 18px rgba(255, 220, 200, 0.55),
+    0 1px 0 rgba(255, 252, 248, 0.35);
 }
 
 .verca-entry-gate__tap {
@@ -101,9 +151,29 @@ html:not(.verca-entry-done) body {
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(184, 100, 71, 0.92);
+  color: var(--terracotta-mid, #c97b5c);
+  text-shadow:
+    0 0 12px rgba(255, 180, 140, 0.5),
+    0 0 1px rgba(255, 248, 240, 0.9);
+}
+
+.verca-entry-gate__tap::after {
+  content: '';
+  display: block;
+  width: min(11rem, 55vw);
+  height: 1px;
+  margin: 0.65rem auto 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--bloom-peach, #e8c4b5) 18%,
+    var(--terracotta-mid, #c97b5c) 50%,
+    var(--bloom-peach, #e8c4b5) 82%,
+    transparent
+  );
+  opacity: 0.85;
 }
 
 /* Dlaždice květ + hex */
