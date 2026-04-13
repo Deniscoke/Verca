@@ -1,6 +1,6 @@
 /**
- * Vstupní brána — particles.js + glow (viz interactive-particle-glow/, MIT).
- * První návštěva: kliknutím uloží relaci a odkryje úvodní stránku. ?gate=1 znovu zobrazí bránu.
+ * Vstupní brána — particles.js + glow; částice a pohyb směřují k „mandálovému“ klidu (hex, φ‑tempo).
+ * Viz interactive-particle-glow/ (MIT). ?gate=1 znovu zobrazí bránu.
  */
 (function () {
   'use strict';
@@ -96,49 +96,55 @@
     particlesJS('verca-entry-particles', {
       particles: {
         number: {
-          value: lite ? 32 : 52,
-          density: { enable: true, value_area: 780 }
+          value: lite ? 28 : 46,
+          density: { enable: true, value_area: 820 }
         },
-        color: { value: ['#fff8f0', '#fce8d8', '#f0d4c0', '#e8dcc8', '#ffffff'] },
+        color: { value: ['#f5ebe0', '#e8d4c4', '#d4c4b0', '#c9b89a', '#ffffff'] },
         shape: {
-          type: 'circle',
-          stroke: { width: 0, color: '#000000' }
+          type: 'polygon',
+          polygon: { nb_sides: 6 },
+          stroke: { width: 0, color: '#b89a82' }
         },
         opacity: {
-          value: 0.5,
+          value: 0.42,
           random: true,
           anim: {
             enable: true,
-            speed: 0.5,
-            opacity_min: 0.12,
+            speed: 0.35,
+            opacity_min: 0.1,
             sync: false
           }
         },
         size: {
-          value: 2.6,
+          value: 2.4,
           random: true,
           anim: {
             enable: true,
-            speed: 2,
-            size_min: 0.35,
+            speed: 1.35,
+            size_min: 0.4,
             sync: false
           }
         },
         line_linked: {
           enable: true,
-          distance: lite ? 88 : 128,
-          color: '#d4a088',
-          opacity: 0.2,
-          width: 0.55
+          distance: lite ? 96 : 132,
+          color: '#c4a088',
+          opacity: 0.18,
+          width: 0.5
         },
         move: {
           enable: true,
-          speed: lite ? 0.45 : 0.72,
+          speed: lite ? 0.32 : 0.48,
           direction: 'none',
           random: true,
           straight: false,
           out_mode: 'out',
-          bounce: false
+          bounce: false,
+          attract: {
+            enable: !lite,
+            rotateX: 520,
+            rotateY: 980
+          }
         }
       },
       interactivity: {
@@ -150,19 +156,19 @@
         },
         modes: {
           grab: {
-            distance: 130,
-            line_linked: { opacity: 0.28 }
+            distance: 118,
+            line_linked: { opacity: 0.24 }
           },
-          push: { particles_nb: 2 },
+          push: { particles_nb: 1 },
           bubble: {
-            distance: 400,
-            size: 36,
-            duration: 2,
-            opacity: 6,
-            speed: 3
+            distance: 360,
+            size: 32,
+            duration: 2.2,
+            opacity: 5,
+            speed: 2.2
           },
-          repulse: { distance: 200, duration: 0.4 },
-          remove: { particles_nb: 2 }
+          repulse: { distance: 160, duration: 0.45 },
+          remove: { particles_nb: 1 }
         }
       },
       retina_detect: true
