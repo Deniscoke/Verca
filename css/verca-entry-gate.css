@@ -42,6 +42,70 @@ html:not(.verca-entry-done) body {
   border: 0;
 }
 
+/* Viditelná výzva + SEO (klíčová témata stránky); pointer-events none — klik propadne na bránu / částice */
+.verca-entry-gate__copy {
+  position: absolute;
+  left: 50%;
+  bottom: max(22px, calc(18px + env(safe-area-inset-bottom)));
+  transform: translateX(-50%);
+  width: min(36rem, calc(100% - 40px));
+  text-align: center;
+  z-index: 3;
+  pointer-events: none;
+  animation: verca-entry-copy-in 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+
+@keyframes verca-entry-copy-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.reduce-motion .verca-entry-gate__copy {
+  animation: none;
+  opacity: 1;
+}
+
+.verca-entry-gate__headline {
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(1.35rem, 4.5vw, 2.05rem);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.03em;
+  line-height: 1.22;
+  color: rgba(42, 38, 34, 0.94);
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 252, 248, 0.55);
+}
+
+.verca-entry-gate__lede {
+  margin-top: 0.85rem;
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: clamp(0.82rem, 2.35vw, 0.98rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: rgba(74, 68, 60, 0.92);
+  text-wrap: balance;
+  max-width: 34em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.verca-entry-gate__tap {
+  margin-top: 1rem;
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(184, 100, 71, 0.92);
+}
+
 /* Dlaždice květ + hex */
 .verca-entry-gate::before {
   content: '';
