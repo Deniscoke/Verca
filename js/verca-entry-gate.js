@@ -1,5 +1,5 @@
 /**
- * Vstupní brána — particles.js + glow; částice a pohyb směřují k „mandálovému“ klidu (hex, φ‑tempo).
+ * Vstupní brána — particles.js + glow; režim „grab“ tahá linky k kurzoru (detect_on window nad overlay).
  * Viz interactive-particle-glow/ (MIT). ?gate=1 znovu zobrazí bránu.
  */
 (function () {
@@ -87,45 +87,45 @@
     particlesJS('verca-entry-particles', {
       particles: {
         number: {
-          value: lite ? 28 : 46,
-          density: { enable: true, value_area: 820 }
+          value: lite ? 40 : 72,
+          density: { enable: true, value_area: lite ? 760 : 640 }
         },
-        color: { value: ['#f5ebe0', '#e8d4c4', '#d4c4b0', '#c9b89a', '#ffffff'] },
+        color: { value: ['#fff9f2', '#f0dcc8', '#e8c9b0', '#d4b89a', '#c9a080', '#ffffff'] },
         shape: {
           type: 'polygon',
           polygon: { nb_sides: 6 },
           stroke: { width: 0, color: '#b89a82' }
         },
         opacity: {
-          value: 0.42,
+          value: 0.52,
           random: true,
           anim: {
             enable: true,
-            speed: 0.35,
-            opacity_min: 0.1,
+            speed: 0.42,
+            opacity_min: 0.14,
             sync: false
           }
         },
         size: {
-          value: 2.4,
+          value: 2.85,
           random: true,
           anim: {
             enable: true,
-            speed: 1.35,
-            size_min: 0.4,
+            speed: 1.55,
+            size_min: 0.45,
             sync: false
           }
         },
         line_linked: {
           enable: true,
-          distance: lite ? 96 : 132,
-          color: '#c4a088',
-          opacity: 0.18,
-          width: 0.5
+          distance: lite ? 112 : 148,
+          color: '#c49578',
+          opacity: 0.32,
+          width: 0.72
         },
         move: {
           enable: true,
-          speed: lite ? 0.22 : 0.34,
+          speed: lite ? 0.28 : 0.42,
           direction: 'none',
           random: true,
           straight: false,
@@ -133,13 +133,14 @@
           bounce: false,
           attract: {
             enable: !lite,
-            rotateX: 520,
-            rotateY: 980
+            rotateX: 420,
+            rotateY: 820
           }
         }
       },
       interactivity: {
-        detect_on: 'canvas',
+        /* window = síť reaguje na kurzor nad celou bránou, ne jen přímo nad canvasem */
+        detect_on: 'window',
         events: {
           onhover: { enable: true, mode: 'grab' },
           onclick: { enable: true, mode: 'push' },
@@ -147,10 +148,10 @@
         },
         modes: {
           grab: {
-            distance: 118,
-            line_linked: { opacity: 0.24 }
+            distance: lite ? 168 : 240,
+            line_linked: { opacity: lite ? 0.42 : 0.62 }
           },
-          push: { particles_nb: 1 },
+          push: { particles_nb: lite ? 2 : 4 },
           bubble: {
             distance: 360,
             size: 32,
