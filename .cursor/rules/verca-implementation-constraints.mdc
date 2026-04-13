@@ -1,0 +1,12 @@
+---
+description: VERCA — concrete over generic, pick one option, MVP then robustness, human-maintained codebase.
+alwaysApply: true
+---
+
+## Important
+
+- Think in terms of real files, real flows, and real implementation constraints.
+- Do not give generic advice when a concrete answer is possible.
+- When multiple options exist, choose one and explain why it is the best fit.
+- Optimize for MVP speed first, then robustness.
+- Assume this project will be maintained by humans, not just generated once.
