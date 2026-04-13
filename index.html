@@ -64,6 +64,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
   --section-y-lg:   clamp(6.5rem, 14vw, 12rem);
   --gap-phi:        clamp(1.125rem, 3.2vw, 2.618rem);
   --sacred-stroke:  rgba(184, 100, 71, 0.14);
+  /* Dlaždice posvátné geometrie (květ života + hex) — sdílená napříč sekcemi */
+  --verca-geo-tile: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%232C3830%22%3E%3Cg%20stroke-width%3D%220.42%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%220.36%22%20opacity%3D%220.72%22%20transform%3D%22rotate(30%2060%2060)%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2226%22%20stroke-width%3D%220.3%22%20opacity%3D%220.52%22%2F%3E%3Cpath%20stroke-width%3D%220.32%22%20opacity%3D%220.58%22%20d%3D%22M60%2034%20L85.2%2048.5V79.5L60%2094L34.8%2079.5V48.5Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  --verca-geo-tile-light: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23d4c9b8%22%3E%3Cg%20stroke-width%3D%220.42%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%220.36%22%20opacity%3D%220.72%22%20transform%3D%22rotate(30%2060%2060)%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2226%22%20stroke-width%3D%220.3%22%20opacity%3D%220.52%22%2F%3E%3Cpath%20stroke-width%3D%220.32%22%20opacity%3D%220.58%22%20d%3D%22M60%2034%20L85.2%2048.5V79.5L60%2094L34.8%2079.5V48.5Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
 
   --line:           rgba(26, 24, 22, 0.08);
   --glass-bg:       rgba(245, 243, 239, 0.95);
@@ -139,7 +142,7 @@ html.verca-lite #verca-ocean-canvas {
   pointer-events: none;
   /* Květ života + rotovaná kopie + hex — prosvítá skrz „glass“ sekce */
   opacity: 0.055;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%232C3830%22%3E%3Cg%20stroke-width%3D%220.42%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Cg%20stroke-width%3D%220.36%22%20opacity%3D%220.72%22%20transform%3D%22rotate(30%2060%2060)%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2284%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2260%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3Ccircle%20cx%3D%2274%22%20cy%3D%2236%22%20r%3D%2214%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2226%22%20stroke-width%3D%220.3%22%20opacity%3D%220.52%22%2F%3E%3Cpath%20stroke-width%3D%220.32%22%20opacity%3D%220.58%22%20d%3D%22M60%2034%20L85.2%2048.5V79.5L60%2094L34.8%2079.5V48.5Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: var(--verca-geo-tile);
   background-size: 92px 92px;
   background-position: 10% 16%;
 }
@@ -192,6 +195,98 @@ html.verca-lite .experience__sacred-bg {
 .verca-surface > * {
   position: relative;
   z-index: 1;
+}
+
+/* Posvátná geometrie v jednotlivých sekcích (sekce s vlastním ::before — filosofie, prostory — používají ::after) */
+.trust {
+  position: relative;
+}
+.trust::before,
+section.services::before,
+section.testimonials::before,
+section.products::before,
+section.about::before,
+section.faq::before,
+section.contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.048;
+  background-image: var(--verca-geo-tile);
+  background-size: 88px 88px;
+  background-repeat: repeat;
+  background-position: 16% 22%;
+}
+.philosophy::after,
+.prostory::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.048;
+  background-image: var(--verca-geo-tile);
+  background-size: 88px 88px;
+  background-repeat: repeat;
+  background-position: 22% 18%;
+}
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.065;
+  background-image: var(--verca-geo-tile-light);
+  background-size: 84px 84px;
+  background-repeat: repeat;
+  background-position: 48% 36%;
+}
+.philosophy > .container,
+.trust > .container,
+section.services > .container,
+section.testimonials > .container,
+section.products > .container,
+section.about > .container,
+section.faq > .container,
+section.contact > .container,
+.footer .footer__inner {
+  position: relative;
+  z-index: 1;
+}
+.philosophy::before {
+  z-index: 0;
+}
+.prostory::before {
+  z-index: 0;
+}
+.reduce-motion .trust::before,
+.reduce-motion .philosophy::after,
+.reduce-motion .prostory::after,
+.reduce-motion section.services::before,
+.reduce-motion section.testimonials::before,
+.reduce-motion section.products::before,
+.reduce-motion section.about::before,
+.reduce-motion section.faq::before,
+.reduce-motion section.contact::before,
+.reduce-motion .footer::before {
+  opacity: 0.026;
+}
+html.verca-lite .trust::before,
+html.verca-lite .philosophy::after,
+html.verca-lite .prostory::after,
+html.verca-lite section.services::before,
+html.verca-lite section.testimonials::before,
+html.verca-lite section.products::before,
+html.verca-lite section.about::before,
+html.verca-lite section.faq::before,
+html.verca-lite section.contact::before {
+  opacity: 0.034;
+}
+html.verca-lite .footer::before {
+  opacity: 0.05;
 }
 
 /* ═══ TYPOGRAPHY ═══ */
@@ -1976,6 +2071,21 @@ html:not(.verca-savedata):not(.reduce-motion) .verca-surface::before {
   opacity: 0.074;
 }
 
+html:not(.verca-savedata):not(.reduce-motion) .trust::before,
+html:not(.verca-savedata):not(.reduce-motion) .philosophy::after,
+html:not(.verca-savedata):not(.reduce-motion) .prostory::after,
+html:not(.verca-savedata):not(.reduce-motion) section.services::before,
+html:not(.verca-savedata):not(.reduce-motion) section.testimonials::before,
+html:not(.verca-savedata):not(.reduce-motion) section.products::before,
+html:not(.verca-savedata):not(.reduce-motion) section.about::before,
+html:not(.verca-savedata):not(.reduce-motion) section.faq::before,
+html:not(.verca-savedata):not(.reduce-motion) section.contact::before {
+  opacity: 0.07;
+}
+html:not(.verca-savedata):not(.reduce-motion) .footer::before {
+  opacity: 0.09;
+}
+
 html:not(.verca-savedata):not(.reduce-motion) .nav {
   background: rgba(245, 243, 239, 0.5);
   backdrop-filter: blur(20px) saturate(130%);
@@ -2149,6 +2259,20 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 @media (max-width: 768px) {
   html:not(.verca-savedata):not(.reduce-motion) .verca-surface::before {
     opacity: 0.058;
+  }
+  html:not(.verca-savedata):not(.reduce-motion) .trust::before,
+  html:not(.verca-savedata):not(.reduce-motion) .philosophy::after,
+  html:not(.verca-savedata):not(.reduce-motion) .prostory::after,
+  html:not(.verca-savedata):not(.reduce-motion) section.services::before,
+  html:not(.verca-savedata):not(.reduce-motion) section.testimonials::before,
+  html:not(.verca-savedata):not(.reduce-motion) section.products::before,
+  html:not(.verca-savedata):not(.reduce-motion) section.about::before,
+  html:not(.verca-savedata):not(.reduce-motion) section.faq::before,
+  html:not(.verca-savedata):not(.reduce-motion) section.contact::before {
+    opacity: 0.054;
+  }
+  html:not(.verca-savedata):not(.reduce-motion) .footer::before {
+    opacity: 0.075;
   }
   html:not(.verca-savedata):not(.reduce-motion) .nav {
     backdrop-filter: blur(12px) saturate(115%);
