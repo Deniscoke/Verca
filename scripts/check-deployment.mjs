@@ -21,6 +21,16 @@ async function main() {
   console.log('GET', url, '→', res.status);
   console.log(JSON.stringify(safe, null, 2));
 
+  const catalogUrl = `${base}/api/store/catalog`;
+  try {
+    const cRes = await fetch(catalogUrl);
+    const cj = await cRes.json().catch(() => ({}));
+    console.log('\nGET', catalogUrl, '→', cRes.status);
+    console.log('store catalog items:', Array.isArray(cj.items) ? cj.items.length : 0);
+  } catch (_) {
+    console.log('\nGET', catalogUrl, '→ (nepodařilo se načíst)');
+  }
+
   console.log('\n--- Další kroky (ručně v dashboardu) ---');
   if (j.urls && j.urls.authCallback) {
     console.log('Supabase → Auth → URL Configuration → Redirect URLs ← přidejte:');

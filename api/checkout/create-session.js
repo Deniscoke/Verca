@@ -9,19 +9,7 @@ var env = require('../_lib/env');
 var readBody = require('../_lib/read-body');
 var getStripe = require('../_lib/stripe-client').getStripe;
 var siteUrlLib = require('../_lib/site-url');
-
-function allowedPriceSet() {
-  var raw =
-    (process.env.STRIPE_ALLOWED_PRICE_IDS || '') +
-    ',' +
-    (process.env.STRIPE_TEST_PRICE_ID || '');
-  var set = new Set();
-  raw.split(/[,\s]+/).forEach(function (p) {
-    var t = p.trim();
-    if (t) set.add(t);
-  });
-  return set;
-}
+var stripePrices = require('../_lib/stripe-prices');
 
 module.exports = function createCheckoutSession(req, res) {
   http.noStore(res);
@@ -39,7 +27,7 @@ module.exports = function createCheckoutSession(req, res) {
     });
   }
 
-  var allowed = allowedPriceSet();
+  var allowed = stripePrices.allowedPriceSet();
   if (allowed.size === 0) {
     return http.json(res, 503, {
       error: 'price_allowlist_empty',
