@@ -263,7 +263,8 @@
     window.setTimeout(cleanup, 900);
   }
 
-  gate.addEventListener('click', function () {
+  gate.addEventListener('click', function (ev) {
+    if (ev.target && ev.target.closest && ev.target.closest('.verca-entry-gate__cookies')) return;
     finishEntry();
   });
 
