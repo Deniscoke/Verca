@@ -12,7 +12,7 @@ Use this as ground truth when choosing libraries, patterns, and scope. Prefer **
 - **Frontend:** Static HTML, CSS (`css/`, large inline `<style>` on `index.html`), vanilla JS (`js/`), no React/Next bundler.
 - **Backend:** Vercel serverless **`api/*.js`** (Node **CommonJS**, `require`), **`fetch`** available on Node 18+.
 - **Auth / data:** **Supabase** (OAuth Google via hosted flow, `auth-callback.html`, anon key exposed only via `/api/public-config` as designed). Optional **`public.profiles`** — see `db/supabase-auth-profiles.sql`.
-- **Payments:** **Stripe** Checkout (`api/checkout/create-session.js`), webhooks (`api/webhooks/stripe.js`), veřejný katalog (`GET /api/store/catalog` + `api/store/catalog.json`), dependency `stripe` v root `package.json`.
+- **Payments:** **Stripe** Checkout (`api/checkout/create-session.js`), webhooks (`api/webhooks/stripe.js`), veřejný katalog (`GET /api/store/catalog` čte `api/store/products.json`), dependency `stripe` v root `package.json`.
 - **Deploy:** Vercel; env via Vercel + `.env` locally (gitignored). See `.env.example`.
 
 This is **not** a Next.js / TypeScript app unless the codebase is migrated — do not assume App Router, `next.config`, or TS paths.

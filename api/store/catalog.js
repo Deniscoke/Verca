@@ -11,13 +11,14 @@ var http = require('../_lib/http');
 var stripePrices = require('../_lib/stripe-prices');
 
 function loadRawCatalog() {
-  var filePath = path.join(__dirname, 'catalog.json');
+  // Soubor musí mít jiný basename než catalog.js — Vercel neumožňuje catalog.js + catalog.json ve stejné složce.
+  var filePath = path.join(__dirname, 'products.json');
   try {
     var raw = fs.readFileSync(filePath, 'utf8');
     var data = JSON.parse(raw);
     return Array.isArray(data) ? data : [];
   } catch (e) {
-    console.error('[store/catalog] read catalog.json', e && e.message ? e.message : e);
+    console.error('[store/catalog] read products.json', e && e.message ? e.message : e);
     return [];
   }
 }

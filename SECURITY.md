@@ -42,7 +42,7 @@ Implementace: `api/checkout/create-session.js` (Checkout Session + allowlist cen
 
 **`GET /api/public-config`:** Returns only **non-service** values for the static shop UI (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, public redirect URLs). The anon key is for browser use with **RLS**; never return `SUPABASE_SERVICE_ROLE_KEY` or other secrets from this endpoint.
 
-**`GET /api/store/catalog`:** Returns product **metadata** (name, slug, image paths, Stripe `price` IDs) from `api/store/catalog.json`, but only for `price` values present in the server allowlist (`STRIPE_ALLOWED_PRICE_IDS` / `STRIPE_TEST_PRICE_ID`). Do not put secrets in that JSON; treat it as public.
+**`GET /api/store/catalog`:** Returns product **metadata** (name, slug, image paths, Stripe `price` IDs) from `api/store/products.json`, but only for `price` values present in the server allowlist (`STRIPE_ALLOWED_PRICE_IDS` / `STRIPE_TEST_PRICE_ID`). Do not put secrets in that JSON; treat it as public.
 
 ---
 
