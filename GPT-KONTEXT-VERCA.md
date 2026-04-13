@@ -174,7 +174,7 @@ When `.verca-lite`: sections have **opaque** solid backgrounds, no blur.
 | Scroll reveals (fade+translate, reverse on scroll up) | `verca-ui-scroll-effects.js → vercaJuxtInitReveals` (toggleActions: `play none none reverse`) |
 | Anchor click | GSAP `scrollTo` when wheel-smooth active, else native `scrollTo({behavior:'smooth'})` |
 | Hero parallax | Inline GSAP — blob drift, video y-shift on scroll |
-| Day/night track | `heroDayTrackFill` width = scroll progress, label cycles through Úsvit→Noc→Hlubina |
+| Day track | `heroDayTrackFill` scaleX = scroll progress (bez textového popisku) |
 | Ocean sun arc | `verca-ocean.js` — `uS` uniform driven by scroll position |
 
 ---
