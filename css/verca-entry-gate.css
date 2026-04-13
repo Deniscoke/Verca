@@ -255,6 +255,46 @@ html.verca-entry-done .verca-entry-gate {
   animation: none;
 }
 
+/* Semínko života — jemný kruhový vzor (doplněk k dlaždici) */
+.verca-entry-gate__seed {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: min(78vmin, 480px);
+  height: min(78vmin, 480px);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 248, 240, 0.35) 0%, transparent 42%),
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23a08068%22%20stroke-width%3D%220.55%22%20opacity%3D%220.9%22%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2222%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%2278%22%20r%3D%2222%22%2F%3E%3Ccircle%20cx%3D%22119%22%20cy%3D%2289%22%20r%3D%2222%22%2F%3E%3Ccircle%20cx%3D%22119%22%20cy%3D%22111%22%20r%3D%2222%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22122%22%20r%3D%2222%22%2F%3E%3Ccircle%20cx%3D%2281%22%20cy%3D%22111%22%20r%3D%2222%22%2F%3E%3Ccircle%20cx%3D%2281%22%20cy%3D%2289%22%20r%3D%2222%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")
+    center / contain no-repeat;
+  animation: verca-entry-seed-breathe 52s ease-in-out infinite alternate;
+}
+
+@keyframes verca-entry-seed-breathe {
+  0% {
+    transform: translate(-50%, -50%) scale(0.88);
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.04);
+    opacity: 0.2;
+  }
+}
+
+/* Květy podél čar ke kurzoru (canvas overlay) */
+.verca-entry-gate__line-adorn {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: block;
+}
+
 .reduce-motion .verca-entry-gate__bloom,
 .reduce-motion .verca-entry-gate__orb--1,
 .reduce-motion .verca-entry-gate__orb--2 {
@@ -262,6 +302,12 @@ html.verca-entry-done .verca-entry-gate {
   opacity: 0.75;
   filter: none;
   transform: translate(-50%, -50%) scale(0.92);
+}
+
+.reduce-motion .verca-entry-gate__seed {
+  animation: none;
+  opacity: 0.14;
+  transform: translate(-50%, -50%) scale(0.96);
 }
 
 #verca-entry-particles {
