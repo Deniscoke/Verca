@@ -1,6 +1,6 @@
 /**
- * Vstupní brána — cream, posvátná geometrie (dlaždice --verca-geo-tile z :root),
- * φ‑časované animace, hexové kruhy + particles (inspirace interactive-particle-glow, MIT).
+ * Vstupní brána — bez viditelného UI: cream, posvátná geometrie, pomalý „bloom“ (přiblížení),
+ * hexové kruhy + particles (interactive-particle-glow, MIT).
  */
 html:not(.verca-entry-done) body {
   overflow: hidden;
@@ -11,9 +11,7 @@ html:not(.verca-entry-done) body {
   inset: 0;
   z-index: 250;
   isolation: isolate;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
     max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
   background:
@@ -23,17 +21,34 @@ html:not(.verca-entry-done) body {
     linear-gradient(168deg, #f7f4ee 0%, #f0ebe3 42%, #e8e4dc 100%);
   cursor: pointer;
   opacity: 1;
+  outline: none;
   transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Dlaždice květ + hex (stejná data jako úvodní stránka) */
+.verca-entry-gate:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(184, 100, 71, 0.35);
+}
+
+.verca-entry-gate__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Dlaždice květ + hex */
 .verca-entry-gate::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.11;
+  opacity: 0.12;
   background-image: var(--verca-geo-tile, none);
   background-size: 74px 74px;
   background-repeat: repeat;
@@ -47,7 +62,7 @@ html:not(.verca-entry-done) body {
   inset: -15%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.075;
+  opacity: 0.08;
   background-image: var(--verca-geo-tile, none);
   background-size: 98px 98px;
   background-repeat: repeat;
@@ -93,14 +108,49 @@ html.verca-entry-done .verca-entry-gate {
   z-index: 0;
 }
 
+/* Centrální bloom: začíná „daleko“ (malý, rozmazaný, slabý) → pomalu se přiblíží */
+.verca-entry-gate__bloom {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: min(150vmin, 920px);
+  height: min(150vmin, 920px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    circle at 48% 46%,
+    rgba(255, 244, 232, 0.72) 0%,
+    rgba(245, 214, 188, 0.38) 22%,
+    rgba(232, 188, 160, 0.16) 42%,
+    rgba(240, 228, 215, 0.06) 58%,
+    transparent 72%
+  );
+  animation: verca-entry-bloom-approach 36s ease-in-out infinite alternate;
+}
+
+@keyframes verca-entry-bloom-approach {
+  0% {
+    transform: translate(-50%, -50%) scale(0.52);
+    opacity: 0.32;
+    filter: blur(22px);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.06);
+    opacity: 0.98;
+    filter: blur(0px);
+  }
+}
+
 .verca-entry-gate__orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(0);
   pointer-events: none;
+  z-index: 0;
 }
 
-/* φ‑oddělené periody: ~38.2 s a ~23.6 s (≈ 1,618) */
 .verca-entry-gate__orb--1 {
   width: min(120vmin, 720px);
   height: min(120vmin, 720px);
@@ -113,8 +163,7 @@ html.verca-entry-done .verca-entry-gate {
     rgba(201, 123, 92, 0.12) 42%,
     transparent 68%
   );
-  opacity: 0.85;
-  animation: verca-entry-orbit-a 38.2s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+  animation: verca-entry-orb-breathe 42s ease-in-out infinite alternate;
 }
 
 .verca-entry-gate__orb--2 {
@@ -129,39 +178,35 @@ html.verca-entry-done .verca-entry-gate {
     rgba(90, 114, 96, 0.08) 45%,
     transparent 70%
   );
-  opacity: 0.7;
-  animation: verca-entry-orbit-b 23.6s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+  animation: verca-entry-orb-breathe-sage 34s ease-in-out infinite alternate;
 }
 
-@keyframes verca-entry-orbit-a {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.78;
+@keyframes verca-entry-orb-breathe {
+  0% {
+    transform: translate(-50%, -50%) scale(0.62);
+    opacity: 0.48;
+    filter: blur(12px);
   }
-  33% {
-    transform: translate(-50%, -50%) translate(1.5%, -1.1%) scale(1.045) rotate(2deg);
+  100% {
+    transform: translate(-50%, -50%) scale(1.04) translate(0.8%, -0.5%);
     opacity: 0.9;
-  }
-  66% {
-    transform: translate(-50%, -50%) translate(-1.2%, 1.3%) scale(1.03) rotate(-1.5deg);
-    opacity: 0.82;
+    filter: blur(0px);
   }
 }
 
-@keyframes verca-entry-orbit-b {
-  0%,
+@keyframes verca-entry-orb-breathe-sage {
+  0% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 0.4;
+    filter: blur(10px);
+  }
   100% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(1.02) rotate(0deg);
-    opacity: 0.62;
-  }
-  50% {
-    transform: translate(-50%, -50%) translate(1%, 0.8%) scale(1.08) rotate(5deg);
-    opacity: 0.82;
+    transform: translate(-50%, -50%) scale(1.08) translate(-0.6%, 0.4%);
+    opacity: 0.78;
+    filter: blur(0px);
   }
 }
 
-/* Hexové „mandaly“ — jemný obrys, pomalá rotace (6 · 12.73 s ≈ 76 s cyklus) */
 .verca-entry-gate__rings {
   position: absolute;
   left: 50%;
@@ -210,10 +255,13 @@ html.verca-entry-done .verca-entry-gate {
   animation: none;
 }
 
+.reduce-motion .verca-entry-gate__bloom,
 .reduce-motion .verca-entry-gate__orb--1,
 .reduce-motion .verca-entry-gate__orb--2 {
   animation: none;
   opacity: 0.75;
+  filter: none;
+  transform: translate(-50%, -50%) scale(0.92);
 }
 
 #verca-entry-particles {
@@ -226,74 +274,4 @@ html.verca-entry-done .verca-entry-gate {
 
 #verca-entry-particles canvas {
   display: block;
-}
-
-.verca-entry-gate__panel {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 26rem;
-  pointer-events: none;
-}
-
-.verca-entry-gate__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
-  font-size: clamp(2.5rem, 8vw, 3.75rem);
-  letter-spacing: 0.12em;
-  color: var(--charcoal, #1a1816);
-  margin-bottom: 0.35rem;
-}
-
-.verca-entry-gate__tag {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-muted, #8a847c);
-  margin-bottom: 1.75rem;
-}
-
-.verca-entry-gate__btn {
-  pointer-events: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 40px;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--terracotta, #b86447);
-  border: 1.5px solid var(--terracotta, #b86447);
-  border-radius: 999px;
-  box-shadow: 0 10px 32px rgba(42, 38, 34, 0.12);
-  cursor: pointer;
-  transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.55s,
-    background 0.35s;
-}
-
-.verca-entry-gate__btn:hover,
-.verca-entry-gate__btn:focus-visible {
-  background: #a4563c;
-  border-color: #a4563c;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 40px rgba(42, 38, 34, 0.14);
-  outline: none;
-}
-
-.verca-entry-gate__btn:active {
-  transform: translateY(0);
-}
-
-.verca-entry-gate__hint {
-  margin-top: 1.25rem;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-size: 12px;
-  color: var(--text-soft, #5c564e);
-  opacity: 0.85;
 }

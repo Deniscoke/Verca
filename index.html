@@ -2433,8 +2433,10 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 </audio>
 <script src="js/verca-ambient.js" defer></script>
 
-<div id="verca-entry-gate" class="verca-entry-gate" role="dialog" aria-modal="true" aria-labelledby="verca-entry-title" aria-describedby="verca-entry-hint">
+<div id="verca-entry-gate" class="verca-entry-gate" role="dialog" aria-modal="true" aria-label="Úvodní prostor" aria-describedby="verca-entry-sr" tabindex="-1">
+  <p id="verca-entry-sr" class="verca-entry-gate__sr-only">Pokračujte kliknutím kamkoli na obrazovku nebo klávesou Enter.</p>
   <div class="verca-entry-gate__glow-wrap" aria-hidden="true">
+    <div class="verca-entry-gate__bloom"></div>
     <div class="verca-entry-gate__orb verca-entry-gate__orb--1"></div>
     <div class="verca-entry-gate__orb verca-entry-gate__orb--2"></div>
   </div>
@@ -2443,12 +2445,6 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     <div class="verca-entry-gate__ring verca-entry-gate__ring--inner"></div>
   </div>
   <div id="verca-entry-particles" aria-hidden="true"></div>
-  <div class="verca-entry-gate__panel">
-    <p class="verca-entry-gate__title" id="verca-entry-title">Verca</p>
-    <p class="verca-entry-gate__tag">Jemná péče · posvátná geometrie v nádechu</p>
-    <button type="button" class="verca-entry-gate__btn" id="verca-entry-btn">Vstoupit</button>
-    <p class="verca-entry-gate__hint" id="verca-entry-hint">Kliknutím vstoupíte na úvodní stránku — nebo klepněte kamkoli do pozadí.</p>
-  </div>
 </div>
 
 <div class="verca-surface">

@@ -21,7 +21,6 @@
     return;
   }
 
-  var btn = document.getElementById('verca-entry-btn');
   var finished = false;
   var cleaned = false;
 
@@ -71,17 +70,9 @@
     window.setTimeout(cleanup, 900);
   }
 
-  gate.addEventListener('click', function (e) {
-    if (e.target.closest('#verca-entry-btn')) return;
+  gate.addEventListener('click', function () {
     finishEntry();
   });
-
-  if (btn) {
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      finishEntry();
-    });
-  }
 
   document.addEventListener('keydown', function keyEnter(e) {
     if (root.classList.contains('verca-entry-done')) return;
@@ -134,7 +125,7 @@
         },
         move: {
           enable: true,
-          speed: lite ? 0.32 : 0.48,
+          speed: lite ? 0.22 : 0.34,
           direction: 'none',
           random: true,
           straight: false,
@@ -173,13 +164,11 @@
       },
       retina_detect: true
     });
-    if (btn && typeof btn.focus === 'function') {
-      window.requestAnimationFrame(function () {
-        try {
-          btn.focus();
-        } catch (f) {}
-      });
-    }
+    window.requestAnimationFrame(function () {
+      try {
+        gate.focus();
+      } catch (f) {}
+    });
   }
 
   if (document.readyState === 'loading') {
