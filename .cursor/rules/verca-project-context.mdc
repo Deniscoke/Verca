@@ -1,0 +1,49 @@
+---
+description: VERCA project context — stack, stage, priorities, constraints for all agent work.
+alwaysApply: true
+---
+
+# VERCA — project context
+
+Use this as ground truth when choosing libraries, patterns, and scope. Prefer **concrete files and flows** in this repo over generic stack advice.
+
+## Stack
+
+- **Frontend:** Static HTML, CSS (`css/`, large inline `<style>` on `index.html`), vanilla JS (`js/`), no React/Next bundler.
+- **Backend:** Vercel serverless **`api/*.js`** (Node **CommonJS**, `require`), **`fetch`** available on Node 18+.
+- **Auth / data:** **Supabase** (OAuth Google via hosted flow, `auth-callback.html`, anon key exposed only via `/api/public-config` as designed). Optional **`public.profiles`** — see `db/supabase-auth-profiles.sql`.
+- **Payments:** **Stripe** Checkout (`api/checkout/create-session.js`), webhooks (`api/webhooks/stripe.js`), dependency in root `package.json`.
+- **Deploy:** Vercel; env via Vercel + `.env` locally (gitignored). See `.env.example`.
+
+This is **not** a Next.js / TypeScript app unless the codebase is migrated — do not assume App Router, `next.config`, or TS paths.
+
+## App type
+
+- **Brand:** Verca — jemná přírodní péče, **bylinný ateliér** (e-shop v přípravě), doplňkově obsah o těle / vědomí (bez přehnaných zdravotních tvrzení v kódu).
+- **Users:** Návštěvníci webu, volitelné přihlášení (Google), host checkout / test platby.
+
+## Current stage
+
+- **MVP / early beta:** OAuth + účet UI na ateliéru, Stripe test flow, veřejná konfigurace z env; **plná produktová nabídka a objednávky v DB** nejsou hotové.
+
+## Priority (ordered)
+
+1. **MVP speed** — malé bezpečné iterace, nasazení na `main` → Vercel.
+2. **Robustnost** — validace, chyby, bezpečnost na API.
+3. **Konverze / důvěra** — hlavní cesty (kontakt, ateliér, přihlášení, checkout).
+4. **Výkon** — respektovat existující `verca-perf-boot.js` / `verca-lite` chování.
+
+## Constraints
+
+- **Existující kód:** Neměnit architekturu bez silného důvodu; žádný velký rewrite na framework bez explicitního zadání.
+- **Malý tým / údržba:** Jednoduché, čitelné soubory; minimální nové závislosti (odůvodnit každou).
+- **Repo pravidla:** Po změnách viz `.cursor/rules/deploy-after-changes.mdc` (commit + push na `main`), pokud uživatel neřekne jinak.
+- **Compliance / data:** Obchod oddělen od zdravotních záznamů — viz `SECURITY.md`, `docs/`.
+
+## Coding style preferences
+
+- **Simple, explicit, modular** v rámci současné struktury (`api/_lib/*`, sdílené helpery).
+- **Minimal dependencies** — upřednostnit nativní Node / fetch; Stripe už je v projektu.
+- **Naming** — sladit s existujícími soubory (čeština v UI copy, angličtina v API kódu je běžná v tomto repu).
+
+When the user’s message conflicts with this file, **follow the user’s latest explicit instruction** and offer to update this context if their direction is permanent.
