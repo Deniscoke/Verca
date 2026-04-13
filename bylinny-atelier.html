@@ -85,7 +85,7 @@
     </p>
     <p class="atelier-shop-config__env-hint">
       V <code>.env</code> nastavte mimo jiné: <code>PUBLIC_SITE_URL</code>, <code>SUPABASE_URL</code>, <code>SUPABASE_ANON_KEY</code>;
-      pro Google pak <code>PUBLIC_GOOGLE_LOGIN_ENABLED=true</code> a v Supabase povolenou adresu přesměrování (<code>SUPABASE_AUTH_REDIRECT_URL</code> nebo výchozí <code>…/auth-callback.html</code>).
+      pro Google: v Supabase povolený provider + přesměrování (<code>SUPABASE_AUTH_REDIRECT_URL</code> nebo výchozí <code>…/auth-callback.html</code>); tlačítko vypnete jen explicitně (<code>PUBLIC_GOOGLE_LOGIN_ENABLED=false</code>).
       Pro Stripe: <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET</code>, <code>STRIPE_TEST_PRICE_ID</code> (nebo <code>STRIPE_ALLOWED_PRICE_IDS</code>), webhook URL ve Stripe: <code>/api/webhooks/stripe</code>.
       Katalog pro budoucí výpis produktů: <code>GET /api/store/catalog</code> (data v <code>api/store/products.json</code>, filtrované allowlistem).
     </p>

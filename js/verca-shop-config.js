@@ -81,10 +81,10 @@
     if (cfg.configured) {
       parts.push('Supabase konfigurace je načtená.');
       if (cfg.features && cfg.features.googleLogin) {
-        parts.push('Přihlášení přes Google je zapnuté.');
+        parts.push('Přihlášení přes Google je zapnuté (ověřte provider a Redirect URLs v Supabase).');
       } else {
         parts.push(
-          'Google: nastavte PUBLIC_GOOGLE_LOGIN_ENABLED=true a Redirect URLs v Supabase.'
+          'Google přihlášení není k dispozici — v prostředí je vypnuté (PUBLIC_GOOGLE_LOGIN_ENABLED=false), nebo chybí adresa webu pro návrat po OAuth (PUBLIC_SITE_URL / SUPABASE_AUTH_REDIRECT_URL).'
         );
       }
       if (

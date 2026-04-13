@@ -56,7 +56,7 @@ async function main() {
   }
   if (!j.features || !j.features.googleLogin) {
     console.log(
-      'Google login: PUBLIC_GOOGLE_LOGIN_ENABLED=true + Google provider v Supabase + redirect URL výše.'
+      'Google login: Google provider + Redirect URLs v Supabase; v prostředí odstraňte PUBLIC_GOOGLE_LOGIN_ENABLED=false (nebo doplňte site URL / SUPABASE_AUTH_REDIRECT_URL).'
     );
   }
 }

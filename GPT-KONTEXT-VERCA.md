@@ -249,7 +249,7 @@ Stejné hodnoty zkopírovat do **Vercel → Project → Settings → Environment
 
 - Aplikovat SQL migraci z `db/schema-proposal.sql` (nebo upravit podle `auth.users`), zapnout **RLS**.
 - Webhook Stripe doplnit o zápis `orders` / `payments` / `webhook_events`.
-- Volitelně: `PUBLIC_GOOGLE_LOGIN_ENABLED=true` + Google provider v Supabase.
+- Google OAuth: ve výchozím stavu zapnuto při kompletním Supabase; vypnutí explicitně `PUBLIC_GOOGLE_LOGIN_ENABLED=false` + provider a Redirect URLs v Supabase.
 
 ---
 

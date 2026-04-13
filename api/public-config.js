@@ -33,10 +33,11 @@ module.exports = function publicConfig(req, res) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
     '';
-  var googleEnabled =
-    String(process.env.PUBLIC_GOOGLE_LOGIN_ENABLED || '')
-      .toLowerCase()
-      .trim() === 'true';
+  /* Google OAuth: vypnutí jen explicitně (false/0/no). Když proměnná chybí, tlačítko se zobrazí při kompletním Supabase — stále musí být provider + Redirect URLs v dashboardu. */
+  var googleEnv = String(process.env.PUBLIC_GOOGLE_LOGIN_ENABLED || '')
+    .toLowerCase()
+    .trim();
+  var googleEnabled = !(googleEnv === 'false' || googleEnv === '0' || googleEnv === 'no');
 
   var defaultCallback = siteUrl ? siteUrl + '/auth-callback.html' : '';
   var authRedirectUrl = trimSlash(process.env.SUPABASE_AUTH_REDIRECT_URL || '') || defaultCallback;
