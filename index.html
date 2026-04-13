@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F5F3EF">
+<script>
+(function () {
+  try {
+    var sp = new URLSearchParams(window.location.search);
+    if (sp.get('gate') === '1' || sp.get('welcome') === '1') {
+      sessionStorage.removeItem('vercaEntered');
+    } else if (sessionStorage.getItem('vercaEntered') === '1') {
+      document.documentElement.classList.add('verca-entry-done');
+    }
+  } catch (e) {}
+})();
+</script>
 <meta name="format-detection" content="telephone=no">
 <title>Verca — Jemná přírodní péče</title>
 <meta name="description" content="Ručně připravované bylinné přípravky a jemná péče o tělo — texty nabídky se ladí; e-shop v přípravě.">
@@ -12,6 +24,7 @@
 <link rel="preload" as="image" href="images/IMG_0964.JPG" media="(max-width: 768px)">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet">
 <link rel="stylesheet" href="css/verca-transitions.css">
+<link rel="stylesheet" href="css/verca-entry-gate.css">
 <style>
 
 /* ═══ RESET ═══ */
@@ -2420,6 +2433,20 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 </audio>
 <script src="js/verca-ambient.js" defer></script>
 
+<div id="verca-entry-gate" class="verca-entry-gate" role="dialog" aria-modal="true" aria-labelledby="verca-entry-title" aria-describedby="verca-entry-hint">
+  <div class="verca-entry-gate__glow-wrap" aria-hidden="true">
+    <div class="verca-entry-gate__orb verca-entry-gate__orb--1"></div>
+    <div class="verca-entry-gate__orb verca-entry-gate__orb--2"></div>
+  </div>
+  <div id="verca-entry-particles" aria-hidden="true"></div>
+  <div class="verca-entry-gate__panel">
+    <p class="verca-entry-gate__title" id="verca-entry-title">Verca</p>
+    <p class="verca-entry-gate__tag">Jemná přírodní péče</p>
+    <button type="button" class="verca-entry-gate__btn" id="verca-entry-btn">Vstoupit</button>
+    <p class="verca-entry-gate__hint" id="verca-entry-hint">Kliknutím vstoupíte na úvodní stránku — nebo klepněte kamkoli do pozadí.</p>
+  </div>
+</div>
+
 <div class="verca-surface">
 <nav class="nav" id="nav" role="navigation" aria-label="Hlavní navigace">
   <a href="#" class="nav__logo">Verca</a>
@@ -2926,6 +2953,8 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" defer></script>
 <script src="js/verca-ui-scroll-effects.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.js" defer></script>
+<script src="js/verca-entry-gate.js" defer></script>
 <script>
 (function () {
   'use strict';

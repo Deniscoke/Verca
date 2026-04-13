@@ -9,6 +9,7 @@
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       html.classList.add('reduce-motion');
+      html.classList.add('verca-entry-done');
     }
   } catch (e) {}
 
