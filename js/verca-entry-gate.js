@@ -160,26 +160,61 @@
     adornRaf = window.requestAnimationFrame(lineAdornTick);
   }
 
+  function getParticlesCanvas() {
+    return document.querySelector('#verca-entry-particles canvas');
+  }
+
+  function updateMousePxFromClient(clientX, clientY) {
+    var c = getParticlesCanvas();
+    if (!c) return;
+    var r = c.getBoundingClientRect();
+    var sx = c.width / Math.max(1, c.offsetWidth);
+    var sy = c.height / Math.max(1, c.offsetHeight);
+    mousePx.x = (clientX - r.left) * sx;
+    mousePx.y = (clientY - r.top) * sy;
+  }
+
+  function recenterMousePx() {
+    var c = getParticlesCanvas();
+    if (!c) return;
+    mousePx.x = c.width * 0.5;
+    mousePx.y = c.height * 0.5;
+  }
+
   gate.addEventListener(
     'mousemove',
     function (ev) {
-      var c = document.querySelector('#verca-entry-particles canvas');
-      if (!c) return;
-      var r = c.getBoundingClientRect();
-      var sx = c.width / Math.max(1, c.offsetWidth);
-      var sy = c.height / Math.max(1, c.offsetHeight);
-      mousePx.x = (ev.clientX - r.left) * sx;
-      mousePx.y = (ev.clientY - r.top) * sy;
+      updateMousePxFromClient(ev.clientX, ev.clientY);
     },
     { passive: true }
   );
 
-  gate.addEventListener('mouseleave', function () {
-    var c = document.querySelector('#verca-entry-particles canvas');
-    if (!c) return;
-    mousePx.x = c.width * 0.5;
-    mousePx.y = c.height * 0.5;
-  });
+  gate.addEventListener('mouseleave', recenterMousePx);
+
+  function onGateTouch(ev) {
+    if (!ev.touches || ev.touches.length < 1) return;
+    var t = ev.touches[0];
+    updateMousePxFromClient(t.clientX, t.clientY);
+  }
+
+  gate.addEventListener('touchstart', onGateTouch, { passive: true });
+  gate.addEventListener('touchmove', onGateTouch, { passive: true });
+  gate.addEventListener(
+    'touchend',
+    function (ev) {
+      if (ev.touches.length === 0) recenterMousePx();
+      else onGateTouch(ev);
+    },
+    { passive: true }
+  );
+  gate.addEventListener(
+    'touchcancel',
+    function (ev) {
+      if (ev.touches.length === 0) recenterMousePx();
+      else onGateTouch(ev);
+    },
+    { passive: true }
+  );
 
   function destroyParticles() {
     if (typeof window.pJSDom !== 'undefined' && window.pJSDom && window.pJSDom.length) {
