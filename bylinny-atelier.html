@@ -40,6 +40,16 @@
     <a href="kontakt.html">Kontakt</a>
   </nav>
   <div class="atelier-top__end">
+    <details class="atelier-profile" data-atelier-profile hidden>
+      <summary class="atelier-profile__summary">Účet</summary>
+      <div class="atelier-profile__panel" role="group" aria-label="Účet a ochrana údajů">
+        <a href="#nakup" class="atelier-profile__link">Přihlášení v ateliéru</a>
+        <span class="atelier-profile__note" aria-disabled="true">Historie nákupů — připravujeme</span>
+        <a href="ochrana-osobnich-udaju.html" class="atelier-profile__link">Ochrana osobních údajů</a>
+        <a href="cookies.html" class="atelier-profile__link">Cookies</a>
+        <button type="button" class="atelier-profile__btn" data-atelier-nav-logout>Odhlásit</button>
+      </div>
+    </details>
     <button type="button" class="atelier-ambient" id="verca-ambient-toggle" aria-pressed="false" aria-label="Přehrát jemnou hudbu v pozadí" title="Hudba v pozadí">
       <svg class="ambient-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></svg>
       <svg class="ambient-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>

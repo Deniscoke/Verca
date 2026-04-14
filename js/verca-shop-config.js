@@ -14,6 +14,8 @@
   var accountWrap = root.querySelector('[data-shop-account]');
   var accountDetail = root.querySelector('[data-shop-account-detail]');
   var btnLogout = root.querySelector('[data-shop-logout]');
+  var profileDetails = document.querySelector('[data-atelier-profile]');
+  var btnNavLogout = document.querySelector('[data-atelier-nav-logout]');
 
   function setStatus(text, isError) {
     if (!statusEl) return;
@@ -139,11 +141,45 @@
     }
 
     if (btnGoogle) {
-      if (cfg.configured && cfg.features && cfg.features.googleLogin && cfg.urls && cfg.urls.googleAuthorize) {
+      /* OAuth musí jít přes supabase.auth.signInWithOAuth (PKCE). Přímý odkaz na /auth/v1/authorize bez klienta neuloží code_verifier → auth-callback nemá relaci. */
+      if (cfg.configured && cfg.features && cfg.features.googleLogin && cfg.urls && cfg.urls.authCallback) {
         btnGoogle.disabled = false;
         btnGoogle.removeAttribute('aria-disabled');
         btnGoogle.onclick = function () {
-          window.location.href = cfg.urls.googleAuthorize;
+          btnGoogle.disabled = true;
+          btnGoogle.setAttribute('aria-disabled', 'true');
+          import('https://esm.sh/@supabase/supabase-js@2.49.1')
+            .then(function (mod) {
+              var supabase = mod.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+                auth: {
+                  persistSession: true,
+                  detectSessionInUrl: false,
+                  flowType: 'pkce',
+                },
+              });
+              return supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                  redirectTo: cfg.urls.authCallback,
+                },
+              });
+            })
+            .then(function (out) {
+              if (out && out.error) {
+                setStatus(out.error.message || 'Přihlášení Google se nepodařilo spustit.', true);
+                btnGoogle.disabled = false;
+                btnGoogle.removeAttribute('aria-disabled');
+                return;
+              }
+              if (out && out.data && out.data.url) {
+                window.location.assign(out.data.url);
+              }
+            })
+            .catch(function () {
+              setStatus('Chyba při spuštění přihlášení (zkuste obnovit stránku).', true);
+              btnGoogle.disabled = false;
+              btnGoogle.removeAttribute('aria-disabled');
+            });
         };
       } else {
         btnGoogle.disabled = true;
@@ -183,6 +219,11 @@
         if (pack.err || !pack.session) {
           accountWrap.hidden = true;
           btnLogout.hidden = true;
+          if (profileDetails) {
+            profileDetails.hidden = true;
+            profileDetails.open = false;
+          }
+          if (btnNavLogout) btnNavLogout.onclick = null;
           return;
         }
         var session = pack.session;
@@ -191,11 +232,24 @@
         accountWrap.hidden = false;
         accountDetail.textContent = email ? 'Přihlášeni: ' + email : 'Přihlášeni';
         btnLogout.hidden = false;
-        btnLogout.onclick = function () {
+        function doSignOut() {
           supabase.auth.signOut().then(function () {
             window.location.reload();
           });
-        };
+        }
+        btnLogout.onclick = doSignOut;
+        if (profileDetails) {
+          profileDetails.hidden = false;
+          var sum = profileDetails.querySelector('summary');
+          if (sum) {
+            sum.textContent = email ? email.split('@')[0].slice(0, 18) || 'Účet' : 'Účet';
+          }
+        }
+        if (btnNavLogout) {
+          btnNavLogout.onclick = function () {
+            doSignOut();
+          };
+        }
         if (btnGoogle) {
           btnGoogle.disabled = true;
           btnGoogle.setAttribute('aria-disabled', 'true');

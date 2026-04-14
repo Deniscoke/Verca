@@ -75,7 +75,10 @@
     if (code) {
       const { error: exErr } = await supabase.auth.exchangeCodeForSession(code);
       if (exErr) {
-        msg.textContent = 'Dokončení přihlášení se nepodařilo: ' + (exErr.message || 'chyba OAuth');
+        const detail =
+          exErr.message ||
+          'chyba OAuth (zkuste znovu z ateliéru — přihlášení musí spustit tlačítko Google, ne přímý odkaz na /authorize).';
+        msg.textContent = 'Dokončení přihlášení se nepodařilo: ' + detail;
         throw exErr;
       }
       url.searchParams.delete('code');
