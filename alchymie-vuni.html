@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alchymie vůní — Verca</title>
 <meta name="description" content="Kurzy a dílny s éterickými oleji — osobní parfém, směsi na míru a vůně jako podpora nervové soustavy.">
+<meta name="verca:calendly" content="https://calendly.com/denis-mitrovi/new-meeting-1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet">
@@ -32,7 +33,7 @@
         <svg class="ambient-toggle-icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></svg>
         <svg class="ambient-toggle-icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
       </button>
-      <a href="index.html#prostory" class="back">← Zpět na úvod</a>
+      <a href="index.html#prostory" class="back" data-verca-history-back>← Zpět na úvod</a>
     </div>
   </div>
 
@@ -53,6 +54,14 @@
     <p class="note">Ozvu se s termíny nebo vám doporučím nejbližší setkání.</p>
     <div id="err" role="alert"></div>
 
+    <section class="contact-calendly-zone" aria-labelledby="cal-heading-alchymie">
+      <h2 id="cal-heading-alchymie" class="contact-subheading">Online termín (volitelné)</h2>
+      <p id="verca-calendly-fallback" class="contact-calendly-fallback">
+        Kalendář se zobrazí po doplnění meta značky <code class="contact-code">verca:calendly</code> v hlavičce této stránky platnou adresou Calendly.
+      </p>
+      <div id="verca-calendly-root" class="contact-calendly-frame" hidden></div>
+    </section>
+
     <nav class="room-cross" aria-label="Další prostory">
       <a href="esence-zeny.html">Esence ženy</a><span class="sep">·</span>
       <a href="tajemstvi-panevniho-dna.html">Tajemství pánevního dna</a><span class="sep">·</span>
@@ -63,6 +72,7 @@
   <p class="attrib">v spolupráci s IndiWeb</p>
 </div>
 
+<script src="js/verca-calendly-inline.js"></script>
 <script src="js/verca-room-gl.js"></script>
 </body>
 </html>

@@ -38,6 +38,23 @@
     return path.replace(/\/index\.html$/i, '/').replace(/\/$/, '') || '/';
   }
 
+  function shouldPreferHistoryBack(a) {
+    return a && a.hasAttribute('data-verca-history-back');
+  }
+
+  function tryHistoryBack() {
+    try {
+      if (window.history.length <= 1) return false;
+      var ref = document.referrer || '';
+      if (!ref) return false;
+      if (new URL(ref).origin !== window.location.origin) return false;
+      window.history.back();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function shouldSkipAnchor(a, event) {
     if (!a || a.getAttribute('href') == null) return true;
     if (event.defaultPrevented) return true;
@@ -106,6 +123,11 @@
       function (e) {
         var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
         if (!a || shouldSkipAnchor(a, e)) return;
+
+        if (shouldPreferHistoryBack(a) && tryHistoryBack()) {
+          e.preventDefault();
+          return;
+        }
 
         var theme = themeForUrl(a.href);
         el.className = 'verca-transition--' + theme + ' is-visible';
