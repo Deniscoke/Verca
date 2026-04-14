@@ -117,7 +117,7 @@ module.exports = function contactMessage(req, res) {
       return http.json(res, 502, {
         error: 'send_failed',
         message:
-          'E-mail se nepodařilo odeslat přes Resend. Zkuste znovu nebo použijte odkaz mailto níže.',
+          'E-mail se nepodařilo odeslat přes Resend. Zkuste znovu nebo použijte odkaz hello@verca.care v poznámce pod formulářem.',
       });
     })
     .catch(function (err) {

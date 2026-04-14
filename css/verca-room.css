@@ -394,6 +394,22 @@ body.room-contact-page .contact-form .btn--primary {
   align-self: flex-start;
 }
 
+body.room-contact-page .note__mailto {
+  display: block;
+  margin-top: 0.65rem;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--room-contact-faint);
+}
+body.room-contact-page .note__mailto a {
+  color: var(--room-contact-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+body.room-contact-page .note__mailto a:hover {
+  color: var(--room-contact-text);
+}
+
 .attrib {
   margin-top: auto;
   padding-top: 32px;

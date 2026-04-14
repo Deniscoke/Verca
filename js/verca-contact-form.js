@@ -47,13 +47,13 @@
         var msg =
           (out.data && out.data.message) ||
           (out.status === 501
-            ? 'Formulář zatím není napojený na e-mail na serveru. Použijte tlačítko „Napsat e-mailem“ níže.'
-            : 'Odeslání se nepodařilo. Zkuste to prosím znovu, nebo napište přímo na hello@verca.care.');
+            ? 'Formulář zatím není napojený na server. Napište prosím na hello@verca.care (odkaz v poznámce pod formulářem).'
+            : 'Odeslání se nepodařilo. Zkuste to znovu, nebo použijte odkaz hello@verca.care v poznámce.');
         setMsg(msg, false);
       })
       .catch(function () {
         setMsg(
-          'Chyba spojení. Zkuste to znovu později nebo použijte odkaz na e-mail níže.',
+          'Chyba spojení. Zkuste to znovu později, případně hello@verca.care v poznámce.',
           false
         );
       })
