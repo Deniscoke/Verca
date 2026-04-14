@@ -29,6 +29,18 @@ body.reduce-motion .gl-fallback { opacity: 1; }
     linear-gradient(165deg, #1a1510 0%, #2a241c 100%);
   transition: opacity 1.2s ease;
 }
+body.room-contact-page .gl-fallback {
+  inset: auto;
+  top: 0;
+  bottom: 0;
+  left: -11vw;
+  width: 118vw;
+  max-width: none;
+  background:
+    radial-gradient(ellipse 88% 72% at 22% 44%, rgba(200, 120, 88, 0.38) 0%, transparent 56%),
+    radial-gradient(ellipse 58% 48% at 62% 58%, rgba(42, 56, 47, 0.48) 0%, transparent 52%),
+    linear-gradient(165deg, #1a1510 0%, #2a241c 100%);
+}
 
 #glcanvas {
   position: fixed;
@@ -39,6 +51,17 @@ body.reduce-motion .gl-fallback { opacity: 1; }
   height: 100vh;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+}
+/* Kontakt: horizont posunutý doleva — „slunce“ vlevo, rám vpravo, méně překryvu s textem */
+body.room-contact-page #glcanvas {
+  inset: auto;
+  top: 0;
+  bottom: 0;
+  left: -11vw;
+  width: 118vw;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
 }
 body.reduce-motion #glcanvas,
 body.no-webgl #glcanvas { display: none; }
@@ -57,6 +80,9 @@ body.no-webgl #glcanvas { display: none; }
 body.reduce-motion .room-sacred {
   opacity: 0.045;
 }
+body.room-contact-page .room-sacred {
+  background-position: 8% 26%;
+}
 
 body::after {
   content: '';
@@ -65,6 +91,9 @@ body::after {
   z-index: 1;
   pointer-events: none;
   background: radial-gradient(ellipse 75% 65% at 50% 45%, transparent 30%, rgba(10, 8, 6, 0.55) 100%);
+}
+body.room-contact-page::after {
+  background: radial-gradient(ellipse 82% 72% at 34% 46%, transparent 24%, rgba(10, 8, 6, 0.58) 100%);
 }
 
 .contact-wrap {
@@ -438,72 +467,37 @@ h1 em {
 }
 
 body.room-contact-page .contact-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
+  width: 100%;
+  margin: 0;
 }
 
 body.room-contact-page .contact-layout {
-  display: grid;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
   width: 100%;
 }
 
 @media (min-width: 960px) {
   body.room-contact-page .contact-layout {
-    grid-template-columns: minmax(200px, 0.4fr) minmax(0, 1fr);
-    align-items: start;
+    align-items: flex-end;
+    max-width: min(1240px, 100%);
+    margin-left: auto;
+    margin-right: 0;
   }
-}
-
-body.room-contact-page .contact-layout__glow {
-  position: relative;
-  min-height: 140px;
-  border-radius: 20px;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 85% 70% at 18% 42%, rgba(232, 160, 120, 0.45) 0%, transparent 58%),
-    radial-gradient(circle at 72% 58%, rgba(184, 100, 71, 0.22) 0%, transparent 45%),
-    linear-gradient(168deg, rgba(42, 38, 34, 0.12) 0%, transparent 100%);
-  border: 1px solid rgba(246, 241, 232, 0.08);
-}
-
-@media (min-width: 960px) {
-  body.room-contact-page .contact-layout__glow {
-    position: sticky;
-    top: max(88px, env(safe-area-inset-top));
-    min-height: min(72vh, 620px);
-  }
-}
-
-body.room-contact-page .contact-layout__glow-ring {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(78%, 260px);
-  aspect-ratio: 1;
-  max-height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(255, 220, 190, 0.35) 0%, rgba(184, 100, 71, 0.12) 42%, transparent 68%);
-  filter: blur(0.5px);
-}
-
-body.room-contact-page .contact-layout__glow-caption {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 88%;
-  text-align: center;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1rem, 2.4vw, 1.25rem);
-  font-style: italic;
-  color: var(--room-contact-faint);
-  letter-spacing: 0.02em;
 }
 
 body.room-contact-page .contact-layout__main {
   min-width: 0;
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  body.room-contact-page .contact-layout__main {
+    max-width: min(520px, 46vw);
+  }
 }
 
 body.room-contact-page .top-bar {
@@ -524,12 +518,13 @@ body.room-contact-page .logo {
 }
 
 body.room-contact-page .contact-stage {
-  background: linear-gradient(168deg, rgba(30, 26, 22, 0.94) 0%, rgba(22, 18, 14, 0.96) 100%);
+  background: linear-gradient(168deg, rgba(28, 24, 20, 0.96) 0%, rgba(18, 15, 12, 0.98) 100%);
   border: 1px solid var(--room-contact-surface-edge);
-  backdrop-filter: blur(12px) saturate(118%);
-  -webkit-backdrop-filter: blur(12px) saturate(118%);
+  backdrop-filter: blur(14px) saturate(118%);
+  -webkit-backdrop-filter: blur(14px) saturate(118%);
   box-shadow:
-    0 28px 90px rgba(0, 0, 0, 0.42),
+    0 28px 90px rgba(0, 0, 0, 0.48),
+    0 0 0 1px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
