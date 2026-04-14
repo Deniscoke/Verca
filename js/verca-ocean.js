@@ -329,6 +329,7 @@
     if (isLite && lastCssW === cssW && canvas.width > 0) {
       maxScroll = Math.max(1, document.documentElement.scrollHeight - cssH);
       tgt = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      updateOceanOpacity();
       return;
     }
     lastCssW = cssW;
@@ -349,6 +350,7 @@
 
     maxScroll = Math.max(1, document.documentElement.scrollHeight - cssH);
     tgt = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+    updateOceanOpacity();
   }
 
   function requestResize() {
@@ -358,17 +360,32 @@
   resize();
   window.addEventListener('resize', requestResize, { passive: true });
 
-  /** Oceán viditelný skoro po celou délku stránky; stmavání až v závěru scrollu (plynulý den→noc podle uS). */
+  function getHeroEl() {
+    return document.querySelector('.hero.hero--ocean') || document.getElementById('home');
+  }
+
+  /**
+   * Viditelnost plátna podle úvodního hero — ne podle celé délky stránky (jinak při běžném scrollu
+   * zůstává fixní WebGL „slunce/moře“ vidět v rozích nad světlým obsahem).
+   * Časová osa dne→noc v shaderu dál používá uS z celkového scrollu (tgt).
+   */
   function updateOceanOpacity() {
-    var ms = maxScroll;
-    var p = ms > 0 ? window.scrollY / ms : 0;
-    if (p <= 0.7) {
+    var y = window.scrollY;
+    var hero = getHeroEl();
+    if (!hero) {
       canvas.style.opacity = '1';
-    } else if (p >= 0.92) {
-      canvas.style.opacity = '0';
-    } else {
-      canvas.style.opacity = String(1 - (p - 0.7) / 0.22);
+      return;
     }
+    var r = hero.getBoundingClientRect();
+    var heroTopDoc = r.top + y;
+    var heroH = Math.max(1, r.height);
+    var fade0 = heroTopDoc + heroH * 0.2;
+    var fade1 = heroTopDoc + heroH * 0.72;
+    var op;
+    if (y <= fade0) op = 1;
+    else if (y >= fade1) op = 0;
+    else op = 1 - (y - fade0) / (fade1 - fade0);
+    canvas.style.opacity = String(Math.max(0, Math.min(1, op)));
   }
 
   window.addEventListener('scroll', function () {
