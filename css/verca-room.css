@@ -29,7 +29,7 @@ body.reduce-motion .gl-fallback { opacity: 1; }
     linear-gradient(165deg, #1a1510 0%, #2a241c 100%);
   transition: opacity 1.2s ease;
 }
-body.room-contact-page .gl-fallback {
+body.room-sun-layout .gl-fallback {
   inset: auto;
   top: 0;
   bottom: 0;
@@ -52,8 +52,8 @@ body.room-contact-page .gl-fallback {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* Kontakt: horizont posunutý doleva — „slunce“ vlevo, rám vpravo, méně překryvu s textem */
-body.room-contact-page #glcanvas {
+/* Kontakt + prostory: horizont posunutý doleva — „slunce“ vlevo, rám vpravo */
+body.room-sun-layout #glcanvas {
   inset: auto;
   top: 0;
   bottom: 0;
@@ -80,7 +80,7 @@ body.no-webgl #glcanvas { display: none; }
 body.reduce-motion .room-sacred {
   opacity: 0.045;
 }
-body.room-contact-page .room-sacred {
+body.room-sun-layout .room-sacred {
   background-position: 8% 26%;
 }
 
@@ -92,7 +92,7 @@ body::after {
   pointer-events: none;
   background: radial-gradient(ellipse 75% 65% at 50% 45%, transparent 30%, rgba(10, 8, 6, 0.55) 100%);
 }
-body.room-contact-page::after {
+body.room-sun-layout::after {
   background: radial-gradient(ellipse 82% 72% at 34% 46%, transparent 24%, rgba(10, 8, 6, 0.58) 100%);
 }
 
@@ -466,10 +466,23 @@ h1 em {
   margin: 0;
 }
 
-body.room-contact-page .contact-wrap {
+body.room-sun-layout .contact-wrap {
   max-width: none;
   width: 100%;
   margin: 0;
+}
+
+/* Esence / Tajemství / Alchymie: stejný pravý sloupec jako kontakt (bez inner .contact-layout) */
+@media (min-width: 960px) {
+  body.room-sun-layout:not(.room-contact-page) .contact-wrap {
+    align-items: flex-end;
+  }
+  body.room-sun-layout:not(.room-contact-page) .contact-wrap > .top-bar,
+  body.room-sun-layout:not(.room-contact-page) .contact-wrap > .contact-stage,
+  body.room-sun-layout:not(.room-contact-page) .contact-wrap > .attrib {
+    width: 100%;
+    max-width: min(38rem, calc(100vw - clamp(28px, 6vw, 96px)));
+  }
 }
 
 body.room-contact-page .contact-layout {

@@ -33,8 +33,8 @@
   var maxDPR = isLite ? 1.0 : (window.devicePixelRatio || 1);
   var lastW = 0;
 
-  function isContactPage() {
-    return document.body && document.body.classList.contains('room-contact-page');
+  function isSunLayoutPage() {
+    return document.body && document.body.classList.contains('room-sun-layout');
   }
 
   function resize() {
@@ -44,15 +44,15 @@
     lastW = w;
     var d = Math.min(window.devicePixelRatio || 1, maxDPR);
     var scale = isLite ? 0.65 : 1;
-    /* Kontakt: širší buffer + posun vlevo, aby animace „slunce“ seděla s CSS (čitelnost vpravo). */
-    var contact = isContactPage();
-    var cssW = contact ? Math.round(w * 1.18) : w;
-    var cssLeft = contact ? Math.round(w * -0.11) : 0;
+    /* room-sun-layout: širší buffer + posun vlevo (kontakt + prostory). */
+    var sunLayout = isSunLayoutPage();
+    var cssW = sunLayout ? Math.round(w * 1.18) : w;
+    var cssLeft = sunLayout ? Math.round(w * -0.11) : 0;
     canvas.width = Math.floor(cssW * d * scale);
     canvas.height = Math.floor(h * d * scale);
     canvas.style.width = cssW + 'px';
     canvas.style.height = h + 'px';
-    if (contact) {
+    if (sunLayout) {
       canvas.style.left = cssLeft + 'px';
       canvas.style.right = 'auto';
     } else {
