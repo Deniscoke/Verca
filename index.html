@@ -2992,6 +2992,10 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
       var target = document.querySelector(a.getAttribute('href'));
       if (target) sections.push({ el: target, link: a });
     });
+    /* Pořadí odkazů v menu ≠ pořadí sekcí na stránce — aktivní značka musí odpovídat pozici scrollu (jinak „O mně“ zvýrazní Ateliér). */
+    sections.sort(function (a, b) {
+      return a.el.offsetTop - b.el.offsetTop;
+    });
 
     function update() {
       nav.classList.toggle('is-scrolled', window.scrollY > 40);
@@ -3218,6 +3222,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         if (typeof window.vercaPersistAmbient === 'function') window.vercaPersistAmbient();
         var overlay = document.createElement('div');
         overlay.setAttribute('aria-hidden', 'true');
+        overlay.setAttribute('data-verca-route-overlay', '1');
         overlay.style.cssText =
           'position:fixed;inset:0;z-index:99999;background:#F5F3EF;' +
           'opacity:0;pointer-events:all;transition:opacity 0.55s cubic-bezier(0.22,1,0.36,1);';
@@ -3300,6 +3305,16 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     initAnchors();
     initKontaktTransition();
   }
+
+  /* Po návratu zpět z podstránky (bfcache) odstranit případný „exit“ overlay a uvolnit scroll — jinak prázdná/bílá obrazovka. */
+  window.addEventListener('pageshow', function () {
+    document.body.style.overflow = '';
+    document.querySelectorAll('[data-verca-route-overlay]').forEach(function (n) {
+      n.remove();
+    });
+    var tr = document.getElementById('verca-transition');
+    if (tr) tr.classList.remove('is-visible');
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

@@ -4,14 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kontakt — Verca</title>
-<meta name="description" content="Napište Verca a domluvte si sezení nebo se zeptejte na bylinné produkty.">
+<meta name="description" content="Domluvte sezení nebo napište Verca — klidný kontakt bez spěchu.">
+<!-- Volitelné: veřejná URL schůzky Calendly pro vložení widgetu (https://calendly.com/…) -->
+<meta name="verca:calendly" content="">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet">
 <link rel="stylesheet" href="css/verca-transitions.css">
 <link rel="stylesheet" href="css/verca-room.css">
 </head>
-<body>
+<body class="room-contact-page">
 <script src="js/verca-perf-boot.js"></script>
 <script src="js/verca-page-transition.js"></script>
 
@@ -24,39 +26,88 @@
 </audio>
 <script src="js/verca-ambient.js"></script>
 
+<a class="contact-skip" href="#main-contact">Přejít na obsah rezervace</a>
+
 <div class="contact-wrap">
-  <div class="top-bar">
-    <a href="index.html" class="logo">Verca</a>
-    <div class="top-bar__end">
-      <button type="button" class="ambient-toggle" id="verca-ambient-toggle" aria-pressed="false" aria-label="Přehrát jemnou hudbu v pozadí" title="Hudba v pozadí">
-        <svg class="ambient-toggle-icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></svg>
-        <svg class="ambient-toggle-icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-      </button>
-      <a href="index.html#prostory" class="back">← Zpět na úvod</a>
-    </div>
-  </div>
+  <div class="contact-layout">
+    <aside class="contact-layout__glow" aria-hidden="true">
+      <span class="contact-layout__glow-ring"></span>
+      <p class="contact-layout__glow-caption">Klid · světlo · návrat k tělu</p>
+    </aside>
 
-  <div class="contact-stage">
-    <span class="label">Začněte v klidu</span>
-    <h1>Napište, až budete <em>připravená</em></h1>
-    <p class="lead">První sezení vždy začíná zprávou. Bez tlaku — napište, co vám přijde vhodné, a odpovím vám osobně.</p>
-    <div class="actions">
-      <a class="btn btn--primary" href="mailto:hello@verca.care?subject=Rezervace%20sezen%C3%AD%20%E2%80%94%20Verca">Domluvit první sezení</a>
-      <a class="btn btn--ghost" href="mailto:hello@verca.care?subject=Dotaz%20%E2%80%94%20Verca">Poslat dotaz</a>
-    </div>
-    <p class="note">Obvykle odpovídám do 24 hodin.</p>
-    <div id="err" role="alert"></div>
+    <main id="main-contact" class="contact-layout__main" tabindex="-1">
+      <header class="top-bar" role="banner">
+        <a href="index.html" class="logo">Verca</a>
+        <div class="top-bar__end">
+          <button type="button" class="ambient-toggle" id="verca-ambient-toggle" aria-pressed="false" aria-label="Přehrát jemnou hudbu v pozadí" title="Hudba v pozadí">
+            <svg class="ambient-toggle-icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></svg>
+            <svg class="ambient-toggle-icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </button>
+          <a href="index.html" class="contact-back">
+            <span class="contact-back__arrow" aria-hidden="true">←</span>
+            <span class="contact-back__text">Zpět na hlavní stránku</span>
+          </a>
+        </div>
+      </header>
 
-    <nav class="room-cross" aria-label="Témata a prostory">
-      <a href="esence-zeny.html">Esence ženy</a><span class="sep">·</span>
-      <a href="tajemstvi-panevniho-dna.html">Tajemství pánevního dna</a><span class="sep">·</span>
-      <a href="alchymie-vuni.html">Alchymie vůní</a>
-    </nav>
+      <section class="contact-stage" aria-labelledby="contact-heading">
+        <p class="label" id="contact-label">Rezervace a dotazy</p>
+        <h1 id="contact-heading">Napište, až budete <em>připravená</em></h1>
+        <p class="lead" id="contact-desc">
+          Jedna cesta: zpráva e-mailem. Bez tlaku odpovím osobně; až doplníte odkaz Calendly níže, přibude i výběr termínu online.
+        </p>
+
+        <div class="contact-actions">
+          <a class="btn btn--primary" href="mailto:hello@verca.care?subject=Rezervace%20nebo%20dotaz%20%E2%80%94%20Verca">Napsat na hello@verca.care</a>
+        </div>
+        <p class="note">Obvykle odpovídám do 24 hodin.</p>
+        <div id="err" role="alert"></div>
+
+        <section class="contact-calendly-zone" aria-labelledby="cal-heading">
+          <h2 id="cal-heading" class="contact-subheading">Online termín (volitelné)</h2>
+          <p id="verca-calendly-fallback" class="contact-calendly-fallback">
+            Kalendář se zobrazí po doplnění meta značky <code class="contact-code">verca:calendly</code> v hlavičce této stránky platnou adresou Calendly (např. <code class="contact-code">https://calendly.com/vase-jmeno/30min</code>).
+          </p>
+          <div id="verca-calendly-root" class="contact-calendly-frame" hidden></div>
+        </section>
+
+        <nav class="room-cross" aria-label="Související prostory">
+          <a href="esence-zeny.html">Esence ženy</a><span class="sep">·</span>
+          <a href="tajemstvi-panevniho-dna.html">Tajemství pánevního dna</a><span class="sep">·</span>
+          <a href="alchymie-vuni.html">Alchymie vůní</a>
+        </nav>
+      </section>
+    </main>
   </div>
 
   <p class="attrib">v spolupráci s IndiWeb</p>
 </div>
 
+<script>
+(function () {
+  var meta = document.querySelector('meta[name="verca:calendly"]');
+  var url = meta && meta.getAttribute('content') ? String(meta.getAttribute('content')).trim() : '';
+  var root = document.getElementById('verca-calendly-root');
+  var fb = document.getElementById('verca-calendly-fallback');
+  if (!root || !fb) return;
+  if (!url || !/^https:\/\/(www\.)?calendly\.com\//i.test(url)) {
+    fb.hidden = false;
+    return;
+  }
+  fb.hidden = true;
+  root.hidden = false;
+  var w = document.createElement('div');
+  w.className = 'calendly-inline-widget';
+  w.style.minWidth = '320px';
+  w.style.height = '680px';
+  w.setAttribute('data-url', url);
+  root.appendChild(w);
+  var s = document.createElement('script');
+  s.src = 'https://assets.calendly.com/assets/external/widget.js';
+  s.async = true;
+  document.body.appendChild(s);
+})();
+</script>
 <!--
   WebGL fragment shader: MIT License, Copyright 2026 Fabio E Zola
   https://codepen.io/equant_org/pen/RNayBgp

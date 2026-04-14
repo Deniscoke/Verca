@@ -242,7 +242,8 @@ h1 em {
   opacity: 0.45;
 }
 
-.actions {
+.actions,
+.contact-actions {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -386,5 +387,264 @@ h1 em {
   .ambient-toggle.is-playing:hover {
     color: #F6F1E8;
     border-color: rgba(212, 136, 106, 0.65);
+  }
+}
+
+/* ═══ Kontakt (rezervace) — tokeny, čitelnost, layout slunce | formulář ═══ */
+:root {
+  --room-contact-surface: rgba(26, 22, 18, 0.92);
+  --room-contact-surface-edge: rgba(246, 241, 232, 0.2);
+  --room-contact-text: #f6f1e8;
+  --room-contact-muted: rgba(246, 241, 232, 0.78);
+  --room-contact-faint: rgba(246, 241, 232, 0.52);
+  --room-contact-accent: #e8b89a;
+  --room-contact-cta-border: rgba(212, 136, 106, 0.65);
+}
+
+.contact-skip:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.contact-skip:focus {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 50;
+  padding: 12px 18px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #1a1510;
+  background: #f6f1e8;
+  border-radius: 10px;
+  border: 2px solid rgba(184, 100, 71, 0.45);
+  outline: 3px solid #d4886a;
+  outline-offset: 2px;
+  clip: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+body.room-contact-page .contact-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+body.room-contact-page .contact-layout {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  body.room-contact-page .contact-layout {
+    grid-template-columns: minmax(200px, 0.4fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+body.room-contact-page .contact-layout__glow {
+  position: relative;
+  min-height: 140px;
+  border-radius: 20px;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 70% at 18% 42%, rgba(232, 160, 120, 0.45) 0%, transparent 58%),
+    radial-gradient(circle at 72% 58%, rgba(184, 100, 71, 0.22) 0%, transparent 45%),
+    linear-gradient(168deg, rgba(42, 38, 34, 0.12) 0%, transparent 100%);
+  border: 1px solid rgba(246, 241, 232, 0.08);
+}
+
+@media (min-width: 960px) {
+  body.room-contact-page .contact-layout__glow {
+    position: sticky;
+    top: max(88px, env(safe-area-inset-top));
+    min-height: min(72vh, 620px);
+  }
+}
+
+body.room-contact-page .contact-layout__glow-ring {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(78%, 260px);
+  aspect-ratio: 1;
+  max-height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 220, 190, 0.35) 0%, rgba(184, 100, 71, 0.12) 42%, transparent 68%);
+  filter: blur(0.5px);
+}
+
+body.room-contact-page .contact-layout__glow-caption {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88%;
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-style: italic;
+  color: var(--room-contact-faint);
+  letter-spacing: 0.02em;
+}
+
+body.room-contact-page .contact-layout__main {
+  min-width: 0;
+}
+
+body.room-contact-page .top-bar {
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  margin-bottom: clamp(1rem, 3vw, 1.75rem);
+  background: var(--room-contact-surface);
+  border: 1px solid var(--room-contact-surface-edge);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px) saturate(125%);
+  -webkit-backdrop-filter: blur(10px) saturate(125%);
+}
+
+body.room-contact-page .logo {
+  color: var(--room-contact-text);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+body.room-contact-page .contact-stage {
+  background: linear-gradient(168deg, rgba(30, 26, 22, 0.94) 0%, rgba(22, 18, 14, 0.96) 100%);
+  border: 1px solid var(--room-contact-surface-edge);
+  backdrop-filter: blur(12px) saturate(118%);
+  -webkit-backdrop-filter: blur(12px) saturate(118%);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+body.room-contact-page .label {
+  color: var(--room-contact-accent);
+}
+
+body.room-contact-page .lead {
+  color: var(--room-contact-muted);
+  max-width: 48ch;
+}
+
+body.room-contact-page h1 {
+  color: var(--room-contact-text);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
+}
+
+body.room-contact-page .note {
+  color: var(--room-contact-faint);
+}
+
+body.room-contact-page .room-cross {
+  color: var(--room-contact-faint);
+}
+
+.contact-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  min-height: 44px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #1a1510;
+  background: linear-gradient(165deg, #f6f1e8 0%, #e8dcc8 100%);
+  border: 2px solid var(--room-contact-cta-border);
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.contact-back__arrow {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.contact-back:focus-visible {
+  outline: 3px solid #f6f1e8;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .contact-back:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(184, 100, 71, 0.28);
+    background: #fff9f2;
+  }
+}
+
+.contact-subheading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  font-weight: 400;
+  color: var(--room-contact-text);
+  margin: 2rem 0 0.5rem;
+}
+
+.contact-calendly-zone {
+  margin-top: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(246, 241, 232, 0.12);
+}
+
+.contact-calendly-fallback {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--room-contact-muted);
+  max-width: 52ch;
+}
+
+.contact-calendly-fallback[hidden] {
+  display: none;
+}
+
+.contact-code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.82em;
+  color: var(--room-contact-accent);
+}
+
+.contact-calendly-frame {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(246, 241, 232, 0.14);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.contact-calendly-frame[hidden] {
+  display: none;
+}
+
+body.room-contact-page .ambient-toggle {
+  border-color: rgba(246, 241, 232, 0.28);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--room-contact-muted);
+}
+
+@media (max-width: 768px) {
+  body.room-contact-page .contact-stage {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 }
