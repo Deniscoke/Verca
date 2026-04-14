@@ -3248,15 +3248,18 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         overlay.setAttribute('data-verca-route-overlay', '1');
         overlay.style.cssText =
           'position:fixed;inset:0;z-index:99999;background:#F5F3EF;' +
-          'opacity:0;pointer-events:all;transition:opacity 0.55s cubic-bezier(0.22,1,0.36,1);';
+          'opacity:0;pointer-events:all;transition:opacity 0.1s ease-out;';
         document.body.appendChild(overlay);
         requestAnimationFrame(function () {
           overlay.style.opacity = '1';
         });
         setTimeout(function () {
+          overlay.style.opacity = '0';
+        }, 100);
+        setTimeout(function () {
           if (typeof window.vercaPersistAmbient === 'function') window.vercaPersistAmbient();
           window.location.href = 'kontakt.html';
-        }, 520);
+        }, 210);
       });
     });
   }

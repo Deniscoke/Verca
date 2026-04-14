@@ -6,7 +6,9 @@
 
   var STORAGE = 'verca-t';
   var THEME_KEY = 'verca-t-theme';
-  var DURATION_MS = 580;
+  /** Délka CSS fade (#verca-transition) — musí sedět s verca-transitions.css */
+  var FADE_MS = 100;
+  var HOLD_VISIBLE_MS = 100;
   var reduceMotion = false;
 
   try {
@@ -130,22 +132,32 @@
         }
 
         var theme = themeForUrl(a.href);
-        el.className = 'verca-transition--' + theme + ' is-visible';
-
         e.preventDefault();
         var dest = a.href;
-        var ms = reduceMotion ? 80 : DURATION_MS;
+        var fadeMs = reduceMotion ? 60 : FADE_MS;
+        var holdMs = reduceMotion ? 40 : HOLD_VISIBLE_MS;
 
-        window.setTimeout(function () {
-          try {
-            if (typeof window.vercaPersistAmbient === 'function') {
-              window.vercaPersistAmbient();
-            }
-            window.sessionStorage.setItem(STORAGE, '1');
-            window.sessionStorage.setItem(THEME_KEY, theme);
-          } catch (err) {}
-          window.location.href = dest;
-        }, ms);
+        el.className = 'verca-transition--' + theme;
+        void el.offsetWidth;
+        el.classList.add('is-visible');
+
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            window.setTimeout(function () {
+              el.classList.remove('is-visible');
+              window.setTimeout(function () {
+                try {
+                  if (typeof window.vercaPersistAmbient === 'function') {
+                    window.vercaPersistAmbient();
+                  }
+                  window.sessionStorage.setItem(STORAGE, '1');
+                  window.sessionStorage.setItem(THEME_KEY, theme);
+                } catch (err) {}
+                window.location.href = dest;
+              }, fadeMs);
+            }, holdMs);
+          });
+        });
       },
       false
     );

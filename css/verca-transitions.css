@@ -9,7 +9,7 @@
   z-index: 2147483000;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.1s ease-out;
   will-change: opacity;
 }
 
@@ -53,7 +53,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #verca-transition {
-    transition-duration: 0.15s;
+    transition-duration: 0.06s;
   }
 }
 
