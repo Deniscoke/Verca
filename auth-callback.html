@@ -70,6 +70,37 @@
     });
 
     const url = new URL(window.location.href);
+    const hashRaw = window.location.hash && window.location.hash.length > 1 ? window.location.hash.slice(1) : '';
+    const hashParams = new URLSearchParams(hashRaw);
+
+    const hashErr = hashParams.get('error_description') || hashParams.get('error');
+    if (hashErr) {
+      msg.textContent = 'OAuth chyba: ' + decodeURIComponent(String(hashErr).replace(/\+/g, ' '));
+      throw new Error('oauth_hash');
+    }
+
+    const accessFromHash = hashParams.get('access_token');
+    const refreshFromHash = hashParams.get('refresh_token');
+    if (accessFromHash && refreshFromHash) {
+      const { data: hashData, error: hashSetErr } = await supabase.auth.setSession({
+        access_token: accessFromHash,
+        refresh_token: refreshFromHash,
+      });
+      if (hashSetErr) {
+        msg.textContent =
+          'Nepodařilo se uložit relaci z návratu Google: ' + (hashSetErr.message || 'chyba setSession');
+        throw hashSetErr;
+      }
+      window.history.replaceState({}, '', url.pathname + url.search);
+      const hu = hashData && hashData.session && hashData.session.user;
+      if (hu) {
+        const em = hu.email || 'účet bez e-mailu';
+        msg.textContent =
+          'Jste přihlášeni jako ' + em + '. Pokračujte do ateliéru — údaje účtu načteme i na serveru (/api/account/me).';
+        return;
+      }
+    }
+
     const oauthErr = url.searchParams.get('error_description') || url.searchParams.get('error');
     if (oauthErr) {
       msg.textContent = 'OAuth chyba: ' + decodeURIComponent(String(oauthErr).replace(/\+/g, ' '));
@@ -108,11 +139,11 @@
       }
     }
 
-    if (!code) {
+    if (!code && !accessFromHash) {
       msg.textContent =
-        'V adrese chybí autorizační kód (?code=…). Přihlaste se znovu z bylinného ateliéru na téže doméně (' +
+        'V adrese chybí návrat z přihlášení (očekává se ?code=… pro PKCE nebo #access_token=…). Zkuste znovu z ateliéru na ' +
         window.location.origin +
-        ') a v Supabase → Authentication → Redirect URLs přidejte přesně ' +
+        ' a v Supabase → Authentication → Redirect URLs přidejte ' +
         window.location.origin +
         '/auth-callback.html';
       return;
@@ -131,7 +162,7 @@
         ' (stejná doména jako návrat z Google).';
     }
   } catch (e) {
-    if (msg && !msg.textContent.includes('Chybí') && !msg.textContent.includes('nepodařilo')) {
+    if (msg && !/chybí|nepodařilo|oauth|relaci|přihlášeni jako/i.test(msg.textContent)) {
       msg.textContent = 'Chyba při načtení (spusťte web přes Vercel / vercel dev, ne file://).';
     }
   }
