@@ -49,14 +49,35 @@
         <p class="label" id="contact-label">Rezervace a dotazy</p>
         <h1 id="contact-heading">Napište, až budete <em>připravená</em></h1>
         <p class="lead" id="contact-desc">
-          Jedna cesta: zpráva e-mailem. Bez tlaku odpovím osobně; až doplníte odkaz Calendly níže, přibude i výběr termínu online.
+          Zprávu můžete poslat přímo z formuláře — dorazí mi na e-mail. Calendly níže slouží k výběru termínu online. Odpovím osobně, bez tlaku.
         </p>
 
+        <form id="verca-contact-form" class="contact-form" method="post" action="/api/contact/message">
+          <div>
+            <label for="verca-contact-name">Jméno</label>
+            <input type="text" id="verca-contact-name" name="name" required maxlength="120" autocomplete="name" />
+          </div>
+          <div>
+            <label for="verca-contact-email">E-mail</label>
+            <input type="email" id="verca-contact-email" name="email" required maxlength="320" autocomplete="email" />
+          </div>
+          <div>
+            <label for="verca-contact-message">Zpráva</label>
+            <textarea id="verca-contact-message" name="message" required minlength="10" maxlength="8000" rows="6" spellcheck="true"></textarea>
+          </div>
+          <div class="contact-form__hp" aria-hidden="true">
+            <label for="verca-company-hp">Firma</label>
+            <input type="text" id="verca-company-hp" name="company" tabindex="-1" autocomplete="off" />
+          </div>
+          <button type="submit" class="btn btn--primary">Odeslat zprávu</button>
+        </form>
+
+        <div id="err" role="alert"></div>
+
         <div class="contact-actions">
-          <a class="btn btn--primary" href="mailto:hello@verca.care?subject=Rezervace%20nebo%20dotaz%20%E2%80%94%20Verca">Napsat na hello@verca.care</a>
+          <a class="btn btn--ghost" href="mailto:hello@verca.care?subject=Rezervace%20nebo%20dotaz%20%E2%80%94%20Verca">Napsat e-mailem (váš program)</a>
         </div>
         <p class="note">Obvykle odpovídám do 24 hodin.</p>
-        <div id="err" role="alert"></div>
 
         <section class="contact-calendly-zone" aria-labelledby="cal-heading">
           <h2 id="cal-heading" class="contact-subheading">Online termín (volitelné)</h2>
@@ -78,6 +99,7 @@
   <p class="attrib">v spolupráci s IndiWeb</p>
 </div>
 
+<script src="js/verca-contact-form.js"></script>
 <script src="js/verca-calendly-inline.js"></script>
 <!--
   WebGL fragment shader: MIT License, Copyright 2026 Fabio E Zola
