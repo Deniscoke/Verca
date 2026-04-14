@@ -472,16 +472,24 @@ body.room-sun-layout .contact-wrap {
   margin: 0;
 }
 
-/* Esence / Tajemství / Alchymie: stejný pravý sloupec jako kontakt (bez inner .contact-layout) */
+/* Esence / Tajemství / Alchymie: pravý okraj — .contact-stage má globálně margin:auto, což jinak věší kartu na střed i při flex-end */
 @media (min-width: 960px) {
   body.room-sun-layout:not(.room-contact-page) .contact-wrap {
     align-items: flex-end;
+    padding-right: max(12px, env(safe-area-inset-right));
   }
   body.room-sun-layout:not(.room-contact-page) .contact-wrap > .top-bar,
   body.room-sun-layout:not(.room-contact-page) .contact-wrap > .contact-stage,
   body.room-sun-layout:not(.room-contact-page) .contact-wrap > .attrib {
     width: 100%;
-    max-width: min(38rem, calc(100vw - clamp(28px, 6vw, 96px)));
+    max-width: min(38rem, calc(100vw - clamp(24px, 5vw, 72px)));
+    margin-left: 0;
+    margin-right: 0;
+    align-self: flex-end;
+  }
+  body.room-sun-layout:not(.room-contact-page) .contact-wrap > .contact-stage {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }
 
