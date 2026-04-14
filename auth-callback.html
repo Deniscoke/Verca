@@ -70,20 +70,52 @@
     });
 
     const url = new URL(window.location.href);
+    const oauthErr = url.searchParams.get('error_description') || url.searchParams.get('error');
+    if (oauthErr) {
+      msg.textContent = 'OAuth chyba: ' + decodeURIComponent(String(oauthErr).replace(/\+/g, ' '));
+      throw new Error('oauth_query');
+    }
+
     const code = url.searchParams.get('code');
 
+    const { data: existing } = await supabase.auth.getSession();
+    if (!code && existing && existing.session && existing.session.user) {
+      const em = existing.session.user.email || 'účet bez e-mailu';
+      msg.textContent =
+        'Jste přihlášeni jako ' + em + '. Pokračujte do ateliéru — relace je již uložená v tomto prohlížeči.';
+      return;
+    }
+
     if (code) {
-      const { error: exErr } = await supabase.auth.exchangeCodeForSession(code);
+      const { data: exData, error: exErr } = await supabase.auth.exchangeCodeForSession(code);
       if (exErr) {
         const detail =
           exErr.message ||
-          'chyba OAuth (zkuste znovu z ateliéru — přihlášení musí spustit tlačítko Google, ne přímý odkaz na /authorize).';
+          'chyba OAuth (zkuste znovu z ateliéru na stejné doméně, kde jste klikli na Google — PKCE musí být na stejném originu).';
         msg.textContent = 'Dokončení přihlášení se nepodařilo: ' + detail;
         throw exErr;
       }
       url.searchParams.delete('code');
       const clean = url.pathname + (url.searchParams.toString() ? '?' + url.searchParams.toString() : '') + url.hash;
       window.history.replaceState({}, '', clean);
+
+      const s = exData && exData.session;
+      if (s && s.user) {
+        const em = s.user.email || 'účet bez e-mailu';
+        msg.textContent =
+          'Jste přihlášeni jako ' + em + '. Pokračujte do ateliéru — údaje účtu načteme i na serveru (/api/account/me).';
+        return;
+      }
+    }
+
+    if (!code) {
+      msg.textContent =
+        'V adrese chybí autorizační kód (?code=…). Přihlaste se znovu z bylinného ateliéru na téže doméně (' +
+        window.location.origin +
+        ') a v Supabase → Authentication → Redirect URLs přidejte přesně ' +
+        window.location.origin +
+        '/auth-callback.html';
+      return;
     }
 
     const { data: { session }, error } = await supabase.auth.getSession();
@@ -93,7 +125,10 @@
       const em = session.user.email || 'účet bez e-mailu';
       msg.textContent = 'Jste přihlášeni jako ' + em + '. Pokračujte do ateliéru — údaje účtu načteme i na serveru (/api/account/me).';
     } else {
-      msg.textContent = 'Žádná aktivní relace. Zkuste znovu přihlášení z ateliéru.';
+      msg.textContent =
+        'Relace se nepodařila uložit. Zkuste znovu přihlášení z ateliéru na ' +
+        window.location.origin +
+        ' (stejná doména jako návrat z Google).';
     }
   } catch (e) {
     if (msg && !msg.textContent.includes('Chybí') && !msg.textContent.includes('nepodařilo')) {

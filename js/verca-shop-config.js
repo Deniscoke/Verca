@@ -78,6 +78,19 @@
       .replace(/"/g, '&quot;');
   }
 
+  /** OAuth PKCE ukládá code_verifier do localStorage pod aktuálním originem — redirect_to musí být na STEJNÝ origin jako stránka, kde uživatel spustil přihlášení. */
+  function resolveOAuthRedirectTo(cfg) {
+    var origin = window.location.origin;
+    var fallback = origin + '/auth-callback.html';
+    var server = cfg.urls && cfg.urls.authCallback;
+    if (!server) return fallback;
+    try {
+      var su = new URL(server);
+      if (su.origin === origin) return server;
+    } catch (e) {}
+    return fallback;
+  }
+
   function apply(cfg) {
     if (!cfg || typeof cfg !== 'object') {
       setStatus('Neplatná odpověď serveru.', true);
@@ -160,7 +173,7 @@
               return supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                  redirectTo: cfg.urls.authCallback,
+                  redirectTo: resolveOAuthRedirectTo(cfg),
                 },
               });
             })
