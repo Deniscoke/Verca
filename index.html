@@ -556,6 +556,7 @@ h1, h2, h3, h4 {
 }
 .nav__mobile-drawer a:hover,
 .nav__mobile-drawer a:active { color: var(--terracotta); }
+.nav__mobile-drawer a.is-active { color: var(--text); }
 .nav__mobile-drawer .nav__cta {
   font-size: 12px !important;
   padding: 14px 36px !important;
@@ -2974,6 +2975,8 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
   'use strict';
 
   var reduceMotion = document.documentElement.classList.contains('reduce-motion');
+  /** Mezera pod fixním nav při kotvení i při výpočtu aktivní sekce (px) — musí být shodná v initAnchors a initNav. */
+  var NAV_ANCHOR_GAP = 16;
 
   var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   var EASE = 'power3.out';
@@ -2993,24 +2996,44 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
       if (target) sections.push({ el: target, link: a });
     });
     /* Pořadí odkazů v menu ≠ pořadí sekcí na stránce — aktivní značka musí odpovídat pozici scrollu (jinak „O mně“ zvýrazní Ateliér). */
+    function sectionDocTop(el) {
+      return el.getBoundingClientRect().top + window.scrollY;
+    }
     sections.sort(function (a, b) {
-      return a.el.offsetTop - b.el.offsetTop;
+      return sectionDocTop(a.el) - sectionDocTop(b.el);
     });
 
     function update() {
       nav.classList.toggle('is-scrolled', window.scrollY > 40);
 
-      var scrollY = window.scrollY + nav.offsetHeight + 60;
+      /* Stejná „čára“ jako u kotvového scrollu (initAnchors): nav + 16 px — ne document.scrollY vs. offsetTop (ten je vůči offsetParentu, ne stránce). */
+      var navH = nav.offsetHeight || 0;
+      var probe = window.scrollY + navH + NAV_ANCHOR_GAP;
       var active = null;
       for (var i = sections.length - 1; i >= 0; i--) {
-        if (scrollY >= sections[i].el.offsetTop) { active = sections[i]; break; }
+        if (probe >= sectionDocTop(sections[i].el) - 1) {
+          active = sections[i];
+          break;
+        }
       }
       navLinks.forEach(function (a) { a.classList.remove('is-active'); });
-      if (active) active.link.classList.add('is-active');
+      document.querySelectorAll('[data-mobile-nav].is-active').forEach(function (a) {
+        a.classList.remove('is-active');
+      });
+      if (active) {
+        active.link.classList.add('is-active');
+        var href = active.link.getAttribute('href');
+        if (href) {
+          document.querySelectorAll('[data-mobile-nav][href="' + href + '"]').forEach(function (a) {
+            a.classList.add('is-active');
+          });
+        }
+      }
     }
 
     update();
     window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
 
     var hamburger = document.getElementById('navHamburger');
     var drawer = document.getElementById('navDrawer');
@@ -3258,7 +3281,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         var target = document.querySelector(id);
         if (!target) return;
         e.preventDefault();
-        var offset = (nav ? nav.offsetHeight : 0) + 16;
+        var offset = (nav ? nav.offsetHeight : 0) + NAV_ANCHOR_GAP;
         if (useGsapAnchor) {
           gsap.to(window, {
             duration: 1.05,
