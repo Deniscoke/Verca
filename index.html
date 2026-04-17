@@ -1406,6 +1406,106 @@ h1, h2, h3, h4 {
   .service-link:hover { gap: 12px; color: var(--terracotta); }
 }
 
+/* Masáže — rozbalovací nabídka v sekci „Co nabízím“ */
+.services-massage {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  scroll-margin-top: 96px;
+}
+.services-massage__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.65rem);
+  color: var(--charcoal);
+  margin: 0 0 0.65rem;
+  line-height: 1.15;
+}
+.services-massage__lead {
+  max-width: min(38rem, 100%);
+  margin: 0 0 clamp(1.25rem, 2.5vw, 1.75rem);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-soft);
+}
+.services-massage__acc {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.services-massage details {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: box-shadow 0.3s var(--ease-organic);
+}
+.services-massage details[open] {
+  box-shadow: var(--shadow-lift);
+}
+.services-massage summary {
+  cursor: pointer;
+  list-style: none;
+  padding: clamp(1rem, 2vw, 1.15rem) clamp(1.15rem, 2vw, 1.35rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.15rem);
+  color: var(--charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  user-select: none;
+}
+.services-massage summary::-webkit-details-marker { display: none; }
+.services-massage__sum-text {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.services-massage__price-tag {
+  flex-shrink: 0;
+}
+.services-massage summary::after {
+  content: '+';
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--terracotta);
+  transition: transform 0.25s var(--ease-organic);
+}
+.services-massage details[open] summary::after {
+  content: '\2212';
+}
+.services-massage__body {
+  padding: 0 clamp(1.15rem, 2vw, 1.35rem) clamp(1.1rem, 2vw, 1.35rem);
+  font-size: 14.5px;
+  line-height: 1.82;
+  color: var(--text-soft);
+  border-top: 1px solid var(--line);
+}
+.services-massage__body p + p { margin-top: 0.85rem; }
+.services-massage__body ul {
+  margin: 0.65rem 0 0;
+  padding-left: 1.2rem;
+}
+.services-massage__body li + li { margin-top: 0.35rem; }
+.services-massage__subhead {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 1rem 0 0.5rem;
+}
+.services-massage__subhead:first-child { margin-top: 0; }
+.services-massage__signature {
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+  font-size: 14px;
+  color: var(--text-soft);
+  font-style: italic;
+}
+.services-massage__cta {
+  margin-top: 1.25rem;
+}
+
 /* ═══ EXPERIENCE ═══ (jen section — .label nesmí mít třídu .experience, jinak dědí padding/gradient) */
 section.experience {
   margin-top: calc(-1 * min(48px, 6vw));
@@ -2650,11 +2750,11 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         <p class="prostory-card__body">Éterické oleje, směsi na míru a workshopy jako domácí bylinková lékárnička — vůně, ruce a rostlinná moudrost.</p>
         <span class="prostory-card__go">Otevřít</span>
       </a>
-      <a class="prostory-card js-reveal-stagger js-to-kontakt" role="listitem" href="kontakt.html">
-        <span class="prostory-card__label">Osobně</span>
-        <h3 class="prostory-card__title">Klidný kontakt</h3>
-        <p class="prostory-card__body">První krok stejně jako vždy — zpráva, domluva, bez tlaku. Pokračování příběhu napíšeme spolu.</p>
-        <span class="prostory-card__go">Rezervovat</span>
+      <a class="prostory-card js-reveal-stagger" role="listitem" href="#masaze">
+        <span class="prostory-card__label">Tělo</span>
+        <h3 class="prostory-card__title">Masáže</h3>
+        <p class="prostory-card__body">Individuální masáže a relaxační rituály — záda a šíje, celotělové ošetření, aromaterapie i zvuk s ladičkami. Ceny a popisy rozbalíte v nabídce níže.</p>
+        <span class="prostory-card__go">Otevřít nabídku</span>
       </a>
     </div>
   </div>
@@ -2665,7 +2765,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     <div class="services__header">
       <h2 class="services__title js-reveal">Co <em>nabízím</em></h2>
       <p class="services__intro js-reveal">
-        Tři cesty péče — každá jiná, všechny vyrostly ze stejného kořene: z inteligence vašeho těla.
+        Čtyři cesty péče — tělesná sezení, aromaterapie, bylinný ateliér a masáže. Každá jiná, všechny ze stejného kořene: z inteligence vašeho těla.
       </p>
     </div>
 
@@ -2714,6 +2814,92 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         <p class="service-card__body">Ručně vyráběné krémy, masti a přípravky z rostlin, které vybírám, připravuji a kterým věřím. Každý produkt prodlužuje péči ze sezení do každodenního života — přináší rostlinnou moudrost do vašich domácích rituálů.</p>
         <a href="bylinny-atelier.html" class="service-link">Ateliér a produkty</a>
       </article>
+
+      <article class="service-card js-reveal-stagger" role="listitem">
+        <div class="service-card__thumb">
+          <img src="images/IMG_0962.JPG" width="1536" height="2048" loading="lazy" decoding="async" alt="Masáž a péče o tělo — teplo, oleje a klid.">
+        </div>
+        <span class="service-card__num">04</span>
+        <h3 class="service-card__name">Masáže</h3>
+        <div class="service-card__tags">
+          <span class="service-tag">Záda a šíje</span>
+          <span class="service-tag">Aromaterapie</span>
+          <span class="service-tag">Ladičky</span>
+        </div>
+        <p class="service-card__body">Od cílené masáže zad až po hluboké relaxační rituály s éterickými oleji nebo terapeutickými ladičkami — vždy podle toho, co vaše tělo právě potřebuje.</p>
+        <a href="#masaze" class="service-link">Detailní nabídka a ceny</a>
+      </article>
+    </div>
+
+    <div class="services-massage js-reveal" id="masaze" aria-labelledby="masaze-title">
+      <h3 class="services-massage__title" id="masaze-title">Masáže</h3>
+      <p class="services-massage__lead">
+        10 let práce s lidským tělem mě naučilo jedno — každé tělo má svůj příběh a potřebuje individuální přístup. Ať přicházíte s chronickým napětím, po fyzické zátěži, nebo potřebujete relaxaci a odpočinek, najdeme způsob, jak vašemu tělu ulevit.
+      </p>
+
+      <div class="services-massage__acc">
+        <details class="js-reveal-stagger">
+          <summary><span class="services-massage__sum-text">Masáž zad a šíje</span><span class="service-tag services-massage__price-tag">1&nbsp;100&nbsp;Kč</span></summary>
+          <div class="services-massage__body">
+            <p>Záda a šíje jsou místem, kde tělo nejčastěji drží nahromaděné napětí — ať už z dlouhého sezení u počítače, fyzické práce nebo stresu. Tato masáž cíleně uvolňuje přetížené svaly, zlepšuje prokrvení a přináší okamžitou úlevu.</p>
+          </div>
+        </details>
+
+        <details class="js-reveal-stagger">
+          <summary><span class="services-massage__sum-text">Celotělová masáž</span><span class="service-tag services-massage__price-tag">1&nbsp;700&nbsp;Kč</span></summary>
+          <div class="services-massage__body">
+            <p>Komplexní ošetření celého těla, které pracuje systematicky od hlavy až k patám. Uvolňuje svalové napětí, podporuje krevní a lymfatický oběh — po masáži odcházíte s pocitem, jako by tělo znovu dýchalo.</p>
+          </div>
+        </details>
+
+        <details class="js-reveal-stagger">
+          <summary><span class="services-massage__sum-text">Aromaterapeutická masáž zad a šíje</span><span class="service-tag services-massage__price-tag">90 / 120&nbsp;min</span></summary>
+          <div class="services-massage__body">
+            <p>Aromaterapeutická masáž pracuje současně na více rovinách — uvolňuje svalové napětí, ošetřuje bolestivá místa, podporuje lymfatický a oběhový systém a napomáhá přirozenému odvodu odpadních látek z těla. Při hluboké relaxaci se mozková aktivita přirozeně zpomalí na hladinu alfa — stejný stav, který zažíváme těsně před usnutím nebo při meditaci. V tomto stavu je tělo schopno efektivně regenerovat a účinek masáže je výrazně hlubší a déle trvající. Více o aromaterapii se dočtete v samostatné sekci na tomto webu.</p>
+            <p><strong>90 minut</strong> — 1&nbsp;600&nbsp;Kč · <strong>120 minut</strong> — 2&nbsp;100&nbsp;Kč</p>
+            <p>Před každým ošetřením si uděláme krátký rozhovor, kde zjistíme, co vaše tělo potřebuje. Podle toho namíchám individuální kompozici kvalitních esenciálních olejů, které cílí přímo na vaše aktuální potřeby — ať už jde o uvolnění napětí, podporu imunity, zklidnění nervového systému nebo celkovou regeneraci.</p>
+          </div>
+        </details>
+
+        <details class="js-reveal-stagger">
+          <summary><span class="services-massage__sum-text">Zvuková relaxační masáž</span><span class="service-tag services-massage__price-tag">90 / 120&nbsp;min</span></summary>
+          <div class="services-massage__body">
+            <p>Objevte jedinečnou masáž s terapeutickými ladičkami, které propojují hluboké uvolnění a harmonii těla i mysli. Ladicí vidličky pracují s přesně naladěnými frekvencemi, které se přenášejí do těla a působí na fyzické i psychické úrovni. Během ošetření se jejich jemné vibrace šíří tkáněmi, kde pomáhají uvolnit napětí, zklidnit nervový systém a podpořit přirozenou regeneraci organismu.</p>
+            <p>Tato metoda je ideální pro všechny, kdo cítí stres, vnitřní neklid nebo dlouhodobé napětí. Masáž může přinést hluboké uvolnění svalů, zklidnění mysli, pocit lehkosti a návrat k vnitřní rovnováze. Mnoho klientů během ošetření zažívá stav hluboké relaxace, kdy dochází k celkovému zklidnění.</p>
+            <p class="services-massage__subhead">Pravidelné ošetření může podpořit</p>
+            <ul>
+              <li>snížení stresu a napětí</li>
+              <li>harmonizaci nervového systému, práci s nervus vagus</li>
+              <li>lepší vnímání vlastního těla</li>
+              <li>uvolnění svalů a blokád</li>
+              <li>regeneraci a přirozené samoléčebné procesy</li>
+              <li>celkovou psychickou pohodu a vnitřní klid</li>
+            </ul>
+            <p>Terapeutické ladicí vidličky představují velmi jemnou a neinvazivní metodu. Nejedná se však o náhradu lékařské péče.</p>
+            <p><strong>90 minut</strong> — 1&nbsp;600&nbsp;Kč · <strong>120 minut</strong> — 2&nbsp;100&nbsp;Kč</p>
+
+            <p class="services-massage__subhead">Varianta 90 minut — Harmonizační vibrační rituál</p>
+            <ul>
+              <li>propojení klasické masáže a terapeutických ladicích vidliček</li>
+              <li>hluboké uvolnění svalů i nervového systému</li>
+              <li>práce s napětím, stresem a celkovým zklidněním</li>
+              <li>jemná harmonizace těla pomocí vibrací</li>
+            </ul>
+            <p class="services-massage__subhead">Varianta 120 minut (prémiová) — Hluboký relaxační rituál s frekvencemi</p>
+            <ul>
+              <li>delší, pomalejší a více prožitková terapie</li>
+              <li>prostor pro opravdu hluboké uvolnění a regeneraci celého těla</li>
+              <li>kombinace masáže, vibrací a klidového doznění</li>
+              <li>silnější regenerace a pocit vnitřní rovnováhy</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <p class="services-massage__signature">S přáním hezkého dne — Veronika Hrstková</p>
+      <p class="services-massage__cta">
+        <a href="kontakt.html" class="service-link js-to-kontakt">Domluvit masáž nebo rezervovat</a>
+      </p>
     </div>
   </div>
 </section>
