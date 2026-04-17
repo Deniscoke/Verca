@@ -1406,24 +1406,83 @@ h1, h2, h3, h4 {
   .service-link:hover { gap: 12px; color: var(--terracotta); }
 }
 
-/* Masáže — rozbalovací nabídka v sekci „Co nabízím“ */
+a.service-card {
+  text-decoration: none;
+  color: inherit;
+}
+a.service-card:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 3px;
+  border-radius: var(--radius-card);
+}
+@media (hover: hover) {
+  a.service-card.service-card--massage:hover .service-link {
+    gap: 12px;
+    color: var(--terracotta);
+  }
+}
+
+/* Masáže — druhý krok (po kliknutí na kartu); uvnitř rozbalovací nabídka */
 .services-massage {
   margin-top: clamp(2rem, 4vw, 3rem);
   scroll-margin-top: 96px;
+  padding-bottom: clamp(0.5rem, 2vw, 1.25rem);
+}
+.services-massage[hidden] {
+  display: none !important;
+}
+.services-massage__inner {
+  max-width: min(40rem, 100%);
+  margin-inline: auto;
+}
+.services-massage__head {
+  position: relative;
+  text-align: center;
+  margin-bottom: clamp(1rem, 2vw, 1.35rem);
+  padding-right: clamp(2.5rem, 8vw, 4rem);
+  padding-left: clamp(2.5rem, 8vw, 4rem);
+}
+.services-massage__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.35rem 0.65rem;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    color 0.25s,
+    border-color 0.25s,
+    background 0.25s;
+}
+@media (hover: hover) {
+  .services-massage__close:hover {
+    color: var(--terracotta);
+    border-color: rgba(184, 100, 71, 0.45);
+    background: rgba(255, 255, 255, 0.7);
+  }
 }
 .services-massage__title {
   font-family: var(--font-display);
   font-size: clamp(1.35rem, 2vw, 1.65rem);
   color: var(--charcoal);
-  margin: 0 0 0.65rem;
+  margin: 0;
   line-height: 1.15;
 }
 .services-massage__lead {
   max-width: min(38rem, 100%);
-  margin: 0 0 clamp(1.25rem, 2.5vw, 1.75rem);
+  margin: 0 auto clamp(1.25rem, 2.5vw, 1.75rem);
   font-size: 15px;
   line-height: 1.75;
   color: var(--text-soft);
+  text-align: center;
 }
 .services-massage__acc {
   display: flex;
@@ -1440,6 +1499,11 @@ h1, h2, h3, h4 {
 }
 .services-massage details[open] {
   box-shadow: var(--shadow-lift);
+}
+@media (hover: hover) {
+  .services-massage details:not([open]) summary:hover {
+    background: rgba(255, 255, 255, 0.55);
+  }
 }
 .services-massage summary {
   cursor: pointer;
@@ -1501,9 +1565,24 @@ h1, h2, h3, h4 {
   font-size: 14px;
   color: var(--text-soft);
   font-style: italic;
+  text-align: center;
 }
 .services-massage__cta {
   margin-top: 1.25rem;
+  text-align: center;
+}
+html:not(.reduce-motion) .services-massage:not([hidden]) {
+  animation: verca-massage-in 0.45s var(--ease-organic) both;
+}
+@keyframes verca-massage-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ═══ EXPERIENCE ═══ (jen section — .label nesmí mít třídu .experience, jinak dědí padding/gradient) */
@@ -2753,7 +2832,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
       <a class="prostory-card js-reveal-stagger" role="listitem" href="#masaze">
         <span class="prostory-card__label">Tělo</span>
         <h3 class="prostory-card__title">Masáže</h3>
-        <p class="prostory-card__body">Individuální masáže a relaxační rituály — záda a šíje, celotělové ošetření, aromaterapie i zvuk s ladičkami. Ceny a popisy rozbalíte v nabídce níže.</p>
+        <p class="prostory-card__body">Individuální masáže a relaxační rituály — záda a šíje, celotělové ošetření, aromaterapie i zvuk s ladičkami. Po kliknutí na kartu Masáže v nabídce se zobrazí ceny a celý popis.</p>
         <span class="prostory-card__go">Otevřít nabídku</span>
       </a>
     </div>
@@ -2815,7 +2894,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         <a href="bylinny-atelier.html" class="service-link">Ateliér a produkty</a>
       </article>
 
-      <article class="service-card js-reveal-stagger" role="listitem">
+      <a href="#masaze" class="service-card service-card--massage js-reveal-stagger" role="listitem">
         <div class="service-card__thumb">
           <img src="images/IMG_0962.JPG" width="1536" height="2048" loading="lazy" decoding="async" alt="Masáž a péče o tělo — teplo, oleje a klid.">
         </div>
@@ -2827,43 +2906,47 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
           <span class="service-tag">Ladičky</span>
         </div>
         <p class="service-card__body">Od cílené masáže zad až po hluboké relaxační rituály s éterickými oleji nebo terapeutickými ladičkami — vždy podle toho, co vaše tělo právě potřebuje.</p>
-        <a href="#masaze" class="service-link">Detailní nabídka a ceny</a>
-      </article>
+        <span class="service-link">Detailní nabídka a ceny</span>
+      </a>
     </div>
 
-    <div class="services-massage js-reveal" id="masaze" aria-labelledby="masaze-title">
-      <h3 class="services-massage__title" id="masaze-title">Masáže</h3>
-      <p class="services-massage__lead">
-        10 let práce s lidským tělem mě naučilo jedno — každé tělo má svůj příběh a potřebuje individuální přístup. Ať přicházíte s chronickým napětím, po fyzické zátěži, nebo potřebujete relaxaci a odpočinek, najdeme způsob, jak vašemu tělu ulevit.
-      </p>
+    <div class="services-massage js-reveal" id="masaze" hidden aria-hidden="true" aria-labelledby="masaze-title">
+      <div class="services-massage__inner">
+        <div class="services-massage__head">
+          <button type="button" class="services-massage__close" id="masazeClose" aria-controls="masaze">Zavřít</button>
+          <h3 class="services-massage__title" id="masaze-title">Masáže</h3>
+        </div>
+        <p class="services-massage__lead">
+          10 let práce s lidským tělem mě naučilo jedno — každé tělo má svůj příběh a potřebuje individuální přístup. Ať přicházíte s chronickým napětím, po fyzické zátěži, nebo potřebujete relaxaci a odpočinek, najdeme způsob, jak vašemu tělu ulevit.
+        </p>
 
-      <div class="services-massage__acc">
-        <details class="js-reveal-stagger">
-          <summary><span class="services-massage__sum-text">Masáž zad a šíje</span><span class="service-tag services-massage__price-tag">1&nbsp;100&nbsp;Kč</span></summary>
-          <div class="services-massage__body">
-            <p>Záda a šíje jsou místem, kde tělo nejčastěji drží nahromaděné napětí — ať už z dlouhého sezení u počítače, fyzické práce nebo stresu. Tato masáž cíleně uvolňuje přetížené svaly, zlepšuje prokrvení a přináší okamžitou úlevu.</p>
-          </div>
-        </details>
+        <div class="services-massage__acc">
+          <details class="js-reveal-stagger">
+            <summary><span class="services-massage__sum-text">Masáž zad a šíje</span><span class="service-tag services-massage__price-tag">1&nbsp;100&nbsp;Kč</span></summary>
+            <div class="services-massage__body">
+              <p>Záda a šíje jsou místem, kde tělo nejčastěji drží nahromaděné napětí — ať už z dlouhého sezení u počítače, fyzické práce nebo stresu. Tato masáž cíleně uvolňuje přetížené svaly, zlepšuje prokrvení a přináší okamžitou úlevu.</p>
+            </div>
+          </details>
 
-        <details class="js-reveal-stagger">
-          <summary><span class="services-massage__sum-text">Celotělová masáž</span><span class="service-tag services-massage__price-tag">1&nbsp;700&nbsp;Kč</span></summary>
-          <div class="services-massage__body">
-            <p>Komplexní ošetření celého těla, které pracuje systematicky od hlavy až k patám. Uvolňuje svalové napětí, podporuje krevní a lymfatický oběh — po masáži odcházíte s pocitem, jako by tělo znovu dýchalo.</p>
-          </div>
-        </details>
+          <details class="js-reveal-stagger">
+            <summary><span class="services-massage__sum-text">Celotělová masáž</span><span class="service-tag services-massage__price-tag">1&nbsp;700&nbsp;Kč</span></summary>
+            <div class="services-massage__body">
+              <p>Komplexní ošetření celého těla, které pracuje systematicky od hlavy až k patám. Uvolňuje svalové napětí, podporuje krevní a lymfatický oběh — po masáži odcházíte s pocitem, jako by tělo znovu dýchalo.</p>
+            </div>
+          </details>
 
-        <details class="js-reveal-stagger">
-          <summary><span class="services-massage__sum-text">Aromaterapeutická masáž zad a šíje</span><span class="service-tag services-massage__price-tag">90 / 120&nbsp;min</span></summary>
-          <div class="services-massage__body">
-            <p>Aromaterapeutická masáž pracuje současně na více rovinách — uvolňuje svalové napětí, ošetřuje bolestivá místa, podporuje lymfatický a oběhový systém a napomáhá přirozenému odvodu odpadních látek z těla. Při hluboké relaxaci se mozková aktivita přirozeně zpomalí na hladinu alfa — stejný stav, který zažíváme těsně před usnutím nebo při meditaci. V tomto stavu je tělo schopno efektivně regenerovat a účinek masáže je výrazně hlubší a déle trvající. Více o aromaterapii se dočtete v samostatné sekci na tomto webu.</p>
-            <p><strong>90 minut</strong> — 1&nbsp;600&nbsp;Kč · <strong>120 minut</strong> — 2&nbsp;100&nbsp;Kč</p>
-            <p>Před každým ošetřením si uděláme krátký rozhovor, kde zjistíme, co vaše tělo potřebuje. Podle toho namíchám individuální kompozici kvalitních esenciálních olejů, které cílí přímo na vaše aktuální potřeby — ať už jde o uvolnění napětí, podporu imunity, zklidnění nervového systému nebo celkovou regeneraci.</p>
-          </div>
-        </details>
+          <details class="js-reveal-stagger">
+            <summary><span class="services-massage__sum-text">Aromaterapeutická masáž zad a šíje</span><span class="service-tag services-massage__price-tag">90 / 120&nbsp;min</span></summary>
+            <div class="services-massage__body">
+              <p>Aromaterapeutická masáž pracuje současně na více rovinách — uvolňuje svalové napětí, ošetřuje bolestivá místa, podporuje lymfatický a oběhový systém a napomáhá přirozenému odvodu odpadních látek z těla. Při hluboké relaxaci se mozková aktivita přirozeně zpomalí na hladinu alfa — stejný stav, který zažíváme těsně před usnutím nebo při meditaci. V tomto stavu je tělo schopno efektivně regenerovat a účinek masáže je výrazně hlubší a déle trvající. Více o aromaterapii se dočtete v samostatné sekci na tomto webu.</p>
+              <p><strong>90 minut</strong> — 1&nbsp;600&nbsp;Kč · <strong>120 minut</strong> — 2&nbsp;100&nbsp;Kč</p>
+              <p>Před každým ošetřením si uděláme krátký rozhovor, kde zjistíme, co vaše tělo potřebuje. Podle toho namíchám individuální kompozici kvalitních esenciálních olejů, které cílí přímo na vaše aktuální potřeby — ať už jde o uvolnění napětí, podporu imunity, zklidnění nervového systému nebo celkovou regeneraci.</p>
+            </div>
+          </details>
 
-        <details class="js-reveal-stagger">
-          <summary><span class="services-massage__sum-text">Zvuková relaxační masáž</span><span class="service-tag services-massage__price-tag">90 / 120&nbsp;min</span></summary>
-          <div class="services-massage__body">
+          <details class="js-reveal-stagger">
+            <summary><span class="services-massage__sum-text">Zvuková relaxační masáž</span><span class="service-tag services-massage__price-tag">90 / 120&nbsp;min</span></summary>
+            <div class="services-massage__body">
             <p>Objevte jedinečnou masáž s terapeutickými ladičkami, které propojují hluboké uvolnění a harmonii těla i mysli. Ladicí vidličky pracují s přesně naladěnými frekvencemi, které se přenášejí do těla a působí na fyzické i psychické úrovni. Během ošetření se jejich jemné vibrace šíří tkáněmi, kde pomáhají uvolnit napětí, zklidnit nervový systém a podpořit přirozenou regeneraci organismu.</p>
             <p>Tato metoda je ideální pro všechny, kdo cítí stres, vnitřní neklid nebo dlouhodobé napětí. Masáž může přinést hluboké uvolnění svalů, zklidnění mysli, pocit lehkosti a návrat k vnitřní rovnováze. Mnoho klientů během ošetření zažívá stav hluboké relaxace, kdy dochází k celkovému zklidnění.</p>
             <p class="services-massage__subhead">Pravidelné ošetření může podpořit</p>
@@ -2892,14 +2975,15 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
               <li>kombinace masáže, vibrací a klidového doznění</li>
               <li>silnější regenerace a pocit vnitřní rovnováhy</li>
             </ul>
-          </div>
-        </details>
-      </div>
+            </div>
+          </details>
+        </div>
 
-      <p class="services-massage__signature">S přáním hezkého dne — Veronika Hrstková</p>
-      <p class="services-massage__cta">
-        <a href="kontakt.html" class="service-link js-to-kontakt">Domluvit masáž nebo rezervovat</a>
-      </p>
+        <p class="services-massage__signature">S přáním hezkého dne — Veronika Hrstková</p>
+        <p class="services-massage__cta">
+          <a href="kontakt.html" class="service-link js-to-kontakt">Domluvit masáž nebo rezervovat</a>
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -3450,6 +3534,58 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     });
   }
 
+  /* ── MASÁŽE: druhý krok (panel po kliknutí na kartu / #masaze) ── */
+  function openMassagePanel() {
+    var el = document.getElementById('masaze');
+    if (!el) return;
+    el.removeAttribute('hidden');
+    el.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeMassagePanel() {
+    var el = document.getElementById('masaze');
+    if (!el) return;
+    el.setAttribute('hidden', '');
+    el.setAttribute('aria-hidden', 'true');
+    try {
+      if (window.location.hash === '#masaze') {
+        history.replaceState(null, '', window.location.pathname + (window.location.search || ''));
+      }
+    } catch (err) {}
+  }
+
+  function initMassagePanel() {
+    var closeBtn = document.getElementById('masazeClose');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        closeMassagePanel();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var el = document.getElementById('masaze');
+      if (!el || el.hasAttribute('hidden')) return;
+      closeMassagePanel();
+    });
+  }
+
+  function applyHashMasazeOnLoad() {
+    if (window.location.hash !== '#masaze') return;
+    openMassagePanel();
+    var nav = document.getElementById('nav');
+    var target = document.getElementById('masaze');
+    if (!target) return;
+    var offset = (nav ? nav.offsetHeight : 0) + NAV_ANCHOR_GAP;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        window.scrollTo({
+          top: target.getBoundingClientRect().top + window.scrollY - offset,
+          behavior: 'auto'
+        });
+      });
+    });
+  }
+
   /* ── ANCHOR SCROLL ── */
   function initAnchors() {
     var nav = document.getElementById('nav');
@@ -3463,6 +3599,22 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         gsap.registerPlugin(ScrollToPlugin);
       } catch (err) {}
     }
+    function scrollToAnchorTarget(target) {
+      if (!target) return;
+      var offset = (nav ? nav.offsetHeight : 0) + NAV_ANCHOR_GAP;
+      if (useGsapAnchor) {
+        gsap.to(window, {
+          duration: 1.05,
+          scrollTo: { y: target, offsetY: offset, autoKill: true },
+          ease: 'power2.inOut'
+        });
+      } else {
+        window.scrollTo({
+          top: target.getBoundingClientRect().top + window.scrollY - offset,
+          behavior: reduceMotion ? 'auto' : 'smooth'
+        });
+      }
+    }
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         var id = a.getAttribute('href');
@@ -3470,18 +3622,15 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         var target = document.querySelector(id);
         if (!target) return;
         e.preventDefault();
-        var offset = (nav ? nav.offsetHeight : 0) + NAV_ANCHOR_GAP;
-        if (useGsapAnchor) {
-          gsap.to(window, {
-            duration: 1.05,
-            scrollTo: { y: target, offsetY: offset, autoKill: true },
-            ease: 'power2.inOut'
+        if (id === '#masaze') {
+          openMassagePanel();
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              scrollToAnchorTarget(target);
+            });
           });
         } else {
-          window.scrollTo({
-            top: target.getBoundingClientRect().top + window.scrollY - offset,
-            behavior: reduceMotion ? 'auto' : 'smooth'
-          });
+          scrollToAnchorTarget(target);
         }
       });
     });
@@ -3515,6 +3664,8 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     initAbout();
     initFaq();
     initAnchors();
+    initMassagePanel();
+    applyHashMasazeOnLoad();
     initKontaktTransition();
   }
 
