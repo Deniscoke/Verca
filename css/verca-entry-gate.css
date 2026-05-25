@@ -104,10 +104,107 @@ html:not(.verca-entry-done) body {
   opacity: 1;
 }
 
+/* ── Brand titulok (Viva Esencia) — najväčšia hierarchická úroveň ── */
+.verca-entry-gate__brand {
+  margin: 0 0 clamp(1rem, 2.6vw, 1.6rem);
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(2.6rem, 9.5vw, 4.4rem);
+  font-weight: 300;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--wine-deep, #241e19);
+  background-image: linear-gradient(
+    102deg,
+    var(--wine, #3a3128) 0%,
+    var(--terracotta, #b86447) 32%,
+    var(--bloom-coral, #d4a088) 55%,
+    var(--terracotta-mid, #c97b5c) 78%,
+    var(--wine, #3a3128) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 32px rgba(255, 200, 168, 0.5)) drop-shadow(0 2px 12px rgba(58, 36, 28, 0.12));
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .verca-entry-gate__brand {
+    background: none;
+    -webkit-text-fill-color: unset;
+    color: var(--terracotta, #b86447);
+    filter: none;
+  }
+}
+
+/* ── Pozdrav od Verci (krátky text) — Cormorant italic, dýchajúce riadkovanie ── */
+.verca-entry-gate__lead {
+  margin: 0 auto clamp(0.65rem, 1.6vw, 1rem);
+  max-width: min(32rem, 92vw);
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+  line-height: 1.55;
+  letter-spacing: 0.005em;
+  color: rgba(58, 46, 38, 0.9);
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 252, 246, 0.55);
+}
+
+/* ── Signatúra "— Verca" — handwritten Caveat, jemne vľavo posunuté ── */
+.verca-entry-gate__signature {
+  margin: 0 auto clamp(1.5rem, 3.5vw, 2rem);
+  font-family: var(--font-accent, 'Caveat', cursive);
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  color: var(--terracotta-mid, #c97b5c);
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+}
+
+/* ── Stagger animations — texty sa zjavujú postupne, nie všetko naraz.
+   Override: rodič .verca-entry-gate__copy mal vlastnú opacity animáciu — vypneme ju
+   a každý child má vlastnú stagger animáciu s rastúcimi delays.
+   Vďaka tomu má príchod meditatívne tempo: brand → text → signatúra → Vstoupit. ── */
+.verca-entry-gate__copy {
+  animation: none !important;
+  opacity: 1;
+  transform: none;
+}
+
+.verca-entry-gate__brand,
+.verca-entry-gate__lead,
+.verca-entry-gate__signature,
+.verca-entry-gate__copy .verca-entry-gate__word {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: verca-entry-stagger-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.verca-entry-gate__brand { animation-delay: 0.45s; }
+.verca-entry-gate__lead { animation-delay: 0.95s; }
+.verca-entry-gate__signature { animation-delay: 1.55s; }
+.verca-entry-gate__copy .verca-entry-gate__word { animation-delay: 2.05s; }
+
+@keyframes verca-entry-stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reduce-motion .verca-entry-gate__brand,
+.reduce-motion .verca-entry-gate__lead,
+.reduce-motion .verca-entry-gate__signature,
+.reduce-motion .verca-entry-gate__copy .verca-entry-gate__word {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
 .verca-entry-gate__word {
   margin: 0;
   font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
-  font-size: clamp(2.35rem, 11vw, 4.1rem);
+  font-size: clamp(1.85rem, 7vw, 2.85rem);
   font-weight: 400;
   font-style: normal;
   letter-spacing: 0.08em;

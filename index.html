@@ -17,8 +17,8 @@
 })();
 </script>
 <meta name="format-detection" content="telephone=no">
-<title>Verca — Jemná přírodní péče</title>
-<meta name="description" content="Ručně připravované bylinné přípravky a jemná péče o tělo — texty nabídky se ladí; e-shop v přípravě.">
+<title>Viva Esencia — Jemná přírodní péče s Vercou</title>
+<meta name="description" content="Viva Esencia — terapie pánevního dna, somatická a aromaterapeutická sezení a ručně vyráběné bylinné přípravky. Jemná, lidská péče s Vercou.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="images/IMG_0964.JPG" media="(max-width: 768px)">
@@ -54,8 +54,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
   --wine-deep:      #241e19;
   --charcoal:       #1A1816;
   --text:           #2A2622;
-  --text-soft:      #5C564E;
-  --text-muted:     #8A847C;
+  --text-soft:      #44403A;
+  --text-muted:     #66605A;
   --white-08:       rgba(255,255,255,0.08);
   --white-40:       rgba(255,255,255,0.5);
 
@@ -98,7 +98,7 @@ html.verca-juxt-wheel { scroll-behavior: auto; }
 body {
   color: var(--text);
   font-family: var(--font-body);
-  font-size: clamp(15.5px, 1.05vw, 17.5px);
+  font-size: clamp(16px, 1.1vw, 17.5px);
   line-height: 1.82;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -121,6 +121,9 @@ body::after { display: none; }
   height: 100%;
   pointer-events: none;
   z-index: 120;
+  /* multiply: kvety na tmavom texte sa spravia priesvitné (dark×coral≈dark),
+     na krémovom pozadí zostanú viditeľné a plné — text zostáva čitateľný */
+  mix-blend-mode: multiply;
 }
 .reduce-motion #verca-bloom-canvas { display: none; }
 
@@ -315,7 +318,7 @@ h1, h2, h3, h4 {
   display: inline-block;
   font-family: var(--font-body);
   font-size: 10.5px;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-muted);
   font-weight: 500;
@@ -390,6 +393,51 @@ h1, h2, h3, h4 {
 
 .btn--primary:active { transform: translateY(0) scale(0.98); }
 
+/* ═══ COMING SOON — ateliér zatiaľ skrytý, ale prítomný v UI ═══ */
+.btn--coming-soon {
+  background: var(--cream-deep);
+  color: var(--text-muted);
+  border: 1.5px dashed rgba(184, 100, 71, 0.45);
+  cursor: default;
+  pointer-events: none;
+  letter-spacing: 0.18em;
+}
+.btn--coming-soon::before {
+  content: '✿';
+  font-size: 13px;
+  color: var(--terracotta);
+  opacity: 0.7;
+  margin-right: 2px;
+}
+.coming-soon-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: auto;
+  padding-top: 6px;
+}
+.coming-soon-note::before {
+  content: '✿';
+  color: var(--terracotta);
+  opacity: 0.7;
+  font-size: 13px;
+}
+.coming-soon-whisper {
+  display: block;
+  font-family: var(--font-accent);
+  font-size: 1.1rem;
+  color: var(--terracotta);
+  opacity: 0.75;
+  margin-top: 0.65rem;
+  font-style: normal;
+}
+
 /* ═══ NAV ═══ */
 .nav {
   position: fixed;
@@ -412,7 +460,9 @@ h1, h2, h3, h4 {
 
 .nav__logo {
   font-family: var(--font-display);
-  font-size: clamp(25px, 2.6vw, 30px);
+  /* "Viva Esencia" je dlhšie než pôvodné "Verca" — znížil som horný limit clamp-u
+     o 4px, aby logo nebralo nav-baru priestor menu položkám. */
+  font-size: clamp(20px, 2.2vw, 26px);
   font-weight: 300;
   letter-spacing: 0.08em;
   color: var(--charcoal);
@@ -837,7 +887,7 @@ h1, h2, h3, h4 {
 .hero__title-line { display: block; overflow: hidden; }
 
 .hero__sub {
-  font-size: clamp(14.5px, 1.3vw, 17px);
+  font-size: clamp(16px, 1.3vw, 17px);
   line-height: 1.78;
   color: var(--text-soft);
   max-width: min(28rem, var(--measure-prose));
@@ -937,8 +987,8 @@ h1, h2, h3, h4 {
 }
 
 .trust__desc {
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -1101,7 +1151,7 @@ h1, h2, h3, h4 {
 }
 .prostory__title em { font-style: italic; color: var(--terracotta-mid); }
 .prostory__intro {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.78;
   color: var(--text-soft);
   max-width: min(36rem, 100%);
@@ -1213,8 +1263,8 @@ h1, h2, h3, h4 {
   }
 }
 .prostory-card__label {
-  font-size: 9.5px;
-  letter-spacing: 0.22em;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: 0.65rem;
@@ -1228,7 +1278,7 @@ h1, h2, h3, h4 {
   line-height: 1.15;
 }
 .prostory-card__body {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.72;
   color: var(--text-soft);
   flex: 1;
@@ -1287,7 +1337,7 @@ h1, h2, h3, h4 {
 .services__intro {
   max-width: min(36rem, 100%);
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--text-soft);
 }
@@ -1371,8 +1421,8 @@ h1, h2, h3, h4 {
 }
 
 .service-tag {
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
+  font-size: 10px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 5px 12px;
   border: 1px solid var(--line);
@@ -1382,7 +1432,7 @@ h1, h2, h3, h4 {
 }
 
 .service-card__body {
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.82;
   color: var(--text-soft);
   flex: 1;
@@ -1393,8 +1443,8 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--text);
@@ -1479,7 +1529,7 @@ a.service-card:focus-visible {
 .services-massage__lead {
   max-width: min(38rem, 100%);
   margin: 0 auto clamp(1.25rem, 2.5vw, 1.75rem);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--text-soft);
   text-align: center;
@@ -1539,7 +1589,7 @@ a.service-card:focus-visible {
 }
 .services-massage__body {
   padding: 0 clamp(1.15rem, 2vw, 1.35rem) clamp(1.1rem, 2vw, 1.35rem);
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.82;
   color: var(--text-soft);
   border-top: 1px solid var(--line);
@@ -1552,9 +1602,9 @@ a.service-card:focus-visible {
 .services-massage__body li + li { margin-top: 0.35rem; }
 .services-massage__subhead {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
   margin: 1rem 0 0.5rem;
@@ -1562,7 +1612,7 @@ a.service-card:focus-visible {
 .services-massage__subhead:first-child { margin-top: 0; }
 .services-massage__signature {
   margin-top: clamp(1.5rem, 3vw, 2rem);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
   font-style: italic;
   text-align: center;
@@ -1654,9 +1704,9 @@ section.experience .experience__kicker {
   text-align: center;
   color: var(--text-muted);
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 section.experience .experience__kicker::before,
@@ -1756,7 +1806,7 @@ section.experience .experience__kicker::after {
 .step__name em { font-style: italic; color: var(--terracotta); }
 
 .step__body {
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.82;
   color: var(--text-soft);
   max-width: 36rem;
@@ -1844,8 +1894,8 @@ section.experience .experience__kicker::after {
 }
 
 .testimonial__author {
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -1955,8 +2005,8 @@ section.experience .experience__kicker::after {
 }
 
 .badge {
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 7px 14px;
   border: 1px solid var(--line);
@@ -2129,7 +2179,7 @@ section.experience .experience__kicker::after {
 
 .faq-item__a-inner {
   padding: 0 0 clamp(1.15rem, 2vw, 1.5rem);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.82;
   color: var(--text-soft);
   max-width: 560px;
@@ -2162,7 +2212,7 @@ section.experience .experience__kicker::after {
 .contact__sub {
   max-width: min(28rem, var(--measure-prose));
   margin: 0 auto 2rem;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.78;
   color: var(--text-soft);
 }
@@ -2207,20 +2257,37 @@ section.experience .experience__kicker::after {
   align-items: center;
 }
 .footer__links a {
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgba(246, 241, 232, 0.35);
+  color: rgba(246, 241, 232, 0.55);
   transition: color 0.3s;
 }
 @media (hover: hover) {
   .footer__links a:hover { color: rgba(245, 243, 239, 0.95); }
 }
+
+/* Facebook ikona vo footeri — line icon (SVG inline), na hover terracotta */
+.footer__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.footer__social svg {
+  opacity: 0.7;
+  transition: opacity 0.3s, color 0.3s;
+}
+@media (hover: hover) {
+  .footer__social:hover svg {
+    opacity: 1;
+    color: var(--terracotta-mid);
+  }
+}
 .footer__copy {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: rgba(246, 241, 232, 0.22);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(246, 241, 232, 0.40);
 }
 .footer__legal {
   width: 100%;
@@ -2234,11 +2301,11 @@ section.experience .experience__kicker::after {
   align-items: center;
 }
 .footer__legal a {
-  font-size: 9px;
-  letter-spacing: 0.1em;
+  font-size: 10px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgba(246, 241, 232, 0.28);
+  color: rgba(246, 241, 232, 0.42);
   transition: color 0.3s;
 }
 @media (hover: hover) {
@@ -2584,15 +2651,15 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
   .nav__cta { padding: 9px 18px !important; font-size: 9.5px !important; }
 
   .hero__title { font-size: clamp(2.2rem, 12vw, 3rem); }
-  .hero__sub { font-size: 14px; }
+  .hero__sub { font-size: 15.5px; }
   .prostory-card { padding: clamp(1rem, 2vw, 1.35rem); }
   .prostory-card__title { font-size: clamp(1.15rem, 4vw, 1.45rem); }
   .experience__timeline { padding: 1rem 0.85rem; }
   .step__num { font-size: clamp(2.2rem, 8vw, 3rem); }
   .step__name { font-size: clamp(1.1rem, 4vw, 1.4rem); }
-  .step__body { font-size: 13.5px; }
+  .step__body { font-size: 15px; }
   .testimonial { padding: 1.25rem; }
-  .testimonial__body { font-size: 0.92rem; }
+  .testimonial__body { font-size: 0.95rem; }
   .products__title { font-size: clamp(1.75rem, 6vw, 2.25rem); }
   .about__name { font-size: clamp(1.75rem, 6vw, 2.25rem); }
   .faq__title { font-size: clamp(1.75rem, 6vw, 2.25rem); }
@@ -2613,9 +2680,14 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 </audio>
 <script src="js/verca-ambient.js" defer></script>
 
-<div id="verca-entry-gate" class="verca-entry-gate" role="dialog" aria-modal="true" aria-label="Vstoupit na web Verca" aria-describedby="verca-entry-invite verca-entry-cookies-notice verca-entry-sr" tabindex="-1">
+<div id="verca-entry-gate" class="verca-entry-gate" role="dialog" aria-modal="true" aria-label="Vstoupit na web Viva Esencia" aria-describedby="verca-entry-invite verca-entry-cookies-notice verca-entry-sr" tabindex="-1">
   <div class="verca-entry-gate__below">
     <div id="verca-entry-invite" class="verca-entry-gate__copy">
+      <p class="verca-entry-gate__brand">Viva Esencia</p>
+      <p class="verca-entry-gate__lead">
+        Provázím ženy i muže skrze dotek, bylinky a&nbsp;aromaterapii k&nbsp;většímu vnímání těla, klidu a&nbsp;návratu k&nbsp;sobě
+      </p>
+      <p class="verca-entry-gate__signature">— Verca</p>
       <h2 class="verca-entry-gate__word">Vstoupit</h2>
     </div>
     <aside id="verca-entry-cookies-notice" class="verca-entry-gate__cookies" aria-label="Informace o cookies">
@@ -2643,12 +2715,15 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 
 <div class="verca-surface">
 <nav class="nav" id="nav" role="navigation" aria-label="Hlavní navigace">
-  <a href="#" class="nav__logo">Verca</a>
+  <a href="#" class="nav__logo" aria-label="Viva Esencia — domovská stránka">Viva Esencia</a>
   <div class="nav__links">
-    <a href="#services" data-nav>Nabídka</a>
-    <a href="#about" data-nav>O mně</a>
+    <!-- Poradie odkazov zodpovedá poradiu sekcií na stránke:
+         Prostory (4. sekcia) → Nabídka/services (5.) → Ateliér/products (8.) → O mně (9.)
+         Vďaka tomu sa pri scrollovaní active highlight pohybuje zľava doprava prirodzene. -->
     <a href="#prostory" data-nav>Prostory</a>
+    <a href="#services" data-nav>Nabídka</a>
     <a href="#products" data-nav class="nav__herb-link"><svg class="nav__herb-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14V6M8 6C8 6 6.5 4 4 3.5c-1.5-.3-3 .2-3 .2S2.5 6 4.5 7C6 7.8 8 6 8 6zM8 6C8 6 9.5 4 12 3.5c1.5-.3 3 .2 3 .2S11.5 6 9.5 7C8 7.8 8 6 8 6z" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Ateliér</a>
+    <a href="#about" data-nav>O mně</a>
     <button type="button" class="nav__ambient" id="verca-ambient-toggle" aria-pressed="false" aria-label="Přehrát jemnou hudbu v pozadí" title="Hudba v pozadí">
       <svg class="nav__ambient-icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></svg>
       <svg class="nav__ambient-icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
@@ -2660,10 +2735,11 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
   </div>
 </nav>
 <div class="nav__mobile-drawer" id="navDrawer">
-  <a href="#services" data-mobile-nav>Nabídka</a>
-  <a href="#about" data-mobile-nav>O mně</a>
+  <!-- Mobilné poradie zodpovedá scroll-poradiu sekcií (zhora dole tak, ako idú na stránke). -->
   <a href="#prostory" data-mobile-nav>Prostory</a>
+  <a href="#services" data-mobile-nav>Nabídka</a>
   <a href="#products" data-mobile-nav>Bylinný ateliér</a>
+  <a href="#about" data-mobile-nav>O mně</a>
   <a href="#faq" data-mobile-nav>FAQ</a>
   <a href="kontakt.html" class="nav__cta js-to-kontakt">Rezervovat</a>
 </div>
@@ -2716,7 +2792,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
           </svg>
         </div>
         <div class="hero__eyebrow">
-          <span class="label js-fade">Bylinný ateliér &nbsp;·&nbsp; Tělesné vědomí &nbsp;·&nbsp; Příprava nabídky</span>
+          <span class="label js-fade">Vítej v prostoru Viva Esencia</span>
         </div>
 
         <h1 class="hero__title" id="heroTitle">
@@ -2726,7 +2802,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         </h1>
 
         <p class="hero__sub js-fade">
-          Jemná péče a ruční příprava — aktuálně doplňujeme přesné texty a nabídku. Ozvěte se, vše začíná rozhovorem.
+          Místo, kde propojuji masáže, aromaterapii, bylinky a&nbsp;vědomou práci s&nbsp;tělem v&nbsp;souvislostech. Bez spěchu, beze slov, která neznáte — vše začíná rozhovorem.
         </p>
 
         <div class="hero__actions">
@@ -2783,18 +2859,18 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
       </figure>
       <div class="philosophy__col">
         <blockquote class="philosophy__quote js-reveal">
-          Tělo nese vše, co jste kdy prožila.<br>Zaslouží si péči, která to chápe.
+          Skutečná péče nezačíná až ve chvíli, kdy něco bolí&nbsp;— ale mnohem dřív. Ve chvíli, kdy se naučíme své tělo více vnímat.
         </blockquote>
         <div class="philosophy__text">
           <span class="label js-reveal">Můj přístup</span>
-          <h2 class="js-reveal">Péče zakořeněná v <em>důvěře a přítomnosti</em></h2>
+          <h2 class="js-reveal">Tělo a&nbsp;psychika <em>v souvislostech</em></h2>
           <p class="js-reveal">
-            Pracuji na pomezí terapie pánevního dna, somatického tělesného vědomí a rostlinné medicíny. Každé sezení se odehrává v prostoru hluboké úcty — k vašemu tělu, vaší historii a vašemu tempu.
+            Ve své práci vycházím z&nbsp;přesvědčení, že tělo a&nbsp;psychika spolu úzce souvisí. Pracuji na pomezí masáží, aromaterapie, bylinného poradenství a&nbsp;vědomé práce s&nbsp;tělem — vždy v&nbsp;prostoru hluboké úcty k&nbsp;vašemu tempu.
           </p>
           <p class="js-reveal">
-            Ať se zotavujete, zkoumáte, nebo jen chcete znovu cítit domov ve svém těle — tato práce vás potká přesně tam, kde jste.
+            Masáže a&nbsp;bylinné poradenství jsou otevřené ženám i&nbsp;mužům. Pro ženy zároveň vytvářím prostor hlubší péče skrze <em>Esenci ženy</em> a&nbsp;práci s&nbsp;pánevním dnem, kde propojuji tělo, emoce a&nbsp;ženské zdraví.
           </p>
-          <span class="philosophy__accent js-reveal">Bez spěchu. Bez soudů. Jen péče.</span>
+          <span class="philosophy__accent js-reveal">V&nbsp;návratu k&nbsp;jednoduchosti, přírodě a&nbsp;k&nbsp;sobě samým.</span>
         </div>
       </div>
     </div>
@@ -2891,7 +2967,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
           <span class="service-tag">Rostlinná medicína</span>
         </div>
         <p class="service-card__body">Ručně vyráběné krémy, masti a přípravky z rostlin, které vybírám, připravuji a kterým věřím. Každý produkt prodlužuje péči ze sezení do každodenního života — přináší rostlinnou moudrost do vašich domácích rituálů.</p>
-        <a href="bylinny-atelier.html" class="service-link">Ateliér a produkty</a>
+        <span class="coming-soon-note" aria-label="Ateliér se připravuje">Ateliér připravujeme</span>
       </article>
 
       <a href="#masaze" class="service-card service-card--massage js-reveal-stagger" role="listitem">
@@ -3080,7 +3156,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         <span class="label js-reveal">Bylinný ateliér</span>
         <h2 class="products__title js-reveal">Z rukou,<br><em>ze země</em></h2>
         <p class="products__body js-reveal">
-          Každý krém, mast a přípravek v kolekci Verca vzniká ručně z rostlin, které vybírám, připravuji a kterým věřím. Jsou pokračováním léčivé práce — určené pro vaše domácí rituály, ne pro lékárenskou polici.
+          Každý krém, mast a přípravek v kolekci Viva Esencia vzniká ručně z rostlin, které vybírám, připravuji a kterým věřím. Jsou pokračováním léčivé práce — určené pro vaše domácí rituály, ne pro lékárenskou polici.
         </p>
         <span class="products__handwritten js-reveal">Malé šarže. S úmyslem.</span>
         <div class="products__badges js-reveal">
@@ -3090,9 +3166,10 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
           <span class="badge">Malá série</span>
         </div>
         <div class="js-reveal products__cta-row">
-          <span class="magnetic-wrap"><a href="bylinny-atelier.html" class="btn btn--primary magnetic-target">Prohlédnout ateliér</a></span>
+          <span class="btn btn--coming-soon" role="text" aria-label="Bylinný ateliér se brzy otevře">Brzy otevíráme ateliér</span>
           <span class="magnetic-wrap"><a href="kontakt.html" class="btn btn--secondary magnetic-target js-to-kontakt">Napsat dotaz</a></span>
         </div>
+        <span class="coming-soon-whisper js-reveal">Připravuji pro vás něco s láskou</span>
       </div>
     </div>
   </div>
@@ -3103,20 +3180,20 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     <div class="about__inner">
       <div class="about__portrait-shell js-about-shell">
         <div class="about__portrait" id="aboutPortrait">
-          <img class="about__portrait-img" src="images/verca-about.png" width="768" height="1024" loading="lazy" decoding="async" alt="Verca u stolu s vlastními produkty, oleji a květinami — tvář značky a ateliéru.">
+          <img class="about__portrait-img" src="images/verca-about.png" width="768" height="1024" loading="lazy" decoding="async" alt="Verca, zakladatelka Viva Esencia, u stolu s vlastními bylinnými přípravky, oleji a květinami.">
         </div>
       </div>
       <div class="about__text">
-        <span class="label js-reveal">O Verca</span>
+        <span class="label js-reveal">Zakladatelka</span>
         <h2 class="about__title js-reveal">Péče, která vychází<br><em>ze znalosti</em></h2>
         <p class="about__body js-reveal">
-          Jsem Verca — terapeutka vyškolená v terapii pánevního dna, somatické práci s tělem a aromaterapii, s lety zkušeností s držení prostoru pro ženy, které procházejí bolestí, odpojením, zotavením a proměnou.
+          Jsem Verca. Provázím ženy i&nbsp;muže skrze dotek, bylinky a&nbsp;aromaterapii k&nbsp;většímu vnímání těla, klidu a&nbsp;návratu k&nbsp;sobě. Za značkou <strong>Viva Esencia</strong> stojí lety zkušeností s&nbsp;držením prostoru pro ty, kdo procházejí bolestí, odpojením, zotavením a&nbsp;proměnou.
         </p>
         <p class="about__body js-reveal">
-          Můj přístup vyrůstal z přesvědčení, že tělo je moudré a že uzdravení přichází ve vztahu — s terapeutkou, s rostlinami, s vlastní přítomností. Bylinné přípravky vyrábím ručně jako pokračování této filozofie.
+          Věřím v&nbsp;jemný, ale vědomý přístup. Že tělo je moudré a&nbsp;že uzdravení přichází ve vztahu — s&nbsp;terapeutkou, s&nbsp;rostlinami, s&nbsp;vlastní přítomností. Bylinné přípravky vyrábím ručně jako pokračování této filozofie.
         </p>
         <p class="about__body js-reveal">
-          Každá, která ke mně přijde, nese jiný příběh. Jsem tu, abych ho vyslechla — svýma rukama, skrze rostliny, nepřekotnou pozorností.
+          Každá, každý, kdo ke mně přijde, nese jiný příběh. Jsem tu, abych ho vyslechla — svýma rukama, skrze rostliny, nepřekotnou pozorností.
         </p>
         <span class="about__signature js-reveal">S péčí, Verca</span>
       </div>
@@ -3199,17 +3276,20 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 <footer class="footer">
   <div class="container">
     <div class="footer__inner">
-      <span class="footer__logo">Verca</span>
+      <span class="footer__logo">Viva Esencia</span>
       <nav class="footer__links" aria-label="Navigace v patičce">
-        <a href="#services">Nabídka</a>
         <a href="#prostory">Prostory</a>
-        <a href="bylinny-atelier.html">Ateliér</a>
+        <a href="#services">Nabídka</a>
         <a href="#products">Produkty</a>
         <a href="#about">O mně</a>
         <a href="#faq">Dotazy</a>
         <a href="kontakt.html" class="js-to-kontakt">Kontakt</a>
+        <a href="https://www.facebook.com/share/14cC5gyEwkf/" class="footer__social" target="_blank" rel="noopener noreferrer" aria-label="Viva Esencia na Facebooku">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+          <span>Facebook</span>
+        </a>
       </nav>
-      <span class="footer__copy">© 2026 Verca</span>
+      <span class="footer__copy">© 2026 Viva Esencia</span>
     </div>
     <nav class="footer__legal" aria-label="Právní informace">
       <a href="obchodni-podminky.html">Obchodní podmínky</a>
@@ -3601,16 +3681,24 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     }
     function scrollToAnchorTarget(target) {
       if (!target) return;
+      /* Sekcie majú padding-top 5.5–10rem — scrollovať na <section> by nechalo nadpis ďaleko pod nav.
+         Cieľ namiesto toho mieri na prvý zmysluplný element vnútri (label / nadpis), aby sa text usadil tesne pod menu. */
+      var heading = target.querySelector('.label, h1, h2, h3, .services__header, .prostory__header, .faq__header') || target;
+      /* Hero (#home) nechávame na úplnom začiatku stránky — bez offsetu. */
+      var isHome = target.id === 'home';
       var offset = (nav ? nav.offsetHeight : 0) + NAV_ANCHOR_GAP;
+      var scrollTarget = isHome ? target : heading;
+      /* Pri nadpise pridáme malú „air“ medzeru zhora, aby nelipol priamo k menu. */
+      var extraGap = isHome ? 0 : 24;
       if (useGsapAnchor) {
         gsap.to(window, {
           duration: 1.05,
-          scrollTo: { y: target, offsetY: offset, autoKill: true },
+          scrollTo: { y: scrollTarget, offsetY: offset + extraGap, autoKill: true },
           ease: 'power2.inOut'
         });
       } else {
         window.scrollTo({
-          top: target.getBoundingClientRect().top + window.scrollY - offset,
+          top: scrollTarget.getBoundingClientRect().top + window.scrollY - offset - extraGap,
           behavior: reduceMotion ? 'auto' : 'smooth'
         });
       }
@@ -4022,7 +4110,8 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
   document.addEventListener('touchmove', function (e) {
     if (!e.touches.length) return;
     var t = e.touches[0];
-    spawnTrail(t.clientX, t.clientY);
+    /* spawnTrail vypnutý pri scrollovaní — kvety pri pohybe prsta by prekrývali text.
+       spawnAfterTrail zostáva: jemný efekt iba 2s po tapnutí (nie pri bežnom scrolle). */
     spawnAfterTrail(t.clientX, t.clientY);
   }, { passive: true });
 })();
