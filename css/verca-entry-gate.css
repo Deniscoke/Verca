@@ -20,7 +20,9 @@ html:not(.verca-entry-done) body {
     radial-gradient(ellipse 100% 80% at 88% 75%, rgba(232, 196, 181, 0.35) 0%, transparent 48%),
     radial-gradient(ellipse 70% 55% at 50% 100%, rgba(168, 194, 174, 0.12) 0%, transparent 45%),
     linear-gradient(168deg, #f7f4ee 0%, #f0ebe3 42%, #e8e4dc 100%);
-  cursor: crosshair;
+  /* Default kurzor (klasická šípka) — krížikový crosshair bol rušivý/technický.
+     Default je neutrálny — neťahá pozornosť na klik (auto-enter za 10s spraví vstup sám). */
+  cursor: default;
   opacity: 1;
   outline: none;
   transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
