@@ -2681,23 +2681,29 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 <script src="js/verca-ambient.js" defer></script>
 
 <div id="verca-entry-gate" class="verca-entry-gate" role="dialog" aria-modal="true" aria-label="Vstoupit na web Viva Esencia" aria-describedby="verca-entry-invite verca-entry-cookies-notice verca-entry-sr" tabindex="-1">
-  <div class="verca-entry-gate__below">
+  <!-- Vertikálne centrovaný úvodný text — bez "Vstoupit" tlačidla, web sa otvorí automaticky po 10s -->
+  <div class="verca-entry-gate__center">
     <div id="verca-entry-invite" class="verca-entry-gate__copy">
       <p class="verca-entry-gate__brand">Viva Esencia</p>
       <p class="verca-entry-gate__lead">
         Provázím ženy i muže skrze dotek, bylinky a&nbsp;aromaterapii k&nbsp;většímu vnímání těla, klidu a&nbsp;návratu k&nbsp;sobě
       </p>
       <p class="verca-entry-gate__signature">— Verca</p>
-      <h2 class="verca-entry-gate__word">Vstoupit</h2>
     </div>
+  </div>
+  <!-- Cookies + auto-enter progress bar zakotvené dole -->
+  <div class="verca-entry-gate__bottom">
     <aside id="verca-entry-cookies-notice" class="verca-entry-gate__cookies" aria-label="Informace o cookies">
       <p class="verca-entry-gate__cookies-text">
         Pro základní chod webu používáme nezbytné cookies. Podrobnosti naleznete v&nbsp;<a href="cookies.html">zásadách cookies</a>.
       </p>
     </aside>
+    <div class="verca-entry-gate__autoenter" aria-hidden="true">
+      <div class="verca-entry-gate__autoenter-bar"></div>
+    </div>
   </div>
   <p id="verca-entry-sr" class="verca-entry-gate__sr-only">
-    Vstoupíte kliknutím kamkoli na plochu úvodu nebo klávesou Enter. Odkaz na zásady cookies je níže a neukončuje úvod při čtení.
+    Web Viva Esencia se otevře automaticky za 10 sekund. Můžete vstoupit i kliknutím kamkoli na plochu nebo klávesou Enter. Odkaz na zásady cookies je níže a neukončuje úvod při čtení.
   </p>
   <div class="verca-entry-gate__glow-wrap" aria-hidden="true">
     <div class="verca-entry-gate__bloom"></div>

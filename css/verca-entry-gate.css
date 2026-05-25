@@ -42,8 +42,25 @@ html:not(.verca-entry-done) body {
   border: 0;
 }
 
-/* Slovo „Vstoupit“ + lišta cookies — klik mimo cookies jde na bránu / částice */
-.verca-entry-gate__below {
+/* Vertikálne centrovaný úvodný copy block — text "dýcha" v strede viewportu,
+   bloom orb a kruhy ostávajú pod ním ako vizuálne pozadie. */
+.verca-entry-gate__center {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Padding zhora aj zdola zabezpečí, že na malých displejoch text nelipne k okraju
+     a má priestor pre cookies notice dole. */
+  padding: clamp(2rem, 8vh, 4rem) max(16px, env(safe-area-inset-right))
+    clamp(7rem, 18vh, 11rem) max(16px, env(safe-area-inset-left));
+  pointer-events: none;
+}
+
+/* Bottom zóna — cookies notice + auto-enter progress bar */
+.verca-entry-gate__bottom {
   position: absolute;
   left: 0;
   right: 0;
@@ -52,11 +69,40 @@ html:not(.verca-entry-done) body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  gap: clamp(0.65rem, 2.2vw, 1.1rem);
+  gap: clamp(0.5rem, 1.4vw, 0.9rem);
   padding: 0 max(16px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom))
     max(16px, env(safe-area-inset-left));
   pointer-events: none;
+}
+
+/* Subtilný auto-enter progress — 10s lineárny fill, jemný náznak "niečo sa deje" */
+.verca-entry-gate__autoenter {
+  width: min(220px, 60vw);
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(58, 38, 32, 0.08);
+  overflow: hidden;
+  pointer-events: none;
+}
+.verca-entry-gate__autoenter-bar {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(184, 100, 71, 0.55),
+    var(--terracotta-mid, #c97b5c),
+    rgba(201, 123, 92, 0.85)
+  );
+  animation: verca-entry-autoenter-fill 10s linear forwards;
+  animation-delay: 2.5s; /* nech text najprv "dosadne" cez stagger animations */
+}
+@keyframes verca-entry-autoenter-fill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+.reduce-motion .verca-entry-gate__autoenter {
+  display: none;
 }
 
 .verca-entry-gate__copy {
@@ -190,8 +236,7 @@ html:not(.verca-entry-done) body {
 
 .verca-entry-gate__brand,
 .verca-entry-gate__lead,
-.verca-entry-gate__signature,
-.verca-entry-gate__copy .verca-entry-gate__word {
+.verca-entry-gate__signature {
   opacity: 0;
   transform: translateY(12px);
   animation: verca-entry-stagger-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -199,7 +244,6 @@ html:not(.verca-entry-done) body {
 .verca-entry-gate__brand { animation-delay: 0.45s; }
 .verca-entry-gate__lead { animation-delay: 0.95s; }
 .verca-entry-gate__signature { animation-delay: 1.55s; }
-.verca-entry-gate__copy .verca-entry-gate__word { animation-delay: 2.05s; }
 
 @keyframes verca-entry-stagger-in {
   to {
@@ -210,51 +254,10 @@ html:not(.verca-entry-done) body {
 
 .reduce-motion .verca-entry-gate__brand,
 .reduce-motion .verca-entry-gate__lead,
-.reduce-motion .verca-entry-gate__signature,
-.reduce-motion .verca-entry-gate__copy .verca-entry-gate__word {
+.reduce-motion .verca-entry-gate__signature {
   animation: none;
   opacity: 1;
   transform: none;
-}
-
-.verca-entry-gate__word {
-  margin: 0;
-  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
-  /* Vstoupit je akcia — musí byť dostatočne viditeľná aj pod brandom.
-     Zväčšené späť na ~2.2-3.4rem (medzi pôvodným 4.1rem a redukovaným 2.85rem). */
-  font-size: clamp(2.2rem, 8.5vw, 3.4rem);
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 0.08em;
-  line-height: 1.05;
-  text-wrap: balance;
-  color: var(--wine-deep, #241e19);
-  background-image: linear-gradient(
-    102deg,
-    var(--wine-mid, #463c32) 0%,
-    var(--terracotta, #b86447) 22%,
-    var(--bloom-coral, #d4a088) 44%,
-    #f0c4a8 56%,
-    var(--terracotta-mid, #c97b5c) 70%,
-    var(--wine, #3a3128) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  filter: drop-shadow(0 0 26px rgba(255, 200, 168, 0.58)) drop-shadow(0 3px 14px rgba(58, 36, 28, 0.14));
-}
-
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .verca-entry-gate__word {
-    background: none;
-    -webkit-text-fill-color: unset;
-    color: var(--terracotta, #b86447);
-    filter: none;
-    text-shadow:
-      0 0 32px rgba(255, 196, 170, 0.7),
-      0 2px 0 rgba(255, 252, 248, 0.88);
-  }
 }
 
 .verca-entry-gate__cookies {
@@ -306,6 +309,64 @@ html:not(.verca-entry-done) body {
 .reduce-motion .verca-entry-gate__cookies {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+/* ═══ MOBILNÁ OPTIMALIZÁCIA ═══
+   Na malých telefónoch (iPhone SE, malé Androidy) potrebujeme:
+   - Menší vertikálny gap, aby všetko sedelo aj pri 568px viewport height
+   - Lead text trochu väčší relatívne (na úkor brand-u) — lepšie sa číta
+   - Cookies notice kompaktnejší
+   - Bloom orb a kruhy nech sa neroztiahnu mimo viewport */
+@media (max-width: 640px) {
+  .verca-entry-gate__center {
+    padding: clamp(1.25rem, 5vh, 2rem) max(14px, env(safe-area-inset-right))
+      clamp(5.5rem, 14vh, 7.5rem) max(14px, env(safe-area-inset-left));
+  }
+  .verca-entry-gate__brand {
+    font-size: clamp(2.3rem, 10.5vw, 3.2rem);
+    margin-bottom: clamp(0.85rem, 2.4vw, 1.25rem);
+    letter-spacing: 0.04em;
+  }
+  .verca-entry-gate__lead {
+    font-size: clamp(1.1rem, 4.6vw, 1.35rem);
+    line-height: 1.55;
+    max-width: 92vw;
+    margin-bottom: clamp(0.65rem, 1.5vw, 0.9rem);
+  }
+  .verca-entry-gate__signature {
+    font-size: clamp(1.25rem, 4.5vw, 1.5rem);
+    margin-bottom: 0;
+  }
+  .verca-entry-gate__cookies {
+    padding: 0.45rem 0.75rem;
+  }
+  .verca-entry-gate__cookies-text {
+    font-size: 11.5px;
+    line-height: 1.45;
+  }
+  .verca-entry-gate__autoenter {
+    width: min(180px, 56vw);
+  }
+}
+
+/* Extra malé viewport (iPhone SE 1st gen, malý Android landscape) */
+@media (max-height: 600px) {
+  .verca-entry-gate__center {
+    padding-top: clamp(0.85rem, 3vh, 1.5rem);
+    padding-bottom: clamp(4.5rem, 11vh, 6rem);
+  }
+  .verca-entry-gate__brand {
+    font-size: clamp(2rem, 8vh, 2.8rem);
+    margin-bottom: clamp(0.5rem, 1.5vh, 0.85rem);
+  }
+  .verca-entry-gate__lead {
+    font-size: clamp(1rem, 3vh, 1.2rem);
+    line-height: 1.5;
+    margin-bottom: clamp(0.5rem, 1.5vh, 0.85rem);
+  }
+  .verca-entry-gate__signature {
+    font-size: clamp(1.1rem, 2.8vh, 1.35rem);
+  }
 }
 
 /* Dlaždice květ + hex */

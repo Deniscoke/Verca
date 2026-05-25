@@ -265,15 +265,35 @@
 
   gate.addEventListener('click', function (ev) {
     if (ev.target && ev.target.closest && ev.target.closest('.verca-entry-gate__cookies')) return;
+    if (autoEnterTimer) {
+      clearTimeout(autoEnterTimer);
+      autoEnterTimer = null;
+    }
     finishEntry();
   });
 
   document.addEventListener('keydown', function keyEnter(e) {
     if (root.classList.contains('verca-entry-done')) return;
     if (e.key === 'Enter' && !e.repeat) {
+      if (autoEnterTimer) {
+        clearTimeout(autoEnterTimer);
+        autoEnterTimer = null;
+      }
       finishEntry();
     }
   });
+
+  /**
+   * Auto-enter po 10 sekundách — používateľ nemusí klikať.
+   * Progress bar (CSS animácia, 10s linear) dáva vizuálny náznak že "niečo sa deje".
+   * Ak používateľ klikne / stlačí Enter skôr, timeout sa zruší a vstúpi sa hneď.
+   * reduceMotion override: stále auto-enter, len bez vizuálneho bar-u.
+   */
+  var AUTO_ENTER_MS = 10000;
+  var autoEnterTimer = window.setTimeout(function () {
+    autoEnterTimer = null;
+    finishEntry();
+  }, AUTO_ENTER_MS);
 
   function runParticles() {
     if (typeof particlesJS !== 'function') return;
