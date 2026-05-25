@@ -68,23 +68,28 @@ html:not(.verca-entry-done) body {
   animation: verca-entry-copy-in 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
 }
 
-/* Západ slunce pod textem — čitelnost + návaznost na hero / terrakotové akcenty */
+/* Západ slunce pod textem — čitelnost + návaznost na hero / terrakotové akcenty.
+   Pridaná jasnejšia stredná vrstva (cream glow) pre lepšiu čitateľnosť lead textu
+   bez nutnosti pevného scrim-u/boxu, ktorý by narušil organický pocit. */
 .verca-entry-gate__copy::before {
   content: '';
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 118%;
-  height: 168%;
+  width: 122%;
+  height: 175%;
   z-index: -1;
   pointer-events: none;
   border-radius: 50%;
   background:
-    radial-gradient(ellipse 72% 55% at 50% 88%, rgba(255, 196, 160, 0.42) 0%, transparent 58%),
-    radial-gradient(ellipse 90% 70% at 22% 30%, rgba(255, 214, 188, 0.28) 0%, transparent 52%),
-    radial-gradient(ellipse 80% 60% at 88% 22%, rgba(232, 160, 130, 0.22) 0%, transparent 50%),
-    linear-gradient(168deg, rgba(255, 248, 240, 0.14) 0%, rgba(58, 38, 32, 0.08) 100%);
+    /* Cream glow stred — lifne text z textúrovaného pozadia */
+    radial-gradient(ellipse 60% 45% at 50% 50%, rgba(252, 248, 240, 0.62) 0%, rgba(252, 248, 240, 0.32) 38%, transparent 65%),
+    /* Originálne sunset vrstvy (slabšie aby cream stred dominoval) */
+    radial-gradient(ellipse 72% 55% at 50% 88%, rgba(255, 196, 160, 0.38) 0%, transparent 58%),
+    radial-gradient(ellipse 90% 70% at 22% 30%, rgba(255, 214, 188, 0.22) 0%, transparent 52%),
+    radial-gradient(ellipse 80% 60% at 88% 22%, rgba(232, 160, 130, 0.18) 0%, transparent 50%),
+    linear-gradient(168deg, rgba(255, 248, 240, 0.14) 0%, rgba(58, 38, 32, 0.06) 100%);
   filter: blur(0.5px);
 }
 
@@ -137,29 +142,40 @@ html:not(.verca-entry-done) body {
   }
 }
 
-/* ── Pozdrav od Verci (krátky text) — Cormorant italic, dýchajúce riadkovanie ── */
+/* ── Pozdrav od Verci (krátky text) — Cormorant italic so silnejším kontrastom.
+   Pôvodne bol text málo čitateľný (tenké italic ťahy na textúre). Riešenie:
+   bump weight 400→500, tmavšia farba, väčší size, viacvrstvový text-shadow
+   ako jemné "halo" čo lifne text z pozadia bez agresívneho boxu. ── */
 .verca-entry-gate__lead {
-  margin: 0 auto clamp(0.65rem, 1.6vw, 1rem);
-  max-width: min(32rem, 92vw);
+  margin: 0 auto clamp(0.85rem, 1.8vw, 1.15rem);
+  max-width: min(34rem, 94vw);
   font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
   font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 2.85vw, 1.55rem);
   line-height: 1.55;
   letter-spacing: 0.005em;
-  color: rgba(58, 46, 38, 0.9);
+  color: #2a221b;
   text-wrap: balance;
-  text-shadow: 0 1px 0 rgba(255, 252, 246, 0.55);
+  /* Cream halo — text "vyskočí" z textúrovaného pozadia bez nutnosti boxu/scrim */
+  text-shadow:
+    0 0 1px rgba(247, 244, 238, 0.95),
+    0 0 8px rgba(247, 244, 238, 0.85),
+    0 0 16px rgba(247, 244, 238, 0.6),
+    0 1px 0 rgba(255, 252, 246, 0.75);
 }
 
-/* ── Signatúra "— Verca" — handwritten Caveat, jemne vľavo posunuté ── */
+/* ── Signatúra "— Verca" — handwritten Caveat, čitateľnejšia ── */
 .verca-entry-gate__signature {
-  margin: 0 auto clamp(1.5rem, 3.5vw, 2rem);
+  margin: 0 auto clamp(1.65rem, 3.8vw, 2.2rem);
   font-family: var(--font-accent, 'Caveat', cursive);
-  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
-  color: var(--terracotta-mid, #c97b5c);
-  opacity: 0.85;
+  font-size: clamp(1.35rem, 2.8vw, 1.7rem);
+  font-weight: 600;
+  color: var(--terracotta, #b86447);
   letter-spacing: 0.02em;
+  text-shadow:
+    0 0 1px rgba(247, 244, 238, 0.9),
+    0 0 8px rgba(247, 244, 238, 0.7);
 }
 
 /* ── Stagger animations — texty sa zjavujú postupne, nie všetko naraz.
@@ -204,7 +220,9 @@ html:not(.verca-entry-done) body {
 .verca-entry-gate__word {
   margin: 0;
   font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
-  font-size: clamp(1.85rem, 7vw, 2.85rem);
+  /* Vstoupit je akcia — musí byť dostatočne viditeľná aj pod brandom.
+     Zväčšené späť na ~2.2-3.4rem (medzi pôvodným 4.1rem a redukovaným 2.85rem). */
+  font-size: clamp(2.2rem, 8.5vw, 3.4rem);
   font-weight: 400;
   font-style: normal;
   letter-spacing: 0.08em;
