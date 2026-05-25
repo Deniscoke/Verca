@@ -319,6 +319,7 @@
   var resizeRAF = 0;
 
   var lastCssW = 0;
+  var lastDpr = 0;
 
   function resize() {
     resizeRAF = 0;
@@ -326,15 +327,19 @@
     var cssH = Math.round(window.innerHeight);
     if (!cssW || !cssH) return;
 
-    if (isLite && lastCssW === cssW && canvas.width > 0) {
+    var dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+
+    /* Lite path skip optimalizácia musí brať do úvahy aj zmenu DPR — inak pri Ctrl+Scroll zoome
+       (kde sa cssW nemení, len DPR) zostane canvas pixel buffer pri starej resolution → banding. */
+    if (isLite && lastCssW === cssW && lastDpr === dpr && canvas.width > 0) {
       maxScroll = Math.max(1, document.documentElement.scrollHeight - cssH);
       tgt = maxScroll > 0 ? window.scrollY / maxScroll : 0;
       updateOceanOpacity();
       return;
     }
     lastCssW = cssW;
+    lastDpr = dpr;
 
-    var dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
     var renderScale = dpr * qualityScale;
     var pixelW = Math.max(1, Math.round(cssW * renderScale));
     var pixelH = Math.max(1, Math.round(cssH * renderScale));
@@ -357,8 +362,37 @@
     if (!resizeRAF) resizeRAF = requestAnimationFrame(resize);
   }
 
+  /**
+   * Browser zoom detection (Ctrl+Scroll desktop, pinch mobile, OSK):
+   * - Chrome desktop zoom NEFIRRE `window.resize` — len mení devicePixelRatio.
+   * - VisualViewport API odchytí pinch/desktop zoom + on-screen keyboard.
+   * - matchMedia s aktuálnou resolution dppx detekuje zmenu DPR aj ked viewport nemení rozmer.
+   * Bez tohto sa pri zoom-e canvas pixel buffer rozchádza s CSS display size → "banding" artifact.
+   */
+  function watchDprChange() {
+    if (typeof matchMedia !== 'function') return;
+    var current = window.devicePixelRatio || 1;
+    var mql = matchMedia('(resolution: ' + current + 'dppx)');
+    var handler = function () {
+      requestResize();
+      // Po zmene DPR sa stará MQL stane irrelevantnou — zaregistruj novú pre novú hodnotu.
+      mql.removeEventListener ? mql.removeEventListener('change', handler) : mql.removeListener(handler);
+      watchDprChange();
+    };
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handler);
+    } else if (mql.addListener) {
+      // Safari < 14 fallback
+      mql.addListener(handler);
+    }
+  }
+
   resize();
   window.addEventListener('resize', requestResize, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', requestResize, { passive: true });
+  }
+  watchDprChange();
 
   function getHeroEl() {
     return document.querySelector('.hero.hero--ocean') || document.getElementById('home');

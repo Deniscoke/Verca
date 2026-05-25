@@ -4086,8 +4086,30 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
     rafId = (flowers.length || trails.length) ? requestAnimationFrame(tick) : null;
   }
 
+  /**
+   * Browser zoom (Ctrl+Scroll) v Chrome desktop NEFIRRE `window.resize`.
+   * Mení len DPR, čo by spôsobilo nesúlad medzi canvas pixel buffer-om
+   * a CSS display size → kvety by sa renderovali rozmazane / posunuté.
+   */
+  function watchDprChange() {
+    if (typeof matchMedia !== 'function') return;
+    var current = window.devicePixelRatio || 1;
+    var mql = matchMedia('(resolution: ' + current + 'dppx)');
+    var handler = function () {
+      resize();
+      mql.removeEventListener ? mql.removeEventListener('change', handler) : mql.removeListener(handler);
+      watchDprChange();
+    };
+    if (mql.addEventListener) mql.addEventListener('change', handler);
+    else if (mql.addListener) mql.addListener(handler);
+  }
+
   resize();
   window.addEventListener('resize', resize, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', resize, { passive: true });
+  }
+  watchDprChange();
 
   document.addEventListener('click', function (e) {
     if (Date.now() < ignoreClickUntil) return;

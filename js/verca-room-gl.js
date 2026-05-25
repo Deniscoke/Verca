@@ -32,6 +32,7 @@
 
   var maxDPR = isLite ? 1.0 : (window.devicePixelRatio || 1);
   var lastW = 0;
+  var lastDpr = 0;
 
   function isSunLayoutPage() {
     return document.body && document.body.classList.contains('room-sun-layout');
@@ -40,9 +41,12 @@
   function resize() {
     var w = window.innerWidth;
     var h = window.innerHeight;
-    if (isLite && lastW === w && canvas.width > 0) return;
-    lastW = w;
     var d = Math.min(window.devicePixelRatio || 1, maxDPR);
+    /* Lite skip optimization musí brať do úvahy aj DPR — inak pri Ctrl+Scroll zoome
+       (kde sa w nemení, len DPR) zostane canvas pri starej resolution → banding artifact. */
+    if (isLite && lastW === w && lastDpr === d && canvas.width > 0) return;
+    lastW = w;
+    lastDpr = d;
     var scale = isLite ? 0.65 : 1;
     /* room-sun-layout: širší buffer + posun vlevo (kontakt + prostory). */
     var sunLayout = isSunLayoutPage();
@@ -61,8 +65,33 @@
     }
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
+
+  /**
+   * Browser zoom (Ctrl+Scroll) v Chrome desktop NEFIRRE `window.resize` — mení len DPR.
+   * Riešenie: VisualViewport API + matchMedia DPR observer.
+   */
+  function watchDprChange() {
+    if (typeof matchMedia !== 'function') return;
+    var current = window.devicePixelRatio || 1;
+    var mql = matchMedia('(resolution: ' + current + 'dppx)');
+    var handler = function () {
+      resize();
+      mql.removeEventListener ? mql.removeEventListener('change', handler) : mql.removeListener(handler);
+      watchDprChange();
+    };
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handler);
+    } else if (mql.addListener) {
+      mql.addListener(handler);
+    }
+  }
+
   resize();
   window.addEventListener('resize', resize, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', resize, { passive: true });
+  }
+  watchDprChange();
 
   var vert = [
     'attribute vec2 pos;',
