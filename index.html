@@ -954,6 +954,107 @@ h1, h2, h3, h4 {
 }
 .reduce-motion .hero__scroll-line { animation: none; opacity: 0.4; }
 
+/* ═══ WELCOME — Verkin osobný pozdrav (jej slová verbatim).
+   Letter-like vzhľad: úzky stĺpec, generózne biele miesto, závesný leaf icon,
+   body textom je čítaný Plus Jakarta Sans (zaručuje čitateľnosť aj na mobile),
+   closing line je italic Cormorant ako emocionálne finále. ═══ */
+.welcome {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 18%, rgba(255, 232, 210, 0.4) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 45% at 100% 88%, rgba(168, 194, 174, 0.1) 0%, transparent 55%),
+    var(--cream);
+  padding: clamp(4.5rem, 11vw, 8rem) 0 clamp(4.5rem, 11vw, 8rem);
+  position: relative;
+  text-align: center;
+}
+
+.welcome__inner {
+  max-width: min(40rem, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome__leaf {
+  width: clamp(32px, 4vw, 40px);
+  height: clamp(32px, 4vw, 40px);
+  color: var(--terracotta);
+  opacity: 0.78;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+  display: inline-flex;
+}
+.welcome__leaf svg {
+  width: 100%;
+  height: 100%;
+}
+
+.welcome__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.95rem, 4.5vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+  color: var(--charcoal);
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  text-wrap: balance;
+}
+.welcome__heading em {
+  font-style: italic;
+  color: var(--terracotta);
+  font-weight: 400;
+}
+
+.welcome__body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.05rem, 2.2vw, 1.5rem);
+  width: 100%;
+}
+
+.welcome__para {
+  font-family: var(--font-body);
+  font-size: clamp(15.5px, 1.15vw, 17px);
+  line-height: 1.85;
+  color: var(--text);
+  margin: 0;
+  text-wrap: pretty;
+}
+.welcome__para em {
+  color: var(--terracotta);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.welcome__closing {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.35rem, 2.8vw, 1.9rem);
+  line-height: 1.4;
+  color: var(--terracotta-mid);
+  margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+  text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+  .welcome {
+    padding: clamp(3.25rem, 9vw, 5rem) 0;
+  }
+  .welcome__heading {
+    font-size: clamp(1.75rem, 7.5vw, 2.4rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2.25rem);
+  }
+  .welcome__para {
+    font-size: 15.5px;
+    line-height: 1.78;
+  }
+  .welcome__closing {
+    font-size: clamp(1.2rem, 5vw, 1.45rem);
+    line-height: 1.45;
+  }
+}
+
 /* ═══ TRUST STRIP ═══ */
 .trust {
   background: var(--cream-deep);
@@ -2797,7 +2898,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
           </svg>
         </div>
         <div class="hero__eyebrow">
-          <span class="label js-fade">Vítej v prostoru Viva Esencia</span>
+          <span class="label js-fade">Jemná přírodní péče &nbsp;·&nbsp; S Vercou</span>
         </div>
 
         <h1 class="hero__title" id="heroTitle">
@@ -2807,7 +2908,7 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         </h1>
 
         <p class="hero__sub js-fade">
-          Místo, kde propojuji masáže, aromaterapii, bylinky a&nbsp;vědomou práci s&nbsp;tělem v&nbsp;souvislostech. Bez spěchu, beze slov, která neznáte — vše začíná rozhovorem.
+          Sezení, masáže, aromaterapie a&nbsp;ručně vyráběné bylinné přípravky — vždy ve vašem tempu. Vše začíná rozhovorem.
         </p>
 
         <div class="hero__actions">
@@ -2826,6 +2927,40 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
 
   <div class="hero__scroll-indicator" aria-hidden="true">
     <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ WELCOME — Verkin osobný pozdrav, jej slová verbatim z WhatsApp draftu ═══ -->
+<section class="welcome" id="welcome" aria-label="Vítej v prostoru Viva Esencia">
+  <div class="container">
+    <div class="welcome__inner">
+      <div class="welcome__leaf js-reveal" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 28V14"/>
+          <path d="M16 14C16 14 13 10 8 9c-3-.5-6 .5-6 .5S5 14 9 15c3 1 7-1 7-1z"/>
+          <path d="M16 14C16 14 19 10 24 9c3-.5 6 .5 6 .5S27 14 23 15c-3 1-7-1-7-1z"/>
+          <path d="M16 14C16 14 16 6 18 4"/>
+        </svg>
+      </div>
+      <h2 class="welcome__heading js-reveal">
+        Vítej v&nbsp;prostoru <em>Viva Esencia</em>
+      </h2>
+      <div class="welcome__body">
+        <p class="welcome__para js-reveal">
+          Místo, kde propojuji masáže, aromaterapii, bylinky a&nbsp;vědomou práci s&nbsp;tělem v&nbsp;souvislostech.
+        </p>
+        <p class="welcome__para js-reveal">
+          Ve své práci vycházím z&nbsp;přesvědčení, že tělo a&nbsp;psychika spolu úzce souvisí a&nbsp;že skutečná péče nezačíná až ve chvíli, kdy něco bolí&nbsp;— ale mnohem dřív. Ve chvíli, kdy se naučíme své tělo více vnímat.
+        </p>
+        <p class="welcome__para js-reveal">
+          Masáže a&nbsp;bylinné poradenství jsou otevřené ženám i&nbsp;mužům. Pro ženy zároveň vytvářím prostor hlubší péče skrze <em>Esenci ženy</em> a&nbsp;práci s&nbsp;pánevním dnem, kde propojuji tělo, emoce a&nbsp;ženské zdraví.
+        </p>
+        <p class="welcome__closing js-reveal">
+          Věřím v&nbsp;jemný, ale vědomý přístup.<br>
+          V&nbsp;návrat k&nbsp;jednoduchosti, přírodě a&nbsp;k&nbsp;sobě samým.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2864,18 +2999,18 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
       </figure>
       <div class="philosophy__col">
         <blockquote class="philosophy__quote js-reveal">
-          Skutečná péče nezačíná až ve chvíli, kdy něco bolí&nbsp;— ale mnohem dřív. Ve chvíli, kdy se naučíme své tělo více vnímat.
+          Tělo je moudré. Uzdravení přichází ve vztahu&nbsp;— s&nbsp;terapeutkou, s&nbsp;rostlinami, s&nbsp;vlastní přítomností.
         </blockquote>
         <div class="philosophy__text">
-          <span class="label js-reveal">Můj přístup</span>
-          <h2 class="js-reveal">Tělo a&nbsp;psychika <em>v souvislostech</em></h2>
+          <span class="label js-reveal">Jak pracuji</span>
+          <h2 class="js-reveal">Péče zakořeněná v&nbsp;<em>důvěře a&nbsp;přítomnosti</em></h2>
           <p class="js-reveal">
-            Ve své práci vycházím z&nbsp;přesvědčení, že tělo a&nbsp;psychika spolu úzce souvisí. Pracuji na pomezí masáží, aromaterapie, bylinného poradenství a&nbsp;vědomé práce s&nbsp;tělem — vždy v&nbsp;prostoru hluboké úcty k&nbsp;vašemu tempu.
+            Pracuji na pomezí terapie pánevního dna, somatického tělesného vědomí a&nbsp;rostlinné medicíny. Každé sezení se odehrává v&nbsp;prostoru hluboké úcty&nbsp;— k&nbsp;vašemu tělu, vaší historii a&nbsp;vašemu tempu.
           </p>
           <p class="js-reveal">
-            Masáže a&nbsp;bylinné poradenství jsou otevřené ženám i&nbsp;mužům. Pro ženy zároveň vytvářím prostor hlubší péče skrze <em>Esenci ženy</em> a&nbsp;práci s&nbsp;pánevním dnem, kde propojuji tělo, emoce a&nbsp;ženské zdraví.
+            Ať se zotavujete, zkoumáte, nebo jen chcete znovu cítit domov ve svém těle&nbsp;— tato práce vás potká přesně tam, kde jste. Krok po kroku, dech po dechu.
           </p>
-          <span class="philosophy__accent js-reveal">V&nbsp;návratu k&nbsp;jednoduchosti, přírodě a&nbsp;k&nbsp;sobě samým.</span>
+          <span class="philosophy__accent js-reveal">Bez spěchu. Bez soudů. Jen péče.</span>
         </div>
       </div>
     </div>
