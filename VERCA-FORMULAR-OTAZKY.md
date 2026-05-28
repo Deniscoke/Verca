@@ -44,7 +44,7 @@
 
 ### 2.4 Hlavný email (kontaktný)
 [KRÁTKA ODPOVEĎ — email] · *povinné*
-*Príklady: verca@vivaesencia.cz, hello@vivaesencia.cz, info@vivaesencia.cz…*
+*Príklady: verca@esenciaviva.cz, hello@esenciaviva.cz, info@esenciaviva.cz…*
 
 ### 2.5 Druhý email (pre eshop / objednávky), ak iný
 [KRÁTKA ODPOVEĎ — email] · *voliteľné*
@@ -71,7 +71,7 @@
 
 ### 3.2 Instagram URL alebo @handle
 [KRÁTKA ODPOVEĎ] · *voliteľné*
-*Príklad: @vivaesencia alebo instagram.com/vivaesencia*
+*Príklad: @esenciaviva alebo instagram.com/esenciaviva*
 
 ### 3.3 Iné sociálne siete (TikTok, YouTube, Pinterest…)
 [DLHÁ ODPOVEĎ] · *voliteľné*
@@ -251,11 +251,11 @@
 
 ## 🚀 SEKCIA 10: Release & špeciálne
 
-### 10.1 Cieľový dátum spustenia (live na vivaesencia.cz)
+### 10.1 Cieľový dátum spustenia (live na esenciaviva.cz)
 [DÁTUM] · *povinné*
 *Aktuálne plánované: 15. 5. 2026*
 
-### 10.2 Doménový registrátor — kde kúpiš vivaesencia.cz?
+### 10.2 Doménový registrátor — kde kúpiš esenciaviva.cz?
 [VÝBER]
 ☐ Vercel (jednoduchá integrácia)  
 ☐ Wedos (česká, lacná)  
@@ -263,12 +263,12 @@
 ☐ Forpsi  
 ☐ Iný:
 
-### 10.3 Chce aj `www.vivaesencia.cz` redirect na hlavnú?
+### 10.3 Chce aj `www.esenciaviva.cz` redirect na hlavnú?
 [VÝBER]
 ☐ Áno (odporúčam)  
 ☐ Nie
 
-### 10.4 Email na doméne (verca@vivaesencia.cz) — kde bude hostovaný?
+### 10.4 Email na doméne (verca@esenciaviva.cz) — kde bude hostovaný?
 [VÝBER]
 ☐ Google Workspace (~6 €/mes/user)  
 ☐ Microsoft 365 (~5 €/mes/user)  

@@ -1,14 +1,14 @@
-# Viva Esencia (web Verca) — SEO informácie pre release
+# Esencia Viva (web Verca) — SEO informácie pre release
 
 ## Branding (FINAL)
-- **Značka (web)**: Viva Esencia
+- **Značka (web)**: Esencia Viva
 - **Zakladateľka / terapeutka**: Verca
 - **Pattern**: dual-branding (Goop by Gwyneth Paltrow, Honest by Jessica Alba)
-  - Public-facing brand → **Viva Esencia** (logo, title, meta, footer, copyright)
+  - Public-facing brand → **Esencia Viva** (logo, title, meta, footer, copyright)
   - Person voice → **Verca** (About sekcia, signatúra „S péčí, Verca", testimonialy, kontakt)
 
 ## Doména
-- **Plánovaná**: vivaesencia.cz (kúpa 15. mája 2026)
+- **Plánovaná**: esenciaviva.cz (kúpa 15. mája 2026)
 - **Aktuálna (preview)**: verca-omega.vercel.app
 
 ## Sociálne siete
@@ -25,7 +25,7 @@
 
 ## Email
 - Aktuálny default: hello@verca.care (z .env)
-- **Po release**: nastaviť na vivaesencia.cz email (napr. verca@vivaesencia.cz alebo hello@vivaesencia.cz)
+- **Po release**: nastaviť na esenciaviva.cz email (napr. verca@esenciaviva.cz alebo hello@esenciaviva.cz)
 
 ## Calendly
 - **POZOR**: aktuálne URL `denis-mitrovi/new-meeting` je vývojársky účet

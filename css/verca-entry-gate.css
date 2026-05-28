@@ -157,7 +157,7 @@ html:not(.verca-entry-done) body {
   opacity: 1;
 }
 
-/* ── Brand titulok (Viva Esencia) — najväčšia hierarchická úroveň ── */
+/* ── Brand titulok (Esencia Viva) — najväčšia hierarchická úroveň ── */
 .verca-entry-gate__brand {
   margin: 0 0 clamp(1rem, 2.6vw, 1.6rem);
   font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
