@@ -47,13 +47,13 @@
         var msg =
           (out.data && out.data.message) ||
           (out.status === 501
-            ? 'Formulář zatím není napojený na server. Napište prosím na hello@verca.care (odkaz v poznámce pod formulářem).'
-            : 'Odeslání se nepodařilo. Zkuste to znovu, nebo použijte odkaz hello@verca.care v poznámce.');
+            ? 'Formulář zatím není napojený na server. Napište prosím na verca@esenciaviva.cz (odkaz v poznámce pod formulářem).'
+            : 'Odeslání se nepodařilo. Zkuste to znovu, nebo použijte odkaz verca@esenciaviva.cz v poznámce.');
         setMsg(msg, false);
       })
       .catch(function () {
         setMsg(
-          'Chyba spojení. Zkuste to znovu později, případně hello@verca.care v poznámce.',
+          'Chyba spojení. Zkuste to znovu později, případně verca@esenciaviva.cz v poznámce.',
           false
         );
       })

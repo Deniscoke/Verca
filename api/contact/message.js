@@ -26,7 +26,7 @@ module.exports = function contactMessage(req, res) {
   }
 
   var apiKey = env.getEnv('RESEND_API_KEY');
-  var toEmail = env.getEnv('CONTACT_TO_EMAIL') || 'hello@verca.care';
+  var toEmail = env.getEnv('CONTACT_TO_EMAIL') || 'verca@esenciaviva.cz';
   var fromEmail = env.getEnv('CONTACT_FROM_EMAIL');
   if (!apiKey || !fromEmail) {
     return http.json(res, 501, {
@@ -117,7 +117,7 @@ module.exports = function contactMessage(req, res) {
       return http.json(res, 502, {
         error: 'send_failed',
         message:
-          'E-mail se nepodařilo odeslat přes Resend. Zkuste znovu nebo použijte odkaz hello@verca.care v poznámce pod formulářem.',
+          'E-mail se nepodařilo odeslat přes Resend. Zkuste znovu nebo použijte odkaz verca@esenciaviva.cz v poznámce pod formulářem.',
       });
     })
     .catch(function (err) {
