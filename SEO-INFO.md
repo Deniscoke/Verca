@@ -8,8 +8,8 @@
   - Person voice → **Verca** (About sekcia, signatúra „S péčí, Verca", testimonialy, kontakt)
 
 ## Doména
-- **Plánovaná**: esenciaviva.cz (kúpa 15. mája 2026)
-- **Aktuálna (preview)**: verca-omega.vercel.app
+- **Kúpená a nasadená**: esenciaviva.cz (cez Vercel)
+- **Preview**: verca-omega.vercel.app
 
 ## Sociálne siete
 - **Facebook**: https://www.facebook.com/share/14cC5gyEwkf/
@@ -23,9 +23,18 @@
 - Stránka má `<meta name="robots" content="noindex, nofollow">`
 - Backend (Stripe checkout, Supabase) zostáva pripravený a funkčný pre testovanie
 
-## Email
-- Aktuálny default: hello@verca.care (z .env)
-- **Po release**: nastaviť na esenciaviva.cz email (napr. verca@esenciaviva.cz alebo hello@esenciaviva.cz)
+## Email a kontaktný formulár (Resend)
+- **Verejný kontaktný e-mail**: verca@esenciaviva.cz (mailto odkazy, pätička)
+- **Formulár → Resend**: endpoint `/api/contact/message` posiela e-mail cez Resend.
+  Potrebné Vercel env premenné (Production):
+  - `RESEND_API_KEY` — API kľúč z Resendu (`re_…`)
+  - `CONTACT_FROM_EMAIL` — odosielateľ, napr. `formular@esenciaviva.cz`
+    (doména `esenciaviva.cz` musí byť **overená v Resende cez DNS** — SPF + DKIM)
+  - `CONTACT_TO_EMAIL` — kam chodia správy = Verkina schránka
+    **(drží sa LEN vo Vercel env, NIKDY nie v repe — osobné PII)**
+- `reply_to` = e-mail návštevníka → Verca odpovedá priamo cez „Odpovedať".
+- Po pridaní/zmene env premenných je nutný **redeploy**, inak sa neprejavia.
+- Bez nastavenia vráti API stav `501 not_configured` (formulár ostáva neaktívny).
 
 ## Calendly
 - **POZOR**: aktuálne URL `denis-mitrovi/new-meeting` je vývojársky účet
