@@ -1055,6 +1055,205 @@ h1, h2, h3, h4 {
   }
 }
 
+/* ═══ PROMĚNA — neodolateľná ponuka (Verkina konverzná kópia).
+   Tri fázy v jednej sekcii: rozpoznanie bolesti → transformácia → „s čím odcházíte".
+   Telo je čítané Plus Jakarta Sans (čitateľnosť), emocionálne vrcholy v Cormorant italic.
+   Záverečná karta „s čím odcházíte" je to najdôležitejšie — vizuálne zvýraznená. ═══ */
+.promena {
+  position: relative;
+  background:
+    radial-gradient(ellipse 68% 50% at 50% 0%, rgba(232, 196, 181, 0.30) 0%, transparent 56%),
+    radial-gradient(ellipse 62% 52% at 50% 100%, rgba(168, 194, 174, 0.18) 0%, transparent 60%),
+    var(--cream);
+  padding: clamp(4.5rem, 11vw, 8rem) 0;
+  overflow: hidden;
+}
+.promena .container { max-width: 62rem; }
+
+/* — Fáza 1: rozpoznanie (pain) — */
+.promena__recognition {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.promena__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--charcoal);
+  margin: 0.6rem 0 clamp(1.5rem, 3vw, 2.25rem);
+  text-wrap: balance;
+}
+.promena__heading em { font-style: italic; color: var(--terracotta); font-weight: 400; }
+.promena__lead {
+  font-family: var(--font-body);
+  font-size: clamp(15.5px, 1.2vw, 17.5px);
+  line-height: 1.85;
+  color: var(--text-soft);
+  margin: 0 0 1.1rem;
+  text-wrap: pretty;
+}
+.promena__lead--accent {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  line-height: 1.4;
+  color: var(--terracotta-mid);
+  margin-top: 0.4rem;
+}
+/* symptómy — jemný 2-stĺpcový zoznam s terakotovou pomlčkou (nie agresívne odrážky) */
+.promena__symptoms {
+  list-style: none;
+  margin: clamp(1.5rem, 3vw, 2.25rem) auto 0;
+  padding: 0;
+  max-width: 40rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  gap: 0.6rem clamp(1.5rem, 4vw, 3rem);
+  text-align: left;
+}
+.promena__symptoms li {
+  position: relative;
+  padding-left: 1.45rem;
+  font-family: var(--font-body);
+  font-size: clamp(14.5px, 1.05vw, 15.5px);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.promena__symptoms li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.7rem;
+  height: 1.5px;
+  background: var(--terracotta);
+  opacity: 0.55;
+}
+
+/* — Fáza 2: transformácia — */
+.promena__shift {
+  max-width: 44rem;
+  margin: clamp(3.5rem, 7vw, 5.5rem) auto 0;
+  text-align: center;
+}
+.promena__shift-intro {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.28;
+  color: var(--charcoal);
+  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+  text-wrap: balance;
+}
+.promena__shift-intro strong { font-weight: 500; color: var(--terracotta); }
+.promena__shift-intro em { font-style: italic; color: var(--terracotta-mid); font-weight: 400; }
+.promena__shift-text {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.15vw, 16.5px);
+  line-height: 1.8;
+  color: var(--text-soft);
+  margin: 0 0 clamp(1.5rem, 3vw, 2rem);
+}
+/* dary / outcomes — 2 stĺpce so sage „zaškrtnutím" */
+.promena__gifts {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 38rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  gap: 0.75rem clamp(1.5rem, 4vw, 2.75rem);
+  text-align: left;
+}
+.promena__gifts li {
+  position: relative;
+  padding-left: 1.85rem;
+  font-family: var(--font-body);
+  font-size: clamp(14.5px, 1.1vw, 16px);
+  line-height: 1.5;
+  color: var(--text);
+}
+.promena__gifts li::before {
+  content: "";
+  position: absolute;
+  left: 0.3rem;
+  top: 0.12em;
+  width: 0.5rem;
+  height: 0.85rem;
+  border-right: 1.6px solid var(--bloom-sage-deep);
+  border-bottom: 1.6px solid var(--bloom-sage-deep);
+  transform: rotate(40deg);
+  opacity: 0.7;
+}
+.promena__shift-women {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: clamp(14.5px, 1.05vw, 15.5px);
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 38rem;
+  margin: clamp(1.75rem, 3.5vw, 2.5rem) auto 0;
+}
+
+/* — Fáza 3: „s čím odcházíte" — vrchol, zvýraznená karta — */
+.promena__leave {
+  position: relative;
+  max-width: 47rem;
+  margin: clamp(3.5rem, 7vw, 5.5rem) auto 0;
+  padding: clamp(2.5rem, 5.5vw, 3.75rem) clamp(1.75rem, 5vw, 3.5rem);
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(245, 243, 239, 0.65), rgba(235, 232, 225, 0.55)),
+    rgba(184, 100, 71, 0.05);
+  border: 1px solid rgba(184, 100, 71, 0.18);
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+}
+.promena__leave-label {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  font-weight: 600;
+  margin-bottom: clamp(1rem, 2vw, 1.4rem);
+}
+.promena__leave-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.45rem, 3.4vw, 2.3rem);
+  line-height: 1.36;
+  color: var(--charcoal);
+  margin: 0;
+  text-wrap: balance;
+}
+.promena__leave-quote em { color: var(--terracotta); font-style: italic; }
+.promena__leave-close {
+  font-family: var(--font-body);
+  font-size: clamp(14.5px, 1.1vw, 16px);
+  line-height: 1.75;
+  color: var(--text-soft);
+  margin: clamp(1.5rem, 3vw, 2rem) auto 0;
+  max-width: 34rem;
+}
+
+@media (max-width: 640px) {
+  .promena { padding: clamp(3.25rem, 9vw, 5rem) 0; }
+  .promena__symptoms,
+  .promena__gifts {
+    grid-template-columns: 1fr;
+    max-width: 24rem;
+  }
+  .promena__leave { border-radius: 14px; }
+}
+
 /* ═══ TRUST STRIP ═══ */
 .trust {
   background: var(--cream-deep);
@@ -2962,6 +3161,71 @@ html:not(.verca-savedata):not(.reduce-motion) .footer {
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══ PROMĚNA — neodolatelná nabídka (Verkina konverzná kópia z dream-coaching konzultácie):
+     rozpoznanie bolesti → transformácia → „s čím odcházíte". ═══ -->
+<section class="promena" id="promena" aria-labelledby="promena-heading">
+  <div class="container">
+
+    <!-- 1 · Rozpoznání — kde teď možná jste -->
+    <div class="promena__recognition">
+      <span class="label js-reveal">Možná to znáte</span>
+      <h2 class="promena__heading js-reveal" id="promena-heading">Tělo <em>nezapomíná</em></h2>
+      <p class="promena__lead js-reveal">
+        Možná už jste si zvykli fungovat i&nbsp;ve chvíli, kdy je vaše tělo dávno vyčerpané. Žít ve stažení. V&nbsp;napětí. V&nbsp;neustálém tlaku na sebe. Ignorovat únavu, bolest nebo signály těla, protože „musíte dál“.
+      </p>
+      <p class="promena__lead promena__lead--accent js-reveal">
+        Jenže tělo nezapomíná. Postupně začne mluvit skrze:
+      </p>
+      <ul class="promena__symptoms js-reveal" role="list">
+        <li>bolesti zad a&nbsp;beder</li>
+        <li>napětí v&nbsp;pánvi a&nbsp;podbřišku</li>
+        <li>únavu a&nbsp;vyčerpání</li>
+        <li>úzkosti a&nbsp;přetížený nervový systém</li>
+        <li>hormonální nerovnováhu</li>
+        <li>nespavost</li>
+        <li>pocit odpojení od sebe sama</li>
+        <li>nebo jen tichý pocit, že už dlouho nejste opravdu v&nbsp;pohodě</li>
+      </ul>
+    </div>
+
+    <!-- 2 · Transformace — co se mění -->
+    <div class="promena__shift">
+      <p class="promena__shift-intro js-reveal">
+        V&nbsp;<strong>Esencia&nbsp;Viva</strong> nevznikl prostor jen pro relaxaci.<br>
+        Vznikl prostor pro <em>skutečné uvolnění.</em>
+      </p>
+      <p class="promena__shift-text js-reveal">
+        Skrze vědomý dotek, práci s&nbsp;tělem, aromaterapii, bylinky a&nbsp;individuální přístup pomáhám lidem znovu:
+      </p>
+      <ul class="promena__gifts js-reveal" role="list">
+        <li>cítit lehkost ve vlastním těle</li>
+        <li>uvolnit dlouhodobé napětí</li>
+        <li>zklidnit nervový systém</li>
+        <li>lépe vnímat své potřeby</li>
+        <li>znovu se nadechnout bez tlaku</li>
+        <li>cítit větší stabilitu a&nbsp;bezpečí</li>
+        <li>obnovit kontakt se svým tělem</li>
+        <li>a&nbsp;po dlouhé době opravdu zpomalit</li>
+      </ul>
+      <p class="promena__shift-women js-reveal">
+        U&nbsp;žen se často postupně mění i&nbsp;vztah k&nbsp;vlastnímu ženství, pánevnímu dnu, hranicím a&nbsp;celkovému prožívání sebe sama.
+      </p>
+    </div>
+
+    <!-- 3 · S čím odcházíte — to nejdůležitější (dream-coaching directive) -->
+    <figure class="promena__leave js-reveal">
+      <span class="promena__leave-label">S čím odcházíte</span>
+      <blockquote class="promena__leave-quote">
+        Klienti často říkají, že odcházejí <em>klidnější</em>, <em>lehčí</em>, více propojení sami se sebou&nbsp;— a&nbsp;s&nbsp;pocitem, že jejich tělo konečně nemusí pořád bojovat.
+      </blockquote>
+      <figcaption class="promena__leave-close">
+        Nejde o&nbsp;další výkon. Ani o&nbsp;rychlou opravu. Jde o&nbsp;prostor, kde můžete na chvíli přestat přežívat&nbsp;— a&nbsp;začít se znovu cítit dobře sami v&nbsp;sobě&nbsp;🌿
+      </figcaption>
+    </figure>
+
   </div>
 </section>
 
