@@ -36,10 +36,14 @@
 - Po pridaní/zmene env premenných je nutný **redeploy**, inak sa neprejavia.
 - Bez nastavenia vráti API stav `501 not_configured` (formulár ostáva neaktívny).
 
-## Calendly
-- **POZOR**: aktuálne URL `denis-mitrovi/new-meeting` je vývojársky účet
-- **Pred release**: nahradiť skutočným Verkiným Calendly URL
-- Súbor: `kontakt.html`, riadok ~9: `<meta name="verca:calendly" content="...">`
+## Rezervačný systém (vlastný kalendár — nahradil Calendly)
+- **Calendly odstránené** (platené pri viacerých udalostiach). Vlastný systém na Supabase + Resend.
+- **DB tabuľky** (projekt „Verca", `mdryspqjpfcumedwtgzf`): `booking_slots` (dostupnosť) + `bookings` (žiadosti, vrátane PII). Schéma vo verzii: `db/booking-system.sql`.
+- **API**: `GET /api/booking/availability` (voľné termíny), `POST /api/booking/request` (žiadosť → slot sa hneď zablokuje), `GET/POST /api/booking/decide?token=…` (Verca potvrdí/zamietne).
+- **Tok**: klient vyberie termín → slot sa zablokuje (pending) → Verca dostane e-mail s odkazom → potvrdí (confirmed) alebo zamietne (declined → slot sa uvoľní). Klient dostane e-mail o prijatí aj o potvrdení.
+- **Env premenné** (Production): rovnaké ako kontaktný formulár — `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` (Verkina schránka) + `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (zápis do DB) + `PUBLIC_SITE_URL` (odkazy v e-maile). Bez DB env vráti API `503 not_configured` a web ukáže výzvu napísať cez formulár.
+- **Pridať ďalšie termíny**: insert do `booking_slots` (vzor na konci `db/booking-system.sql`). Dostupnosť 2026: štvrtky 14:45 / 16:00 / 18:00.
+- **Seed jún 2026**: 4./11./18./25. 6.; obsadené (blocked) 4. 6. 14:45 a 11. 6. 18:00.
 
 ## Lokalita (TODO — opýtať sa Vercy)
 - Mesto: ?
